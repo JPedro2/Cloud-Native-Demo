@@ -1,0 +1,43 @@
+apiVersion: appdynamics.com/v1alpha1
+kind: Clusteragent
+metadata:
+  name: k8s-cluster-agent
+  namespace: appdynamics
+spec:
+  appName: "<app-name>"
+  controllerUrl: "<protocol>://<appdynamics-controller-host>:443"
+  account: "<account-name>"
+  image: "docker.io/peolivei/cluster-agent:latest"
+  serviceAccountName: appdynamics-cluster-agent
+  #The namespaces to be monitored in the cluster
+  nsToMonitor:
+  - "default"
+  - "appdynamics"
+  - "istio-system"
+  #How often Kubernetes warning and state-change events are uploaded to the Controller in seconds
+  eventUploadInterval: 10
+  #[Dinamically Configurable]
+  stdoutLogging: "true"
+  #[Dinamically Configurable]Number of log details. INFO, WARNING, DEBUG, OR TRACE
+  logLevel: "INFO"
+  #[Dinamically Configurable]Maximum number of backups the log saves. When the maximum number of backups is reached, the oldest log file after the initial log file is deleted.
+  logFileBackups: 3
+  ################# AppD Auto-Instrumentation Config for NodeJS Apps: paymentservice & currencyservice #################
+  instrumentationMethod: "Env"
+  nsToInstrumentRegex: "default"
+  defaultAppName: "<app-name>"
+  instrumentationRules:
+    - namespaceRegex: "default"
+      language: nodejs
+      imageInfo:
+        image: docker.io/appdynamics/nodejs-agent:20.7.0-alpinev12
+        agentMountPath: /opt/appdynamics
+        imagePullPolicy: Always
+      #instrumentContainer: select
+      #containerMatchString: server
+    #- instrumentContainer:
+    #  select:
+    #    defaultContainerMatchString: server
+  #instrumentationRules:
+  #    customAgentConfigSource:
+  #     - configMapName: controllerConf

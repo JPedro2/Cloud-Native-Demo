@@ -1,0 +1,16 @@
+bin/
+pkg/
+.DS_Store
+*.pyc
+*.swp
+*~
+.vscode/
+.vs/
+.idea
+.skaffold-*.yaml
+.kubernetes-manifests-*/
+.project
+.eclipse.buildship.core.prefs
+release/wi-kubernetes-manifests.yaml
+/hack
+useful-commands.txt
