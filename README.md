@@ -6,7 +6,7 @@
 
 **We use this application to demonstrate the use of Cloud Native technologies like Kubernetes/GKE, Istio, AppDynamics and ThousandEyes**. This application works on any Kubernetes (k8s) cluster, as well as Google Kubernetes Engine (GKE).
 
-This project has been fork'ed from the [original open-source microservices-demo from Google](https://github.com/GoogleCloudPlatform/microservices-demo).
+This project has is based on the [original open-source microservices-demo from Google](https://github.com/GoogleCloudPlatform/microservices-demo).
 
 # Features
 
@@ -124,8 +124,8 @@ gcloud services enable monitoring.googleapis.com \
 
 3.  **Clone this repo:**
     ```sh
-    git clone https://github.com/JPedro2/microservices-demo.git
-    cd microservices-demo
+    git clone https://github.com/JPedro2/Cloud-Native-Demo.git
+    cd Cloud-Native-Demo
     ```
 
 4.  **Create the GKE cluster:** 
