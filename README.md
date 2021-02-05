@@ -14,13 +14,14 @@ This project has is based on the [original open-source microservices-demo from G
   The app is designed to run on Kubernetes.
 - **[gRPC](https://grpc.io):** Microservices use a high volume of gRPC calls to
   communicate to each other.
-- **[Istio](https://istio.io):** Application works on Istio service mesh.
+- **[Istio](https://istio.io):** Application works on _Istio_ service mesh.
+- **[Kiali](https://kiali.io/):** Web-based graphical UI to view service graphs of the mesh, traffic topologies and _Istio_ configuration objects.
 - **[AppDynamics](https://www.appdynamics.com/) for _App_ and _Cluster_ visibility:** The _FrontEnd_ service is versioned and
   instrumented with AppDynamics for [application performance monitoring](https://www.appdynamics.com/product/application-performance-monitoring). The k8s cluster is instrumented with AppDynamics [Cluster Agent](https://www.appdynamics.com/solutions/kubernetes-monitoring) to monitor the health of of the entire cluster, including every node and namespace down to the container level. [**GET YOUR APPDYNAMICS FREE TRIAL HERE**](https://www.appdynamics.com/free-trial/).
-- **[ThousandEyes](https://www.thousandeyes.com/) for external Network visibility and end-user experience:** ThousandEyes
+- **[ThousandEyes](https://www.thousandeyes.com/) for external Network visibility and end-user experience:** _ThousandEyes_
   [Browser Synthetics](https://www.thousandeyes.com/product/browser-synthetics) simulate users interacting with the application. ThousandEyes Cloud Agents were deployed, across the globe, to simulate these interactions and provide metrics, such as _availability_, _response time_, _latency_, _transaction times_, _errors_. [**GET YOUR THOUSANDEYES FREE TRIAL HERE**](https://www.thousandeyes.com/signup/).
 - **[ThousandEyes & AppDynamics Integration](https://www.appdynamics.com/product/network-monitoring) for complete application service visibility:**
-  ThousandEyes alerts are natively configured to trigger alerts in AppDynamics to correlate external network anduser experience problems with internal application metrics. 
+  ThousandEyes alerts are natively configured to trigger alerts in AppDynamics to correlate external network and user experience problems with internal application metrics. 
 - **[Cloud Operations (Stackdriver)](https://cloud.google.com/products/operations):** Many services
   are instrumented with **Profiling**, **Tracing** and **Debugging**. In
   addition to these, using Istio enables features like Request/Response
