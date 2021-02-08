@@ -6,7 +6,7 @@
 
 **We use this application to demonstrate the use of Cloud Native technologies like Kubernetes/GKE, Istio, AppDynamics and ThousandEyes**. This application works on any Kubernetes (k8s) cluster, as well as Google Kubernetes Engine (GKE).
 
-This project has is based on the [original open-source microservices-demo from Google](https://github.com/GoogleCloudPlatform/microservices-demo).
+This project is based on the [original open-source microservices-demo from Google](https://github.com/GoogleCloudPlatform/microservices-demo).
 
 # Features
 
@@ -19,7 +19,7 @@ This project has is based on the [original open-source microservices-demo from G
 - **[AppDynamics](https://www.appdynamics.com/) for _App_ and _Cluster_ visibility:** The _FrontEnd_ service is versioned and
   instrumented with AppDynamics for [application performance monitoring](https://www.appdynamics.com/product/application-performance-monitoring). The k8s cluster is instrumented with AppDynamics [Cluster Agent](https://www.appdynamics.com/solutions/kubernetes-monitoring) to monitor the health of of the entire cluster, including every node and namespace down to the container level. [**GET YOUR APPDYNAMICS FREE TRIAL HERE**](https://www.appdynamics.com/free-trial/).
 - **[ThousandEyes](https://www.thousandeyes.com/) for external Network visibility and end-user experience:** _ThousandEyes_
-  [Browser Synthetics](https://www.thousandeyes.com/product/browser-synthetics) simulate users interacting with the application. ThousandEyes Cloud Agents were deployed, across the globe, to simulate these interactions and provide metrics, such as _availability_, _response time_, _latency_, _transaction times_, _errors_. [**GET YOUR THOUSANDEYES FREE TRIAL HERE**](https://www.thousandeyes.com/signup/).
+  [Browser Synthetics](https://www.thousandeyes.com/product/browser-synthetics) simulates users interacting with the application. ThousandEyes Cloud Agents were deployed, across the globe, to simulate these interactions and provide metrics, such as _availability_, _response time_, _latency_, _transaction times_, _errors_. [**GET YOUR THOUSANDEYES FREE TRIAL HERE**](https://www.thousandeyes.com/signup/).
 - **[ThousandEyes & AppDynamics Integration](https://www.appdynamics.com/product/network-monitoring) for complete application service visibility:**
   ThousandEyes alerts are natively configured to trigger alerts in AppDynamics to correlate external network and user experience problems with internal application metrics. 
 - **[Cloud Operations (Stackdriver)](https://cloud.google.com/products/operations):** Many services
@@ -56,7 +56,7 @@ microservices](./docs/img/architecture-diagram.png)](./docs/img/architecture-dia
 
 ## Kubernetes and Istio
 
-The _Online Boutique_ is initially deployed in GKE with _Istio_, which defines the _Service Mesh_ and handles service-to-service communication. _Istio_  allows to decouple traffic management from application code by attaching a sidecar proxy (called envoy) next to each container that intercepts all incoming and outgoing communications. The interaction between all these proxies in the data plane, together with a common control plane then creates the service mesh. This fundamentally helps you understand traffic flows among services and how to manage them with policies, protection and authentication. 
+The _Online Boutique_ is initially deployed in GKE with _Istio_, which defines the _Service Mesh_ and handles service-to-service communication. _Istio_  allows to decouple traffic management from application code by attaching a sidecar proxy (called envoy) next to each container that intercepts all incoming and outgoing communications. The interaction between all these proxies in the data plane, together with a common control plane, then creates the service mesh. This fundamentally helps you understand traffic flows among services and how to manage them with policies, protection and authentication. 
 
 In this project, ingress resources like an _Istio_ `Gateway` and `VirtualService` are deployed to expose the _Online Boutique_ frontend running inside a Kubernetes cluster.
 
@@ -68,21 +68,21 @@ In this project, ingress resources like an _Istio_ `Gateway` and `VirtualService
 With _Istio_ at full steam we then focus on getting visibility into how the cluster and the application are performing. We start by using _Kiali_ which comes natively integrated with _Istio_ and provides visibility at the network service layer. We then implement _AppDynamics Agents_, at the infrastructure (i.e. cluster) and application layer.
 
 ### Cluster-Agent
-This agent is deployed in its own _namespace_ and collects metrics and metadata for the entire cluster, including every node and namespace down to the container level, via the Kubernetes API. It then sends this information to the AppDynamics Controller.
+This agent is deployed in its own _namespace_ and collects metrics and metadata for the entire cluster, including every node and namespace down to the container level, via the Kubernetes API. It then sends this information to the _AppDynamics_ controller.
 
 [![Cluster Agent Diagram](./docs/img/cluster-agent-arch.png)](./docs/img/cluster-agent-arch.png)
 
-The _AppDynamics cluster-agent_ also comes with an _auto-instrument_ feature, only available for _.NET_, _JAVA_ and _Node.js_. This dynamically and automatically adds the required application agents to the targeted applications. In essence, the _cluster agent_ modifies the application deployment by adding an _init_ container that installs the required AppDynamics application agent on the application container when it automatically restarts. Both the _paymentservice_ & _currencyservice_ are _Node.js_ applications so the _AppDynamics cluster-agent_ automatically instruments them, as covered in the _Deployment_ section. However, due to some AppDynamics gRPC limitations the information of these are microservices is not being correlated at the _AppDynamics Controller level_. The goal is to solve this issue by building a gRPC middleware that allows the AppDynamics controller to correlate the information between the microservices.
+The _AppDynamics cluster-agent_ also comes with an _auto-instrument_ feature, only available for _.NET_, _JAVA_ and _Node.js_. This dynamically and automatically adds the required application agents to the targeted applications. In essence, the _cluster agent_ modifies the application deployment by adding an _init_ container that installs the required _AppDynamics_ application agent on the application container when it automatically restarts. Both the _paymentservice_ & _currencyservice_ are _Node.js_ applications so the _AppDynamics cluster-agent_ automatically instruments them, as covered in the [Deployment section](https://github.com/JPedro2/Cloud-Native-Demo#cluster-agent-1). However, due to some _AppDynamics_ gRPC limitations the information of these are microservices is not being correlated at the _AppDynamics_ controller level. The goal is to solve this issue by building a gRPC middleware that allows the AppDynamics controller to correlate the information between the microservices.
 
 [![Cluster Agent Auto-Instrument Diagram](./docs/img/cluster-agent-auto-instrumentation.png)](./docs/img/cluster-agent-auto-instrumentation.png)
 
 ### Application Performance Monitoring
-At the moment, from an application perspective, only the _FrontEnd_ microservice is meaningfully instrumented with a AppDynamics APM agent as this is the most used microservice. _Extending the AppDynamics APM agents to the remaining microservices is currently work-in-progress_.
+At the moment, from an application perspective, only the _FrontEnd_ microservice is meaningfully instrumented with a _AppDynamics_ APM agent as this is the most used microservice. _Extending the AppDynamics APM agents to the remaining microservices is currently work-in-progress_.
 
 ## ThousandEyes
-With AppDynamics providing visibility at both the infrastructure and application layer, this is then augmented with _ThousandEyes Cloud Agents_ that provide **external visibility** from global vantage points (Cloud agents across 58 countries), the internet and browser synthetics. This provides an end-to-end view into the delivery of the _Online Boutique_ app to the user, whilst getting enhanced insights on the user experience.
+With _AppDynamics_ providing visibility at both the infrastructure and application layer, this is then augmented with _ThousandEyes Cloud Agents_ that provide **external visibility** from global vantage points (Cloud agents across 58 countries), the internet and browser synthetics. This provides an end-to-end view into the delivery of the _Online Boutique_ app to the user, whilst getting enhanced insights on the user experience.
 
-The full architecture of the _Online Boutique_ application, with all the tools deployed looks as follows.
+The full architecture of the _Online Boutique_ application, with all the tools deployed, looks as follows.
 
 [![Full Arch with AppD & TE](./docs/img/full-arch-te-appd.png)](./docs/img/full-arch-te-appd.png)
 
@@ -246,25 +246,25 @@ gcloud services enable monitoring.googleapis.com \
     ```
 
 ## Service-Mesh with Istio
-As _Istio_ allows you to decouple traffic management from application code, as well as helps you understand traffic flows between services. 
-You can then, for example, define the percentage of traffic you want to send to a specific _canary_ version, or determine how to distribute traffic based on _source_/_destination_ or service version _weights_. This makes _A/B testing_, _gradual rollouts_, and _canary releases_ much easier to implement and manage.
+_Istio_ allows you to decouple traffic management from application code, as well as helps you understand traffic flows between services. 
+You can then, for example, define the percentage of traffic you want to send to a specific _canary_ version, or determine how to distribute traffic based on _source_/_destination_ or service version _weights_. This makes _A/B testing_, _gradual rollouts_ and _canary releases_ much easier to implement and manage.
 
-Additionally, _Istio_ provides useful capabilities around [failure recovery to tolerate failing nodes or avoid cascading instabilities](https://istio.io/latest/docs/concepts/traffic-management/#working-with-your-applications), as well as [fault injection](https://istio.io/latest/docs/tasks/traffic-management/fault-injection/) (delays or connectivity failures) on specific requests to test application resiliency.
+Additionally, _Istio_ provides useful capabilities around [failure recovery to tolerate failing nodes or avoid cascading instabilities](https://istio.io/latest/docs/concepts/traffic-management/#working-with-your-applications), as well as [fault injection](https://istio.io/latest/docs/tasks/traffic-management/fault-injection/) in the form of delays or connectivity failures, on specific requests to test application resiliency.
 
-If you wish to experiment with some of these _Istio_ capabilities, you can `apply` some of the _istio_ manifests in the `/istio-manifests/routing` folder, and then with _Kiali_, visualise how the traffic flow changes. 
+If you wish to experiment with some of these _Istio_ capabilities, you can `apply` some of the _Istio_ manifests in the [`/istio-manifests/routing`]((./istio-manifests)/routing) folder, and then with _Kiali_, visualise how the traffic flow changes. 
 
 These _Istio_ manifests only focus on some specific traffic management use cases:
 * Send traffic to different versions of a service based on source/destination, or service version weights. 
 * Inject time delays at specific microservices
 * Inject failures between microservices
 
-As an example you may want to inject a 5 second delay on the _productcatalogservice_, to then evaluate how the other microservices behave and handle that scenario.
+**As an example** you may want to inject a 5 second delay on the _productcatalogservice_, to then evaluate how the other microservices behave and handle that scenario.
 
 ```sh
 kubectl apply -f istio-manifests/routing/injection-delay.yaml 
 ```
 
-Once this is deployed you can confirm it by going into your _Online Boutique_ external IP address in your browser and check that when you click in one of the products on the _FrontEnd_ landing page, it takes at least 5 seconds to load. If you are using _Chrome_ you can re-do these steps whilst using the _inspect_ tool (`right-click > inspect > Network`).
+Once this is deployed you can confirm it by going into your _Online Boutique_ `external IP address` in your browser and checking that when you click in one of the products on the _FrontEnd_ landing page, it takes at least 5 seconds to load. If you are using _Chrome_ you can re-do these steps whilst using the _inspect_ tool (`right-click > inspect > Network`).
 
 [![Istio Injection-Delay Browser](./docs/img/injection-delay-browser.png)](./docs/img/injection-delay-browser.png)
 
@@ -272,14 +272,14 @@ You can also visualise this using _Kiali_, as shown.
 
 [![Istio Injection-Delay Kiali](./docs/img/injection-delay-kiali.png)](./docs/img/injection-delay-kiali.png)
 
-Once you've evaluated and analysed the fault you will need to remove it so that your application goes back to normal.
+Once you've evaluated and analysed the fault, you will need to remove it so that your application goes back to normal.
 ```sh
 kubectl delete -f istio-manifests/routing/injection-delay.yaml 
 ```
 
-To deploy and explore the other _Istio_ manifests please check the [README in /istio-manifests](./istio-manifests).
+To deploy and explore the other _Istio_ manifests please check the [README in the `istio-manifests` folder](./istio-manifests).
 
-**Please note** that the _FrontEnd-v2_ microservice is deployed in the AppDynamics section below.
+**Please note** that the _FrontEnd-v2_ microservice is deployed in the [_AppDynamics_ section below](https://github.com/JPedro2/Cloud-Native-Demo#apm-agent).
 
 ## AppDynamics 
 
@@ -307,13 +307,13 @@ To deploy the cluster agent we use the _AppDynamics Operator_, located in `/AppD
     ```
 
 3.  **Deploy the Cluster Agent:**
-    Before running the _AppD cluster-agent_ manifest you need to first rename the `cluster-agent.yaml.tplt` file to `cluster-agent.yaml` and then update it with your _AppDynamics Controller_ details. Check here [for more information on how to configure the cluster-agent yaml file](https://docs.appdynamics.com/display/PRO45/Configure+the+Cluster+Agent).
+    Before running the _AppD cluster-agent_ manifest you need to first rename the `cluster-agent.yaml.tplt` file to `cluster-agent.yaml` and then update it with your _AppDynamics Controller_ details. Check here [if you want more information on how to configure the cluster-agent yaml file](https://docs.appdynamics.com/display/PRO45/Configure+the+Cluster+Agent).
     * `appName` in _line 8_ - Name of the cluster that displays in the AppDynamics Controller UI as your cluster name.
     * `controllerUrl` in _line 9_ - Full AppDynamics Controller URL.
     * `account` in _line 10_ - AppDynamics account name.
     * `defaultAppName` in _line 28_ - Application name used by the agent to report to the Controller.
     
-    In this particular demo we are using the _AppD cluster-agent_ ability to [auto-instrument applications](https://docs.appdynamics.com/display/PRO21/Enable+Auto-Instrumentation+of+Supported+Applications). Since this feature only supports applications in _.NET_, _JAVA_ and _Node.js_, this only applies to the _paymentservice_ & _currencyservice_ microservices. This feature is implemented in your `cluster-agent.yaml` manifest from line 25 onwards. You can comment or delete those lines if you don't want the _auto-instrument_ feature turned on.
+    In this particular demo we are using the _AppD cluster-agent_ ability to [auto-instrument applications](https://docs.appdynamics.com/display/PRO21/Enable+Auto-Instrumentation+of+Supported+Applications). Since this feature only supports applications written in _.NET_, _JAVA_ and _Node.js_, this only applies to the _paymentservice_ & _currencyservice_ microservices. This feature is implemented in your `cluster-agent.yaml` manifest from line 25 onwards. You can comment or delete those lines if you don't want the _auto-instrument_ feature turned on.
 
     ```sh
     kubectl create -f AppD-Cluster-Agent-20.10/cluster-agent.yaml
@@ -335,9 +335,9 @@ To deploy the cluster agent we use the _AppDynamics Operator_, located in `/AppD
 
 ### APM Agent
 
-The only microservice manually instrumented with _AppDynamics_ APM agent is the _FrontEnd_ microservice, written in `Golang`. _AppDynamics_ does not have an APM Agent per se for `GO`, instead we use the [AppDynamics GO SDK](https://docs.appdynamics.com/display/PRO45/Go+SDK), which in itself uses the `C++` SDK in the background. For more deep and detailed information on how the _AppDynamics_ `GO` SDK is implemented in-line with the _FrontEnd_ code, you can check the the [README in src/frontend-v2-appD](./src/frontend-v2-appD).
+The only microservice manually instrumented with _AppDynamics_ APM agent is the _FrontEnd_ microservice, written in `Golang`. _AppDynamics_ does not have an APM Agent, per se, for `GO`. Instead, we use the [AppDynamics GO SDK](https://docs.appdynamics.com/display/PRO45/Go+SDK), which in itself uses the `C++` SDK in the background. **For more deep and detailed information on how the _AppDynamics_ `GO` SDK is implemented in-line with the _FrontEnd_ code, you can check the the [README in src/frontend-v2-appD](./src/frontend-v2-appD).**
 
-The goal is to deploy a _frontEnd_ version of the microservice that is instrumented with _AppDynamics_ `GO` agent and not replace the existing non-instrumented one. For that we will deploy another _FrontEnd_ `v2` microservice, which is then added to the _Istio_ service mesh that allows us to perform some interesting _traffic management_ routines, like send traffic to either `v1` or `v2` based on version weights.
+The goal is to deploy a _frontEnd_ version of the microservice that is instrumented with the _AppDynamics_ `GO` agent and not replace the existing non-instrumented one. For that we will deploy another _FrontEnd_ `v2` microservice, which is then added to the _Istio_ service mesh and allows us to perform some interesting _traffic management_ routines, like send traffic to either `v1` or `v2` based on version weights.
 
 1. **Add AppDynamics Controller Settings to _frontEnd_ `v2` manifest:**
    Start by renaming the `frontend-v2.yaml.tplt` file to `frontend-v2.yaml`, located in the `/kubernetes-manifests` folder.
@@ -374,16 +374,16 @@ The goal is to deploy a _frontEnd_ version of the microservice that is instrumen
 ## ThousandEyes
 
 ### Cloud Agent - HTTP Server Tests
-In this project, at the moment, ONLY the [_ThousandEyes Cloud Agents_](https://www.thousandeyes.com/product/cloud-agents) are used. These provide an _External Vantage Point_ as they are globally distributed agents installed and managed by ThousandEyes in 190+ cities in 58 countries and immediately available.
+Currently in this project, ONLY [_ThousandEyes Cloud Agents_](https://www.thousandeyes.com/product/cloud-agents) are used. These provide an _External Vantage Point_ as they are globally distributed agents installed and managed by ThousandEyes in 190+ cities in 58 countries and immediately available.
 
-Below is an example of how you can quickly create an `HTTP Server` test against the _Online Boutique_ frontEnd. This test can be performed as often as every minute and from several locations around the world. It provides you with insights on _Availability_, _Response Time_, _Throughput_ and you can even do a _Path Visualization_ to workout which routes is your application given out of GCP **OR**, most importantly, check if there is an issue in the network path if the application performance starts degrading. 
+Below is an example of how you can quickly create an `HTTP Server` test against the _Online Boutique_ frontEnd. This test can be performed as often as every minute and from several locations around the world. It provides you with insights on _Availability_, _Response Time_, _Throughput_ and you can even do a _Path Visualization_ to workout which routes is your application given out of GCP **OR**, most importantly, check if there is an issue in the network path, when the application performance starts degrading. 
 
 [![TE HTTP Server Test](./docs/img/TE-HTTP-Server-Test.gif)](./docs/img/TE-HTTP-Server-Test.gif)
 
 ### Cloud Agent - HTTP Transaction Tests
-Something far more exotic than `HTTP Server` tests are the `HTTP Transaction` tests that provide application experience insights with _Web Synthetics_. These types of tests measure entire multi-page workflows, with credential handling, simulating a complete user journey making sure those journeys complete sucessfully while providing an insight into the user experience. This allows for multi-layer correlation as you can now have transaction scripting tests with further information around _HTTP_, _Path Viz_, _BGP_ and _Internet Outages_.
+Something far more exotic than `HTTP Server` tests are the `HTTP Transaction` tests that provide application experience insights with _Web Synthetics_. These types of tests measure entire multi-page workflows, with credential handling, simulating a complete user journey making sure those journeys complete successfully while providing an insight into the user experience. This allows for multi-layer correlation as you can now have transaction scripting tests with further information around _HTTP_, _Path Viz_, _BGP_ and _Internet Outages_.
 
-To _write_ and _test_ transaction scripts _ThousandEyes_ provides a `ThousandEyes Recorder` application, that records your user journey through the web application and builds the `Transaction Script` for you automatically - **no code expertise required**. All you have to then do is export that `Transaction Script` to your _ThousandEyes_ transaction test and run it, as before, as often as every minute and from several locations around the world.
+To _write_ and _test_ transaction scripts _ThousandEyes_ provides a `ThousandEyes Recorder` application, that records your user journey through the application and builds the `Transaction Script` for you automatically - **no code expertise required**. All you have to do then is export that `Transaction Script` to your _ThousandEyes_ transaction test and run it - as before, as often as every minute and from several locations around the world.
 
 **To fully utilise this feature I highly recommend that you watch [this short video tutorial](https://docs.thousandeyes.com/product-documentation/tests/getting-started-with-transactions)**. 
 
@@ -394,11 +394,11 @@ If you wish to test this out without building your own transaction test scripts,
 ## ThousandEyes and AppDynamics Integration Integration
 
 ### Native Alerts
-_ThousandEyes_ natively supports sending alert notifications directly to _AppDynamics_. This allows you to correlate trigger events with clear events, and to create policies in _AppDynamics_ based on specific properties like: _alertState_, _alertType_ (HTTP, Network, Voice, etc) and _testName_. In _AppDynamics_, _ThousandEyes_ alerts show up as custom events of type _ThousandEyesAlert_ and allow you to open the _ThousandEyes_ app at the _Views_ screen for the alert start time to have further visibility into the issue.
+_ThousandEyes_ natively supports sending alert notifications directly to _AppDynamics_. This allows you to correlate trigger events with clear events, and to create policies in _AppDynamics_ based on specific properties like: _alertState_, _alertType_ (HTTP, Network, Voice, etc) and _testName_. In _AppDynamics_, _ThousandEyes_ alerts show up as custom events of type `ThousandEyesAlert` and allow you to open the _ThousandEyes_ app at the _Views_ screen for the alert start time to have further visibility into the issue.
 
 [![TE AppD Integration Alerts](./docs/img/TE-AppD-Integration-Alerts.gif)](./docs/img/TE-AppD-Integration-Alerts.gif)
 
-You can easily set up the native alerts integration by performing the steps in the official [ThousandEyes Documentation](https://docs.thousandeyes.com/product-documentation/alerts/integrations/appdynamics-integration).
+You can quickly and easily set-up the native alerts integration by following the steps in the official [ThousandEyes Documentation](https://docs.thousandeyes.com/product-documentation/alerts/integrations/appdynamics-integration).
 
 ### Custom Monitor [Work In Progress]
 
