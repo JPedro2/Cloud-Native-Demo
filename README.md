@@ -251,7 +251,7 @@ You can then, for example, define the percentage of traffic you want to send to 
 
 Additionally, _Istio_ provides useful capabilities around [failure recovery to tolerate failing nodes or avoid cascading instabilities](https://istio.io/latest/docs/concepts/traffic-management/#working-with-your-applications), as well as [fault injection](https://istio.io/latest/docs/tasks/traffic-management/fault-injection/) in the form of delays or connectivity failures, on specific requests to test application resiliency.
 
-If you wish to experiment with some of these _Istio_ capabilities, you can `apply` some of the _Istio_ manifests in the [`/istio-manifests/routing`]((./istio-manifests)/routing) folder, and then with _Kiali_, visualise how the traffic flow changes. 
+If you wish to experiment with some of these _Istio_ capabilities, you can `apply` some of the _Istio_ manifests in the [`/istio-manifests/routing`](./istio-manifests/routing) folder, and then with _Kiali_, visualise how the traffic flow changes. 
 
 These _Istio_ manifests only focus on some specific traffic management use cases:
 * Send traffic to different versions of a service based on source/destination, or service version weights. 
@@ -307,13 +307,13 @@ To deploy the cluster agent we use the _AppDynamics Operator_, located in `/AppD
     ```
 
 3.  **Deploy the Cluster Agent:**
-    Before running the _AppD cluster-agent_ manifest you need to first rename the `cluster-agent.yaml.tplt` file to `cluster-agent.yaml` and then update it with your _AppDynamics Controller_ details. Check here [if you want more information on how to configure the cluster-agent yaml file](https://docs.appdynamics.com/display/PRO45/Configure+the+Cluster+Agent).
+    Before running the _AppDynamics cluster-agent_ manifest you need to first rename the `cluster-agent.yaml.tplt` file to `cluster-agent.yaml` and then update it with your _AppDynamics Controller_ details. Check here [if you want more information on how to configure the cluster-agent yaml file](https://docs.appdynamics.com/display/PRO45/Configure+the+Cluster+Agent).
     * `appName` in _line 8_ - Name of the cluster that displays in the AppDynamics Controller UI as your cluster name.
     * `controllerUrl` in _line 9_ - Full AppDynamics Controller URL.
     * `account` in _line 10_ - AppDynamics account name.
     * `defaultAppName` in _line 28_ - Application name used by the agent to report to the Controller.
     
-    In this particular demo we are using the _AppD cluster-agent_ ability to [auto-instrument applications](https://docs.appdynamics.com/display/PRO21/Enable+Auto-Instrumentation+of+Supported+Applications). Since this feature only supports applications written in _.NET_, _JAVA_ and _Node.js_, this only applies to the _paymentservice_ & _currencyservice_ microservices. This feature is implemented in your `cluster-agent.yaml` manifest from line 25 onwards. You can comment or delete those lines if you don't want the _auto-instrument_ feature turned on.
+    In this particular demo we are using the _AppDynamics cluster-agent_ ability to [auto-instrument applications](https://docs.appdynamics.com/display/PRO21/Enable+Auto-Instrumentation+of+Supported+Applications). Since this feature only supports applications written in _.NET_, _JAVA_ and _Node.js_, this only applies to the _paymentservice_ & _currencyservice_ microservices. This feature is implemented in your `cluster-agent.yaml` manifest from line 25 onwards. You can comment or delete those lines if you don't want the _auto-instrument_ feature turned on.
 
     ```sh
     kubectl create -f AppD-Cluster-Agent-20.10/cluster-agent.yaml
