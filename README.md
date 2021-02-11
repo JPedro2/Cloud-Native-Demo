@@ -343,7 +343,7 @@ The only microservice manually instrumented with _AppDynamics_ APM agent is the 
 The goal is to deploy a _frontEnd_ version of the microservice that is instrumented with the _AppDynamics_ `GO` agent and not replace the existing non-instrumented one. For that we will deploy another _FrontEnd_ `v2` microservice, which is then added to the _Istio_ service mesh and allows us to perform some interesting _traffic management_ routines, like send traffic to either `v1` or `v2` based on version weights.
 
 1. **Add AppDynamics Controller Settings to _frontEnd_ `v2` manifest:**
-   Start by renaming the `frontend-v2.yaml.tplt` file to `frontend-v2.yaml`, located in the [`./kubernetes-manifests` folder](./kubernetes-manifests).
+   Start by renaming the `frontend-v2.yaml.tplt` file to `frontend-v2.yaml`, located in the [`kubernetes-manifests` folder](./kubernetes-manifests).
    Add your AppDynamics controller details to the manifest, from _line 72_ to _line 81_.
    ```YAML
    - name: APPD_CONTROLLER_HOST
@@ -371,7 +371,7 @@ The goal is to deploy a _frontEnd_ version of the microservice that is instrumen
    kubectl apply -f istio-manifests/routing/frontend-weighted-v1-v2.yaml
    kubectl delete virtualservice frontend-ingress
    ```
-   **Please Note:** If you wish to experiment and change the weights, you can just modify the `weight` variables in _line 31_ and _37_ of the _Istio_ routing manifest `frontend-weighted-v1-v2.yaml` in the [`istio-manifest/routing`](./istio-manifest/routing) folder and then re-apply the manifest.
+   **Please Note:** If you wish to experiment and change the weights, you can just modify the `weight` variables in _line 31_ and _37_ of the _Istio_ routing manifest `frontend-weighted-v1-v2.yaml` in the [`istio-manifests/routing` folder](./istio-manifests/routing) and then re-apply the manifest.
    Similarly to the section above, you can visualise how the traffic is flowing with this routing policy by looking at the _Kiali_ graph.
 
 [![AppD Dashboard FrontEnd APM](./docs/img/AppD-Dashboard-FrontEnd-APM.gif)](./docs/img/AppD-Dashboard-FrontEnd-APM.gif)
