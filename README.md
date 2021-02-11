@@ -200,7 +200,7 @@ gcloud services enable monitoring.googleapis.com \
 
 11.  **Update the `loadgenerator.yaml.tplt` template k8s deployment with the _Istio Ingress GW IP Address_:**
      
-     Go to the file `./kubernetes-manifests/loadgenerator.yaml.tplt` and update _line 37_ with the external IP address that you get from the previous step:
+     Go to the file `./kubernetes-manifests/loadgenerator.yaml.tplt` and update _line 37_ with the external IP address that you got from the previous step:
     
      ```YAML
      - name: FRONTEND_ADDR
@@ -303,11 +303,11 @@ To deploy the cluster agent we use the _AppDynamics Operator_, located in `/AppD
     ```
 
 2.  **Create a Controller Access Key Secret:**
-    _AppDynamics_ agents need to connect to the controller to retrieve configuration data and send back information about the monitored environment. To find your controller `access-key` [please follow the 4 steps in this guide](https://docs.appdynamics.com/display/PRO21/Agent-to-Controller+Connections#Agent-to-ControllerConnections-findaccount)
+    _AppDynamics_ agents need to connect to the controller to retrieve configuration data and send back information about the monitored environment. To find your controller `access-key` [please follow the 4 steps in this guide](https://docs.appdynamics.com/display/PRO21/Agent-to-Controller+Connections#Agent-to-ControllerConnections-findaccount) and then create a k8s secret as follows.
+
     ```sh
     kubectl -n appdynamics create secret generic cluster-agent-secret --from-literal=controller-key=<access-key>
     ```
-    **Please Note:** 
 
 3.  **Deploy the Cluster Agent:**
     Before running the _AppDynamics cluster-agent_ manifest you need to first rename the `cluster-agent.yaml.tplt` file to `cluster-agent.yaml` and then update it with your _AppDynamics Controller_ details. Check here [if you want more information on how to configure the cluster-agent yaml file](https://docs.appdynamics.com/display/PRO45/Configure+the+Cluster+Agent).
