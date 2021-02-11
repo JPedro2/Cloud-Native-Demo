@@ -25,6 +25,5 @@ spec:
   - route:
     - destination:
         host: frontend
-        subset: v1
         port:
           number: 80

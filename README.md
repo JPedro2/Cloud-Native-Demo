@@ -200,7 +200,7 @@ gcloud services enable monitoring.googleapis.com \
 
 11.  **Update the `loadgenerator.yaml.tplt` template k8s deployment with the _Istio Ingress GW IP Address_:**
      
-     Go to the file `/kubernetes-manifests/loadgenerator.yaml.tplt` and update _line 37_ with the external IP address that you get from the previous step:
+     Go to the file `./kubernetes-manifests/loadgenerator.yaml.tplt` and update _line 37_ with the external IP address that you get from the previous step:
     
      ```YAML
      - name: FRONTEND_ADDR
@@ -303,9 +303,11 @@ To deploy the cluster agent we use the _AppDynamics Operator_, located in `/AppD
     ```
 
 2.  **Create a Controller Access Key Secret:**
+    _AppDynamics_ agents need to connect to the controller to retrieve configuration data and send back information about the monitored environment. To find your controller `access-key` [please follow the 4 steps in this guide](https://docs.appdynamics.com/display/PRO21/Agent-to-Controller+Connections#Agent-to-ControllerConnections-findaccount)
     ```sh
     kubectl -n appdynamics create secret generic cluster-agent-secret --from-literal=controller-key=<access-key>
     ```
+    **Please Note:** 
 
 3.  **Deploy the Cluster Agent:**
     Before running the _AppDynamics cluster-agent_ manifest you need to first rename the `cluster-agent.yaml.tplt` file to `cluster-agent.yaml` and then update it with your _AppDynamics Controller_ details. Check here [if you want more information on how to configure the cluster-agent yaml file](https://docs.appdynamics.com/display/PRO45/Configure+the+Cluster+Agent).
@@ -364,11 +366,12 @@ The goal is to deploy a _frontEnd_ version of the microservice that is instrumen
    ```sh
    kubectl apply -f istio-manifests/routing/destination-rule.yaml
    ```
-4. **Apply an _Istio_ policy rule that routes traffic to _frontEnd_ `v1` and `v2` based on pre-selected weight:**
+4. **Delete the current `frontend-ingress` and apply a new one that routes traffic to _frontEnd_ `v1` and `v2` based on pre-selected weight:**
    ```sh
    kubectl apply -f istio-manifests/routing/frontend-weighted-v1-v2.yaml
+   kubectl delete virtualservice frontend-ingress
    ```
-   **Please Note:** If you wish to experiment and change the weights, you can just modify the `weight` variables in _line 31_ and _37_ of the _Istio_ routing manifest `frontend-weighted-v1-v2.yaml` in `/istio-manifest/routing` and then re-apply the manifest. 
+   **Please Note:** If you wish to experiment and change the weights, you can just modify the `weight` variables in _line 31_ and _37_ of the _Istio_ routing manifest `frontend-weighted-v1-v2.yaml` in the [`istio-manifest/routing`](./istio-manifest/routing) folder and then re-apply the manifest.
    Similarly to the section above, you can visualise how the traffic is flowing with this routing policy by looking at the _Kiali_ graph.
 
 [![AppD Dashboard FrontEnd APM](./docs/img/AppD-Dashboard-FrontEnd-APM.gif)](./docs/img/AppD-Dashboard-FrontEnd-APM.gif)
