@@ -333,8 +333,21 @@ To deploy the cluster agent we use the _AppDynamics Operator_, located in `/AppD
     ```sh
     kubectl -n appdynamics logs <pod-name>
     ```
+4. **Go to the AppDynamics Dashboard to visualise your cluster's monitoring data:**
+   
+   4.1. Open the _AppDynamics_ dashboard in your browser `https://<appdynamics-controller-host>/controller`
 
-[![AppD Cluster Agent Dashboard](./docs/img/AppD-Dashboard-Cluster-Agent.png)](./docs/img/AppD-Dashboard-Cluster-Agent.png)
+   4.2. Click the `Servers` tab at the top
+
+   4.3. Click on the `Clusters` icon on the left-hand side
+
+   4.4. You will see your _cluster name_, then select it and click the `Details` icon
+
+   **Please Note:** Initially you may see _"No Data Available ⚠️"_ as you need to give some time for the agent to send enough data to the controller so that you can start seeing some cool graphs - usually around 15-30mins, aka coffee time ☕️.
+   
+   [![AppD Cluster Agent Dashboard](./docs/img/AppD-Dashboard-Cluster-Agent.png)](./docs/img/AppD-Dashboard-Cluster-Agent.png)
+
+   Check here for more information on [how to use the _AppDynamics_ Cluster Agent via the Dashboard](https://docs.appdynamics.com/display/PRO21/Use+the+Cluster+Agent), such as how to edit which `namespaces` to monitor. 
 
 ### APM Agent
 
