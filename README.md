@@ -343,7 +343,7 @@ The only microservice manually instrumented with _AppDynamics_ APM agent is the 
 The goal is to deploy a _frontEnd_ version of the microservice that is instrumented with the _AppDynamics_ `GO` agent and not replace the existing non-instrumented one. For that we will deploy another _FrontEnd_ `v2` microservice, which is then added to the _Istio_ service mesh and allows us to perform some interesting _traffic management_ routines, like send traffic to either `v1` or `v2` based on version weights.
 
 1. **Add AppDynamics Controller Settings to _frontEnd_ `v2` manifest:**
-   Start by renaming the `frontend-v2.yaml.tplt` file to `frontend-v2.yaml`, located in the [`/kubernetes-manifests` folder](./kubernetes-manifests).
+   Start by renaming the `frontend-v2.yaml.tplt` file to `frontend-v2.yaml`, located in the [`./kubernetes-manifests` folder](./kubernetes-manifests).
    Add your AppDynamics controller details to the manifest, from _line 72_ to _line 81_.
    ```YAML
    - name: APPD_CONTROLLER_HOST

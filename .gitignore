@@ -12,6 +12,9 @@ pkg/
 .project
 .eclipse.buildship.core.prefs
 release/wi-kubernetes-manifests.yaml
+<<<<<<< HEAD
 istio-1.8.0/
+=======
+>>>>>>> 697f994d4c2434bfb6ba133aadf6e895d2e4e877
 /hack
 useful-commands.txt
