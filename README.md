@@ -170,6 +170,7 @@ gcloud services enable monitoring.googleapis.com \
 
 6.  **Install [Istio](https://istio.io/) and add `istioctl` to your path:**
     ```sh
+    curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.8.0 TARGET_ARCH=x86_64 sh -
     cd istio-1.8.0/
     export PATH=$PWD/bin:$PATH
     istioctl install --set profile=demo -y

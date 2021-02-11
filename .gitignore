@@ -12,5 +12,6 @@ pkg/
 .project
 .eclipse.buildship.core.prefs
 release/wi-kubernetes-manifests.yaml
+istio-1.8.0/
 /hack
 useful-commands.txt
