@@ -102,11 +102,6 @@ spec:
   type: ClusterIP
   selector:
     app: frontend
-  template:
-    metadata:
-      labels:
-        app: frontend
-        version: v2
   ports:
   - name: http
     port: 80

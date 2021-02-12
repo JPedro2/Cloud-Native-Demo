@@ -90,13 +90,7 @@ spec:
   type: ClusterIP
   selector:
     app: frontend
-  template:
-    metadata:
-      labels:
-        app: frontend
-        version: v1
   ports:
   - name: http
     port: 80
     targetPort: 8080
-  

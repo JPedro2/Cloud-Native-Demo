@@ -373,7 +373,7 @@ The goal is to deploy a _frontEnd_ version of the microservice that is instrumen
 
 2. **Deploy the AppD instrumented _frontEnd_ `v2` to the cluster:**
    ```sh
-   kubectl apply -f kubernetes-manifests/frontend2.yaml
+   kubectl apply -f kubernetes-manifests/frontend-v2.yaml
    ```
 3. **Apply an _Istio_ destination rule that sets both _frontEnd_ microservices with `v1` and `v2` labels:**
    ```sh
