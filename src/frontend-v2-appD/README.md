@@ -79,7 +79,7 @@ If you wish to develop this further, like add more _Business Transactions_ to [p
    docker push <your Docker Hub username>/boutique-appd-frontend:latest
    ```
 
-4. Update and save the [frontend-v2.yaml](./kubernetes-manifests) manifest _line 33_ with the new docker image that you just pushed to your _Docker Hub_ repo and re-deploy it
+4. Update and save the [frontend-v2.yaml manifest](../../kubernetes-manifests/) _line 33_ with the new docker image that you just pushed to your _Docker Hub_ repo and re-deploy it
    ```sh
    kubectl apply -f kubernetes-manifests/frontend2.yaml
    ```
