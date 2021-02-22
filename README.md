@@ -421,7 +421,7 @@ You can quickly and easily set-up the native alerts integration by following the
 
 _ThousandEyes_ data can be pushed to the _AppDynamics_ controller via a _ThousandEyes_ custom monitor, which is basically a [_AppDynamics_ machine agent extension](https://docs.appdynamics.com/display/PRO45/Extensions+and+Custom+Metrics). This example shows how to create a custom monitor that pulls test data from the [_ThousandEyes_ API](https://developer.thousandeyes.com/), transforms the data payload, and pushes that data to the _AppDynamics_ controller via custom metrics.
 
-**Please Note:** The _ThousandEyes_ monitor machine agent does not need to run in the same environment as your application and you can only associate a machine agent (the _ThousandEyes_ monitor) with one application.
+**Please Note:** The _ThousandEyes_ monitor machine agent does not need to run in the same environment as your application, so you could run this on another VM, for example.
 
 [![AppD TE CustomMonitor](./docs/img/AppD-TE-CustomMonitor.png)](./docs/img/AppD-TE-CustomMonitor.png)
 

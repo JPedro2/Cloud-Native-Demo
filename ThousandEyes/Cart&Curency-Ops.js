@@ -1,3 +1,7 @@
+/*Copyright (c) 2021, Cisco Systems, Inc. and/or its affiliates. All rights reserved. 
+Licensed under the Apache 2.0 license, see LICENSE file.
+*/
+
 import { By, Key } from 'selenium-webdriver';
 import { driver } from 'thousandeyes';
 
