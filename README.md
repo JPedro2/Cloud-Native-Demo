@@ -133,11 +133,23 @@ gcloud services enable monitoring.googleapis.com \
     ```sh
     ZONE=europe-west2-a
     gcloud container clusters create <your-cluster-name> \
-        --project=${PROJECT_ID} --zone=${ZONE} \
+        --project=${PROJECT_ID} --zone=${ZONE} --cluster-version="1.16.15-gke.7800" \
         --enable-autoupgrade --enable-autoscaling \
         --min-nodes=6 --max-nodes=10 --machine-type=e2-standard-2
     ```
     Alternatively you can create a GKE cluster using the [Google Cloud UI](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-zonal-cluster#creating-a-cluster). If you do, please make sure that you **DO NOT** select the `Enable Istio` option under _Features_, as we will be installing _Istio_ manually in step 6.
+
+    **Cost Saving Tip:** If you are using your personal GCP account for this demo **and** if you are planning on running it for a short period of time (<24h), you can use the `--preemptible` flag when creating the GKE cluster. [Preemptible VMs are Compute Engine VM instances that are priced lower, last a maximum of 24 hours in general, and provide no availability guarantees.](https://cloud.google.com/kubernetes-engine/docs/how-to/preemptible-vms)
+    
+    If you wish to do that please use the following to create your GKE cluster:
+
+    ```sh
+    ZONE=europe-west2-a
+    gcloud container clusters create <your-cluster-name> \
+        --project=${PROJECT_ID} --zone=${ZONE} --cluster-version="1.16.15-gke.7800" \
+        --enable-autoupgrade --enable-autoscaling --preemptible \
+        --min-nodes=6 --max-nodes=10 --machine-type=e2-standard-2
+    ```
 
 5.  **Point the `kubectl` context to the new GKE cluster:**
     ```sh
@@ -417,31 +429,22 @@ _ThousandEyes_ natively supports sending alert notifications directly to _AppDyn
 
 You can quickly and easily set-up the native alerts integration by following the steps in the official [ThousandEyes Documentation](https://docs.thousandeyes.com/product-documentation/alerts/integrations/appdynamics-integration).
 
-### Custom Monitor [Work In Progress]
+### Custom Monitor
 
-_ThousandEyes_ data can be pushed to the _AppDynamics_ controller via a _ThousandEyes_ custom monitor, which is basically a [_AppDynamics_ machine agent extension](https://docs.appdynamics.com/display/PRO45/Extensions+and+Custom+Metrics). This example shows how to create a custom monitor that pulls test data from the [_ThousandEyes_ API](https://developer.thousandeyes.com/), transforms the data payload, and pushes that data to the _AppDynamics_ controller via custom metrics.
-
-**Please Note:** The _ThousandEyes_ monitor machine agent does not need to run in the same environment as your application, so you could run this on another VM, for example.
+_ThousandEyes_ data can be pushed to the _AppDynamics_ controller via a _ThousandEyes Custom Monitor_, which is basically a [_AppDynamics_ machine agent extension](https://docs.appdynamics.com/display/PRO45/Extensions+and+Custom+Metrics). [This example](https://github.com/thousandeyes/appd-integration-reference/blob/master/custom-monitor/readme.md) shows how to create a _Custom Monitor_ that pulls test data from the [_ThousandEyes_ API](https://developer.thousandeyes.com/), transforms the data payload, and pushes that data to the _AppDynamics_ controller via custom metrics. Currently the _ThousandEyes Custom Monitor_ only supports pulling metrics from _Page Load_, _HTTP/Web_ and _Network_ _ThousandEyes_ test types, unfortunately the _HTTP Transaction_ tests are not supported at the moment.
 
 [![AppD TE CustomMonitor](./docs/img/AppD-TE-CustomMonitor.png)](./docs/img/AppD-TE-CustomMonitor.png)
 
-## Hashicorp Vault [Work In Progress]
+**Please Note:** The _ThousandEyes Custom Monitor_ **does not** need to run in the same environment as the application, so you could run this on another VM, for example. In fact, for this use-case the _ThousandEyes Custom Monitor_ was deployed in a different VM instance on GKE.
 
-In this project we use [Hashicorp Vault](https://www.hashicorp.com/products/vault) to manage and securely store the k8s secrets. For this we use a tool called [vault-k8s](https://github.com/hashicorp/vault-k8s), which leverages the Kubernetes Mutating Admission Webhook to intercept and augment specifically annotated pod configuration for secrets injection using the _Init_ and _Sidecar_ containers.
+_If you are having issues deploying the custom monitor by following the [sample code referenced earlier](https://github.com/thousandeyes/appd-integration-reference/blob/master/custom-monitor/readme.md), please feel free to email/Webex Teams me directly with your questions (peolivei@cisco.com) or just raise a [GitHub Issue](https://github.com/JPedro2/Cloud-Native-Demo/issues/new) with the `help wanted` label._
 
-It is recommended that `vault-k8s` is installed via the [Vault Helm chart](https://github.com/hashicorp/vault-helm) as this will automatically configure the Vault and Kubernetes integration to run within an existing Kubernetes cluster. We will be using [Homebew (macOS)](https://brew.sh/) to install Helm. If you already have [Helm](https://helm.sh/) installed, please start from 2.
+Once the _ThousandEyes Custom Monitor_ is running the metrics will appear under the _Application's metrics_ within the _Metric Browser_.
 
-1.  **Install Helm with Brew**
-    ```sh
-    brew install helm
-    ```
+[![MetricBrowser AppD-TE CustomMonitor](./docs/img/MetricBrowser-AppD-TE-CustomMonitor.gif)](./docs/img/MetricBrowser-AppD-TE-CustomMonitor.gif)
 
-2.  **Initialize Hashicorp Helm Chart Repo**
-    ```sh
-    helm repo add hashicorp https://helm.releases.hashicorp.com
-    ```
+You can then get the `Average Response Time` from the _FrontEnd_ _Business Transaction Metric_ coming directly from the _AppDynamics_ `GO` agent running in the `frontEnd` microservice and start comparing that with the _Thousand Eyes Custom Metrics_ coming from the different Cloud Agents deployed around the world.
 
-3.  **Install the latest version of Vault**
-    ```sh
-    helm install vault hashicorp/vault
-    ```
+[![MetricBrowser AppD FE](./docs/img/MetricBrowser-AppD-FE.png)](./docs/img/MetricBrowser-AppD-FE.png)
+
+[![MetricBrowser AppD TE CustomMetrics](./docs/img/MetricBrowser-AppD-TE-CustomMetrics.png)](./docs/img/MetricBrowser-AppD-TE-CustomMetrics.png)
