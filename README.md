@@ -1,3 +1,5 @@
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/JPedro2/Cloud-Native-Demo)
+
 <p align="center">
 <img src="src/frontend-v1/static/icons/Hipster_HeroLogoCyan.svg" width="300"/>
 </p>
