@@ -240,7 +240,7 @@ gcloud services enable monitoring.googleapis.com \
     ```sh
     istioctl dashboard kiali
     ```
-    **This command ONLY works if you have `istioctl` in your `PATH`. If you restarted your terminal or are using a different terminal tab, you will need to do the following:**
+    **This command ONLY works if you have `istioctl` in your `$PATH`. If you restarted your terminal or are using a different terminal tab, you will need to do the following:**
     ```sh
     cd istio-1.8.0/
     export PATH=$PWD/bin:$PATH
@@ -433,19 +433,76 @@ You can quickly and easily set-up the native alerts integration by following the
 
 ### Custom Monitor
 
-_ThousandEyes_ data can be pushed to the _AppDynamics_ controller via a _ThousandEyes Custom Monitor_, which is basically a [_AppDynamics_ machine agent extension](https://docs.appdynamics.com/display/PRO45/Extensions+and+Custom+Metrics). [This example](https://github.com/thousandeyes/appd-integration-reference/blob/master/custom-monitor/readme.md) shows how to create a _Custom Monitor_ that pulls test data from the [_ThousandEyes_ API](https://developer.thousandeyes.com/), transforms the data payload, and pushes that data to the _AppDynamics_ controller via custom metrics. Currently the _ThousandEyes Custom Monitor_ only supports pulling metrics from _Page Load_, _HTTP/Web_ and _Network_ _ThousandEyes_ test types, unfortunately the _HTTP Transaction_ tests are not supported at the moment.
+_ThousandEyes_ data can be pushed to the _AppDynamics_ controller via a _ThousandEyes Custom Monitor_, which is basically an [_AppDynamics_ Machine Agent extension](https://docs.appdynamics.com/display/PRO45/Extensions+and+Custom+Metrics) that pulls test data from the [_ThousandEyes_ API](https://developer.thousandeyes.com/), transforms the data payload, and pushes that data to the _AppDynamics_ controller via _custom metrics_. Currently the _ThousandEyes Custom Monitor_ only supports pulling metrics from _Page Load_, _HTTP/Web_ and _Network_ _ThousandEyes_ test types, unfortunately the _HTTP Transaction_ tests are not supported at the moment.
 
 [![AppD TE CustomMonitor](./docs/img/AppD-TE-CustomMonitor.png)](./docs/img/AppD-TE-CustomMonitor.png)
 
-**Please Note:** The _ThousandEyes Custom Monitor_ **does not** need to run in the same environment as the application, so you could run this on another VM, for example. In fact, for this use-case the _ThousandEyes Custom Monitor_ was deployed in a different VM instance on GKE.
+This essentially allows to **correlate data from _ThousandEyes_ agents with data from _AppDynamics_ agents, which means comparing your Application Performance from the app layer (via the _AppDynamics_ APM agent) against the application experience from the user perspective (via the _ThousandEyes_ cloud agents)**. This provides powerful **insights** that can be then used both during production to proactively identify and mitigate sub-standard user-experience, as well as during development to understand how the user-experience may be impacted with the new upcoming features. 
 
-_If you are having issues deploying the custom monitor by following the [sample code referenced earlier](https://github.com/thousandeyes/appd-integration-reference/blob/master/custom-monitor/readme.md), please feel free to email/Webex Teams me directly with your questions (peolivei@cisco.com) or just raise a [GitHub Issue](https://github.com/JPedro2/Cloud-Native-Demo/issues/new) with the `help wanted` label._
+From this Demo there are two ways that you can deploy the _ThousandEyes Custom Monitor_:
 
-Once the _ThousandEyes Custom Monitor_ is running the metrics will appear under the _Application's metrics_ within the _Metric Browser_.
+1. As a standalone docker container that can be deployed anywhere, such as your local machine or another VM in the Cloud or on-prem, since the _ThousandEyes Custom Monitor_ **does not** need to run in the same environment as the application. You will need to have both _Docker_ and _Compose_ [installed](https://docs.docker.com/compose/install/).
+
+2. As another microservice running in the _K8s_ cluster that you've just created
+
+**Please Note:** The _ThousandEyes Custom Monitor_ built in this demo derives from [this example](https://github.com/thousandeyes/appd-integration-reference/blob/master/custom-monitor/readme.md) and uses the _AppDynamics Standalone Machine Agent v21.2.0_ - the latest at the time of development. If you wish to use another version, you will need to build your own custom monitor by following the instructions [on the example](https://github.com/thousandeyes/appd-integration-reference/blob/master/custom-monitor/readme.md) and the [AppDynamics Machine Agent documentation](https://docs.appdynamics.com/display/PRO21/Standalone+Machine+Agent).
+#### Deploying the _ThousandEyes Custom Monitor_ as a docker container
+1. Set the _environment_ variables, used to link both your _AppDynamics_ and _ThousandEyes_ services, in the `configuration.env.tplt` file located in the [AppD-Cluster-Agent-20.10](./Cloud-Native-Demo/AppD-Cluster-Agent-20.10) folder. You will see line comments that explain which variables or credentials you need to use, most of them you have already used in previous parts of the demo.
+2. Rename the _environment_ variable file from `configuration.env.tplt` to `configuration.env`.
+3. Deploy the container using `docker-compose`
+   ``` bash
+   cd AppD-TE-Custom-Monitor/
+   docker-compose up -d
+   ```
+4. Confirm that the _ThousandEyes Custom Monitor_ started successfully and it is running
+   ``` bash
+   docker ps -a
+   ```
+   The output should be similar to the following:
+   ``` bash
+   CONTAINER ID   IMAGE                                     COMMAND                   CREATED         STATUS         PORTS     NAMES
+   3a7f59fc56ba   peolivei/te-appd-custom-monitor:v21.2.0   "/bin/sh -c \"${MACHI…"   3 seconds ago   Up 3 seconds             te-appd-monitor
+   ```
+   You can also check the check the container _logs_:
+   ``` bash
+   docker logs te-appd-monitor
+   ```
+
+The container is running in `detach` mode. If you ever need to gracefully stop the _ThousandEyes Custom Monitor_ container and remove the volumes you need to make sure that you are in the `/Cloud-Native-Demo/AppD-TE-Custom-Monitor` directory and execute the following:
+   ```
+   docker-compose down -v
+   ``` 
+#### Deploying the _ThousandEyes Custom Monitor_ in the _K8s_ cluster
+1. Edit the _environment_ variables, used to link both your _AppDynamics_ and _ThousandEyes_ services, in the `te-appd-custom-monitor.yaml.tplt` file, from _line 24_ to _line 75_, located in the [AppD-Cluster-Agent-20.10](./Cloud-Native-Demo/AppD-Cluster-Agent-20.10) folder. You will see line comments that explain which variables or credentials you need to use, most of them you have already used in previous parts of the demo.
+2. Rename the _K8s_ manifest template file from `configuration.env.tplt` to `configuration.env`.
+3. Deploy the to the _K8s_
+   ``` bash
+   kubectl apply -f AppD-TE-Custom-Monitor/te-appd-custom-monitor.yaml
+   ```
+   **Please Note:** The _ThousandEyes Custom Monitor_ is deployed in the `appdynamics` _namespace_.
+4. Confirm that the _ThousandEyes Custom Monitor_ started successfully and it is running.
+   ``` bash
+   kubectl get pods -n appdynamics
+   ```
+   The output should be similar to the following:
+   ``` bash
+   NAME                                            READY   STATUS    RESTARTS   AGE
+   appdynamics-operator-6d95b46d86-49wzf           1/1     Running   0          28d
+   k8s-cluster-agent-79b6c95cb4-z5st9              1/1     Running   0          28d
+   te-appd-custom-monitor-agent-66c6db6b7f-6nb6c   1/1     Running   0          23h
+   ```
+   You can also check the check the pod _logs_:
+   ``` bash
+   kubectl -n appdynamics logs <pod-name>
+   ```
+
+#### Visualising the metrics
+
+Once the _ThousandEyes Custom Monitor_ is running the metrics will appear under the _Application's metrics_ within the _Metric Browser_ on your _AppDynamics_ Dashboard. I would recommend initially giving it at least _15-30mins_ to give enough time for the controller to collect the data, also bear in mind that this depends on how frequently your _ThousandEyes_ Cloud agents tests are running.
 
 [![MetricBrowser AppD-TE CustomMonitor](./docs/img/MetricBrowser-AppD-TE-CustomMonitor.gif)](./docs/img/MetricBrowser-AppD-TE-CustomMonitor.gif)
 
-You can then get the `Average Response Time` from the _FrontEnd_ _Business Transaction Metric_ coming directly from the _AppDynamics_ `GO` agent running in the `frontEnd` microservice and start comparing that with the _Thousand Eyes Custom Metrics_ coming from the different Cloud Agents deployed around the world.
+You can then get the `Average Response Time` from the _FrontEnd Business Transaction Metric_ coming directly from the _AppDynamics_ `GO` agent running in the `frontEnd` microservice and start correlating with the _Thousand Eyes Custom Metrics_ coming from the different Cloud Agents deployed around the world.
 
 [![MetricBrowser AppD FE](./docs/img/MetricBrowser-AppD-FE.png)](./docs/img/MetricBrowser-AppD-FE.png)
 

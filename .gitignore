@@ -12,6 +12,14 @@ pkg/
 .project
 .eclipse.buildship.core.prefs
 release/wi-kubernetes-manifests.yaml
-istio-1.8.0/
+# CI/CD dev work files
 /hack
+# dev work cheat sheet
 useful-commands.txt
+#local istio for dev work
+istio-1.8.0/
+#local AppD machine agent and TE custom monitor files for dev work
+AppD-TE-Custom-Monitor/custom-monitor
+AppD-TE-Custom-Monitor/custom-monitor-image
+AppD-TE-Custom-Monitor/configuration.env
+AppD-TE-Custom-Monitor/te-appd-custom-monitor.yaml

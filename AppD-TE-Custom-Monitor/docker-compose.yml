@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  te-appd-monitor:
+    container_name: te-appd-monitor
+    hostname: te-appd-monitor
+    #This pulls a docker container image running the AppDynamics Machine Agent v21.2.0 with ThousandEyes Custom monitoring configured
+    image: peolivei/te-appd-custom-monitor:v21.2.0
+    restart: always
+    env_file: ./configuration.env
+    volumes:
+      - /:/hostroot:ro
+      - /var/run/docker.sock:/var/run/docker.sock

@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: te-appd-custom-monitor-agent
+  namespace: appdynamics
+  labels:
+    app: te-appd-custom-monitor-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: te-appd-custom-monitor-agent
+  template:
+    metadata:
+      labels:
+        app: te-appd-custom-monitor-agent
+    spec:
+      containers:
+        - name: te-appd-monitor
+          #This pulls a docker container image running the AppDynamics Machine Agent v21.2.0 with ThousandEyes Custom monitoring configured
+          image: peolivei/te-appd-custom-monitor:v21.2.0
+          env:
+          # AppDynamics Controller connection and credentials (not used by ThousandEyes Monitor directly)
+          - name: APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY
+            value: ""
+          - name: APPDYNAMICS_AGENT_ACCOUNT_NAME
+            value: ""
+          - name: APPDYNAMICS_CONTROLLER_HOST_NAME
+            value: ""
+          - name: APPDYNAMICS_CONTROLLER_PORT
+            value: "443"
+          - name: APPDYNAMICS_CONTROLLER_SSL_ENABLED
+            value: "true"
+          # These AppDynamics variables are required to associate the machine agent with an app in AppDynamics
+          # Set the Application Name to the name of the application in AppDynamics being monitored
+          # Tier and Node should remain "thousandeyes"
+          - name: APPDYNAMICS_AGENT_APPLICATION_NAME
+            value: ""
+          - name: APPDYNAMICS_AGENT_NODE_NAME
+            value: "thousandeyes"
+          - name: APPDYNAMICS_AGENT_TIER_NAME
+            value: "thousandeyes"
+          # This must be set to a unique host name ID so that Machine Agent can restart without conflict
+          - name: APPDYNAMICS_AGENT_UNIQUE_HOST_ID
+            value: ""
+          # AppDynamics Machine Agent metric limit is 450
+          # SIM and Docker are disabled by default
+          - name: APPDYNAMICS_DOCKER_ENABLED
+            value: "false"
+          - name: APPDYNAMICS_SIM_ENABLED
+            value: "false"
+          - name: APPDYNAMICS_AGENT_METRIC_LIMIT
+            value: "300000"
+          # AppDynamics Analytics credentials (used by Monitor only if pushing data to AppD Analytics)
+          # Full Global Account Name, located in AppDynamics under License > Account.
+          - name: APPD_GLOBAL_ACCOUNT
+            value: ""
+          - name: APPD_API_KEY
+            value: ""
+          # ThousandEyes Credentials
+          - name: TE_API_KEY
+            value: ""
+          - name: TE_EMAIL
+            value: ""
+          # Custom Metrics format - this is the template for the emitted Custom Metrics text
+          - name: TE_METRIC_TEMPLATE
+            value: "name=Custom Metrics|{tier}|{agent}|{metricname},value={metricvalue}"
+          - name: TE_SCHEMA_NAME
+            value: "thousandeyes"
+          # ThousandEyes Tests to pull metrics from. The names have to be exactly the same as the ones running in your ThousandEyes account
+          # Please note that only Page Load, HTTP and Network Tests are supported! Unfortunately Web Transactions are not supported yet
+          - name: TE_ACCOUNTGROUP
+            value: ""
+          - name: TE_TESTS
+            value: '["<Test-1>", ..., "<Test-N>"]'
+          volumeMounts:
+            - name: dockersock
+              mountPath: "/var/run/docker.sock"        
+          resources: 
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+      volumes:
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock
+      hostname: te-appd-monitor
+      restartPolicy: Always
