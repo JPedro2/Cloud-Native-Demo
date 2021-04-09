@@ -135,7 +135,7 @@ gcloud services enable monitoring.googleapis.com \
     ```sh
     ZONE=europe-west2-a
     gcloud container clusters create <your-cluster-name> \
-        --project=${PROJECT_ID} --zone=${ZONE} --cluster-version="1.16.15-gke.7800" \
+        --project=${PROJECT_ID} --zone=${ZONE} --release-channel=stable \
         --enable-autoupgrade --enable-autoscaling \
         --min-nodes=4 --max-nodes=6 --machine-type=e2-standard-2
     ```
@@ -148,7 +148,7 @@ gcloud services enable monitoring.googleapis.com \
     ```sh
     ZONE=europe-west2-a
     gcloud container clusters create <your-cluster-name> \
-        --project=${PROJECT_ID} --zone=${ZONE} --cluster-version="1.16.15-gke.7800" \
+        --project=${PROJECT_ID} --zone=${ZONE} --release-channel=stable \
         --enable-autoupgrade --enable-autoscaling --preemptible \
         --min-nodes=4 --max-nodes=6 --machine-type=e2-standard-2
     ```
