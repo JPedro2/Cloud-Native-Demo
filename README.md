@@ -137,7 +137,7 @@ gcloud services enable monitoring.googleapis.com \
     gcloud container clusters create <your-cluster-name> \
         --project=${PROJECT_ID} --zone=${ZONE} --cluster-version="1.16.15-gke.7800" \
         --enable-autoupgrade --enable-autoscaling \
-        --min-nodes=6 --max-nodes=10 --machine-type=e2-standard-2
+        --min-nodes=4 --max-nodes=6 --machine-type=e2-standard-2
     ```
     Alternatively you can create a GKE cluster using the [Google Cloud UI](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-zonal-cluster#creating-a-cluster). If you do, please make sure that you **DO NOT** select the `Enable Istio` option under _Features_, as we will be installing _Istio_ manually in step 6.
 
@@ -150,7 +150,7 @@ gcloud services enable monitoring.googleapis.com \
     gcloud container clusters create <your-cluster-name> \
         --project=${PROJECT_ID} --zone=${ZONE} --cluster-version="1.16.15-gke.7800" \
         --enable-autoupgrade --enable-autoscaling --preemptible \
-        --min-nodes=6 --max-nodes=10 --machine-type=e2-standard-2
+        --min-nodes=4 --max-nodes=6 --machine-type=e2-standard-2
     ```
 
 5.  **Point the `kubectl` context to the new GKE cluster:**
@@ -177,8 +177,6 @@ gcloud services enable monitoring.googleapis.com \
     gke-boutique-appd-1key-boutique2-pool-8589b39d-bm2y   Ready    <none>   12m   v1.16.15-gke.6000
     gke-boutique-appd-1key-boutique2-pool-8589b39d-cl2u   Ready    <none>   12m   v1.16.15-gke.6000
     gke-boutique-appd-1key-boutique2-pool-8589b39d-h3mr   Ready    <none>   12m   v1.16.15-gke.6000
-    gke-boutique-appd-1key-boutique2-pool-8589b39d-i2ur   Ready    <none>   12m   v1.16.15-gke.6000
-    gke-boutique-appd-1key-boutique2-pool-8589b39d-nbda   Ready    <none>   12m   v1.16.15-gke.6000
     ```
 
 
@@ -447,7 +445,7 @@ In this demo there are two ways that you can deploy the _ThousandEyes Custom Mon
 
 **Please Note:** The _ThousandEyes Custom Monitor_ built in this demo derives from [this example](https://github.com/thousandeyes/appd-integration-reference/blob/master/custom-monitor/readme.md) and uses the _AppDynamics Standalone Machine Agent v21.2.0_ - the latest at the time of development. If you wish to use another version, you will need to build your own custom monitor by following the instructions [on the example](https://github.com/thousandeyes/appd-integration-reference/blob/master/custom-monitor/readme.md) and the [AppDynamics Machine Agent documentation](https://docs.appdynamics.com/display/PRO21/Standalone+Machine+Agent).
 #### Deploying the _ThousandEyes Custom Monitor_ as a docker container
-1. Set the _environment_ variables, used to link both your _AppDynamics_ and _ThousandEyes_ services, in the `configuration.env.tplt` file located in the [/AppD-TE-Custom-Monitor](./AppD-TE-Custom-Monitor) folder. You will see line comments that explain which variables or credentials you need to use, most of them you have already used in previous parts of the demo.
+1. Set the _environment_ variables, used to link both your _AppDynamics_ and _ThousandEyes_ services, in the `configuration.env.tplt` file located in the [`AppD-TE-Custom-Monitor`](./AppD-TE-Custom-Monitor) folder. You will see line comments that explain which variables or credentials you need to use, most of them you have already used in previous parts of the demo.
 2. Rename the _environment_ variable file from `configuration.env.tplt` to `configuration.env`.
 3. Deploy the container using `docker-compose`
    ``` bash
@@ -473,7 +471,7 @@ The container is running in `detach` mode. If you ever need to gracefully stop t
    docker-compose down -v
    ``` 
 #### Deploying the _ThousandEyes Custom Monitor_ in the _K8s_ cluster
-1. Edit the _environment_ variables, used to link both your _AppDynamics_ and _ThousandEyes_ services, in the `te-appd-custom-monitor.yaml.tplt` file, from _line 24_ to _line 75_, located in the [/AppD-TE-Custom-Monitor](./AppD-TE-Custom-Monitor) folder. You will see line comments that explain which variables or credentials you need to use, most of them you have already used in previous parts of the demo.
+1. Edit the _environment_ variables, used to link both your _AppDynamics_ and _ThousandEyes_ services, in the `te-appd-custom-monitor.yaml.tplt` file, from _line 24_ to _line 75_, located in the [`AppD-TE-Custom-Monitor`](./AppD-TE-Custom-Monitor) folder. You will see line comments that explain which variables or credentials you need to use, most of them you have already used in previous parts of the demo.
 2. Rename the _K8s_ manifest template file from `configuration.env.tplt` to `configuration.env`.
 3. Deploy the to the _K8s_
    ``` bash
