@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: te-enterprise-agent
+  labels:
+    app: te-enterprise-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: te-enterprise-agent
+  template:
+    metadata:
+      labels:
+        app: te-enterprise-agent
+    spec:
+      containers:
+        - name: te-en-agent-boutique-demo
+          image: docker.io/thousandeyes/enterprise-agent
+          ports:
+          - containerPort: 49152
+          - containerPort: 49153
+          env:
+          - name: TEAGENT_ACCOUNT_TOKEN
+            value: ""
+          - name: TEAGENT_INET
+            value: "4"      
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_ADMIN
+          resources: 
+            requests:
+              cpu: 200m
+              memory: 1Gi
+            limits:
+              cpu: 500m
+              memory: 2Gi
+      hostname: te-en-agent-boutique-demo
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: te-enterprise-agent
+spec:
+  type: ClusterIP
+  selector:
+    app: te-enterprise-agent
+  ports:
+  - name: te-agent2agent-udp-1
+    protocol: UDP
+    port: 49152
+    targetPort: 49152
+  - name: te-agent2agent-udp
+    protocol: UDP
+    port: 49153
+    targetPort: 49153
+  - name: te-agent2agent-tcp
+    protocol: TCP
+    port: 49153
+    targetPort: 49153

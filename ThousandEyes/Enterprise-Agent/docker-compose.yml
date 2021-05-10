@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  boutique-demo-gcp:
+    container_name: te-enterprise-agent-boutique-demo-gcp
+    hostname: te-enterprise-agent-boutique-demo-gcp
+    image: thousandeyes/enterprise-agent
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    environment:
+      TEAGENT_INET: '4'
+      TEAGENT_ACCOUNT_TOKEN: ''
+    command: /sbin/my_init
+    volumes:
+      - ./te-agent:/var/lib/te-agent
+      - ./te-browserbot:/var/lib/te-browserbot
+      - ./log/:/var/log/agent

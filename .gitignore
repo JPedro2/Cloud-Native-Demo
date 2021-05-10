@@ -23,3 +23,5 @@ AppD-TE-Custom-Monitor/custom-monitor
 AppD-TE-Custom-Monitor/custom-monitor-image
 AppD-TE-Custom-Monitor/configuration.env
 AppD-TE-Custom-Monitor/te-appd-custom-monitor.yaml
+#TE EnterpriseAgent for dev work
+ThousandEyes/Enterprise-Agent/te-enterprise-agent.yaml
