@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BiQ App - Dashboard</title>
+<meta charset="UTF-8">
+<% include ../includes/prism %>
+<% include ../partials/theme %>
+<% include head %>
+</head>
+<body>
+    <div class="wrapper">
+		<!-- Menu -->
+		<%- include ./menu %>
+        <div class="page-container">   
+			<!-- Main Page -->
+			<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6">
+					<p>Time Chart :</p>
+					<ul>
+						<li>When working with the Time Chart object you have to provide the data using the data property.</li>
+						<li>This is a wrapper for a C3.js Timeseries Chart (see <a href="https://c3js.org/samples/timeseries.html">c3.js Timeseries chart</a> ) </li>
+						<li>You would use the Time Chart when you want to have control over the data and the chart itself.</li>
+						<li>When the user selects a point on the graph it returns {"id":"Counts","date":"2018-07-30T15:46:33.039Z"}</li>
+					</ul>
+					<p>Data is expected as an array of values. Each value is iteself an array of time in milleseconds and the value.</p>
+					<pre><code class="language-javascript">
+	var chartData =[
+		[1532966193039,5],
+		[1532966013039,10],
+		[1532965833039,20],
+		[1532965593039,7],
+		[1532965293039,30]
+	];
+
+	new TimeChart({
+		targetId:"timeChart",
+		data : chartData
+	}).draw(function(selection){
+		alert(JSON.stringify(selection));
+	})
+					</code></pre>
+
+				</div>	
+				<div id="timeChart" class="col-md-6"></div>				
+			</div>
+			<div class="row"><hr/></div>
+			<div class="row">
+				<div class="col-md-6">
+					<p>Time Chart Component</p>
+					<ul>
+						<li>Adds an outer panel and you can provide a title. The title property can be dynamic and include some variable and or html</li>
+						<li>All chart components allow you to pass in an ADQL query instead of the data property. If you pass in both, the query would be executed first.</li>
+						<li>if you remove the data and query properties then the component will generate random or test data.</li>
+					</ul>
+					<pre><code class="language-javascript">			
+	new TimeChartComponent({
+		targetId:"timeChartNoData",
+		title:"My Time Series Data"
+	}).draw(function(selection){
+		alert(JSON.stringify(selection));
+	})						
+					</code></pre>
+				</div>	
+				<div id="timeChartNoData" class="col-md-6"></div>				
+			</div>
+			<div class="row"><hr/></div>
+			<div class="row">
+					<div class="col-md-6">
+						<p>Customizing Chart Options</p>
+						<ul>
+							<li>To pass in C3 chart options provide a chartOptions property.</li>
+							<li>This will work for both Chart and ChartComponents.</li>
+						</ul>
+						<pre><code class="language-javascript">			
+		new TimeChartComponent({
+			targetId:"timeChartComponentCustomized",
+			title:"My Time Series Data : Customized",
+			options:{
+				size:{width:"400",height:"200"},
+				color:{pattern: ['#FF0000']},
+				legend: {show: false},
+				tooltip:{show:false},
+				axis: {
+					x: {show:false},
+					y: {show:true}
+				}, 
+				point: {
+					show: false
+				}
+			}
+		}).draw(function(selection){
+			alert(JSON.stringify(selection));
+		})			
+	</code></pre>
+	
+					</div>	
+					<div id="timeChartComponentCustomized" class="col-md-6"></div>				
+				</div>
+		</div>
+
+		<div class="row"><hr/></div>
+		<div class="row">
+			<div class="col-md-12">
+				<p>Example Time Series queries :</p>
+
+				<p>Time Charts work in tandem with the data picker. Based on the time range the user selects then the queries you pass into the Components are for example :</p>
+				<p>see [Working with time buckets] for more info.</p>
+				<p>see <a href="https://docs.appdynamics.com/display/PRO44/Analytics+Functions">ADQL Analytics Functions : Series Function</a></p>
+				<pre><code class="language-javascript">	
+
+	//Based on the time range selected group the counts in time buckets to see the trend.
+	var myQuery:"SELECT series(eventTimestamp, '"+getTimeBucket()+"'), count(segments.userData.Error) FROM transactions WHERE application = 'MyApp' and segments.userData.Error IS NOT NULL"			
+	new TimeChartComponent({
+		targetId:"timeChartNoData",
+		title:"My Time Series Data",
+		query:myQuery
+	}).draw(function(selection){
+		alert(JSON.stringify(selection));
+	})
+				</code></pre>
+
+			</div>
+		</div>	
+
+		</div>
+		
+    </div>
+</body>
+<script type="text/javascript">
+	debugApp = true;
+
+	var chartSection = function(){
+
+		var chartData =[
+			[1532966193039,5],
+			[1532966013039,10],
+			[1532965833039,20],
+			[1532965593039,7],
+			[1532965293039,30]
+		];
+
+		new TimeChart({
+			targetId:"timeChart",
+			data : chartData
+		}).draw(function(selection){
+			alert(JSON.stringify(selection));
+		})
+
+		new TimeChartComponent({
+			targetId:"timeChartNoData",
+			title:"My Time Series Data"
+		}).draw(function(selection){
+			alert(JSON.stringify(selection));
+		})
+
+		new TimeChartComponent({
+			targetId:"timeChartComponentCustomized",
+			title:"My Time Series Data : Customized",
+			options:{
+				size:{width:"400",height:"200"},
+				color:{pattern: ['#FF0000']},
+				legend: {show: false},
+            	tooltip:{show:false},
+				axis: {
+					x: {show:false},
+					y: {show:true}
+				}, 
+				point: {
+					show: false
+				}
+			}
+		}).draw(function(selection){
+			alert(JSON.stringify(selection));
+		})
+	}
+
+	//Your BiQ App Components ...
+	var buildDashboard = function(){
+		chartSection();				
+	}
+	chartSection();
+</script>
+</html>

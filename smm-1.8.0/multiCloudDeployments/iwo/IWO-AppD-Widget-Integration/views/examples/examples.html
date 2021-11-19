@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BiQ App - Dashboards</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<% include ../partials/theme %>
+<% include head %>
+
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Menu -->
+		<%- include ./menu %>    
+        <div class="page-container">   
+            <!-- Main Page -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div id="newdash" class="col-md-4"></div>
+                    <div id="boxexample" class="col-md-4"></div>
+                    <div id="drilldown" class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div id="light" class="col-md-4"></div>
+                    <div id="dark" class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div id="appd" class="col-md-4"></div>
+                    <div id="geo" class="col-md-4"></div>
+                    <div id="geo2" class="col-md-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    
+    var buildMenus = function(){
+        new BoxComponent({
+            value:"Basic",
+            title:"Starter Dashboard",
+            targetId:"newdash",
+            actionClick: "window.location.href='/views/examples/example-starter.html'",
+            icon:"fa fa-cogs fa-2x",
+            panelClass:"overview-item--c2"
+        }).draw();
+
+        new BoxComponent({
+            value:"Tabs",
+            title:"Tab Dashboard",
+            targetId:"boxexample",
+            actionClick: "window.location.href='/views/examples/example-tab.html'",
+            icon:"fa fa-cogs fa-2x",
+            panelClass:"overview-item--c2"
+        }).draw();
+
+        new BoxComponent({
+            value:"Drill Downs",
+            title:"Drill Down Dashboard",
+            targetId:"drilldown",
+            actionClick: "window.location.href='/views/examples/example-drilldown.html'",
+            icon:"fa fa-cogs fa-2x",
+            panelClass:"overview-item--c2"
+        }).draw();
+
+         new BoxComponent({
+            value:"Light",
+            title:"Light Theme Dashboard",
+            targetId:"light",
+            actionClick: "window.location.href='/views/examples/lightdash.html'",
+            icon:"fa fa-cogs fa-2x",
+            panelClass:"overview-item--c0"
+        }).draw();
+
+        new BoxComponent({
+            value:"Dark",
+            title:"Dark Theme Dashboard",
+            targetId:"dark",
+            actionClick: "window.location.href='/views/examples/darkdash.html'",
+            icon:"fa fa-cogs fa-2x",
+            panelClass:"overview-item--c0"
+        }).draw();
+
+        new BoxComponent({
+            value:"MyAppD",
+            title:"AppD Theme Dashboard",
+            targetId:"appd",
+            actionClick: "window.location.href='/views/examples/appd.html'",
+            icon:"fa fa-cogs fa-2x",
+            panelClass:"overview-item--c0"
+        }).draw();
+
+        new BoxComponent({
+            value:"Geo Map",
+            title:"Geo Map Dashboard",
+            targetId:"geo",
+            actionClick: "window.location.href='/views/examples/example-geomap.html'",
+            icon:"fa fa-cogs fa-2x",
+            panelClass:"overview-item--c0"
+        }).draw();
+
+        new BoxComponent({
+            value:"Geo Map 2",
+            title:"Geo Map With Filter",
+            targetId:"geo2",
+            actionClick: "window.location.href='/views/examples/example-geomap-2.html'",
+            icon:"fa fa-cogs fa-2x",
+            panelClass:"overview-item--c0"
+        }).draw();
+    }
+
+    buildMenus();
+</script>        
+</html>

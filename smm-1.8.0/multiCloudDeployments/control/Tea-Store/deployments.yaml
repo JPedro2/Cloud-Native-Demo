@@ -1,0 +1,227 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-db
+  labels:
+    app: teastore-db
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: teastore-db
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: teastore-db
+        version: v1
+    spec:
+      containers:
+        - name: teastore-db
+          image: descartesresearch/teastore-db
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 0.5
+            limits:
+              memory: 2Gi
+              cpu: 1
+          ports:
+            - containerPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-registry
+  labels:
+    app: teastore-registry
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: teastore-registry
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: teastore-registry
+        version: v1
+    spec:
+      containers:
+        - name: teastore-registry
+          image: brownkw/teastore-registry
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 0.5
+            limits:
+              memory: 2Gi
+              cpu: 1
+          ports:
+            - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-persistence
+  labels:
+    framework: java
+    app: teastore-persistence
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teastore-persistence
+      version: v1
+  template:
+    metadata:
+      labels:
+        framework: java
+        app: teastore-persistence
+        version: v1
+    spec:
+      containers:
+        - name: teastore-persistence
+          image: brownkw/teastore-persistence
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 0.5
+            limits:
+              memory: 2Gi
+              cpu: 1
+          env:
+            - name: HOST_NAME
+              value: "teastore-persistence"
+            - name: REGISTRY_HOST
+              value: "teastore-registry"
+            - name: DB_HOST
+              value: "teastore-db"
+            - name: DB_PORT
+              value: "3306"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-webui-v1
+  labels:
+    framework: java
+    app: teastore-webui
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: teastore-webui
+      version: v1
+  template:
+    metadata:
+      labels:
+        framework: java
+        app: teastore-webui
+        version: v1
+    spec:
+      containers:
+        - name: teastore-webui-v1
+          image: brownkw/teastore-webui
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 0.5
+            limits:
+              memory: 2Gi
+              cpu: 1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: HOST_NAME
+              value: "teastore-webui"
+            - name: REGISTRY_HOST
+              value: "teastore-registry"
+            - name: PROCESS_PAYMENT
+              value: "true"
+            - name: VISA_URL
+              value: "https://fso-payment-gw-sim.azurewebsites.net/api/payment"
+            - name: MASTERCARD_URL
+              value: "https://fso-payment-gw-sim.azurewebsites.net/api/payment"
+            - name: AMEX_URL
+              value: "https://amex-fso-payment-gw-sim.azurewebsites.net/api/payment"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-image-v1
+  labels:
+    framework: java
+    app: teastore-image
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: teastore-image
+      version: v1
+  template:
+    metadata:
+      labels:
+        framework: java
+        app: teastore-image
+        version: v1
+    spec:
+      containers:
+        - name: teastore-image-v1
+          image: brownkw/teastore-image
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 0.5
+            limits:
+              memory: 2Gi
+              cpu: 1
+          env:
+            - name: HOST_NAME
+              value: "teastore-image"
+            - name: REGISTRY_HOST
+              value: "teastore-registry"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teastore-image-v2
+  labels:
+    framework: java
+    app: teastore-image
+    version: v2
+spec:
+  selector:
+    matchLabels:
+      app: teastore-image
+      version: v2
+  template:
+    metadata:
+      labels:
+        framework: java
+        app: teastore-image
+        version: v2
+    spec:
+      containers:
+        - name: teastore-image-v2
+          image: brownkw/teastore-image
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 0.5
+            limits:
+              memory: 2Gi
+              cpu: 1
+          env:
+            - name: HOST_NAME
+              value: "teastore-image"
+            - name: REGISTRY_HOST
+              value: "teastore-registry"

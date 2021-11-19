@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BiQ App - Dashboard</title>
+<meta charset="UTF-8">
+<% include ../partials/theme %>
+<% include head %>
+</head>
+<body>
+	<div class="wrapper">
+		<aside class="menu-sidebar">
+			<div class="logo">
+				<a href="#">
+					<img width="180px" src="/img/AppDynamicsLogo.svg" alt="AppDynamics" />
+				</a>
+			</div>
+			<div class="menu-sidebar__content js-scrollbar1">
+				<nav class="navbar-sidebar">
+					<ul class="nav" id="side-menu"></ul>
+				</nav>
+			</div>
+		</aside>    
+		<div class="page-container"> 
+			<div class="container-fluid">    
+				<!-- Main Page -->
+				<div class="row">
+					<div id="comp1" class="col"></div>
+					<div id="comp2" class="col"></div>
+					<div id="comp3" class="col"></div>
+				</div>
+				<div class="row"> 
+					<div class="col-md-12">
+						<div id="errorTable"></div>
+						<div id="serviceTable"></div>
+						<div id="customerTable"></div>
+					</div>
+				</div>
+				<div class="row" style="padding-top:25px">
+					<div class="col-md-12">
+						<div id="errorTrend"></div>
+						<div id="serviceTrend"></div>
+						<div id="customerTrend"></div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	//Your BiQ App Components ...
+	
+	var errorDetails = function () {
+		hideElements(["errorTrend","serviceTable","serviceTrend","customerTable","customerTrend"]);
+		new TableComponent({
+			//query : "",
+			targetId:"errorTable",
+			title:"Error Counts",
+			columns: [{ title: "Error" },{ title: "Counts" }],
+		}).draw(function(record){
+			new TimeChartComponent({
+				//query: "",    
+				targetId:"errorTrend",
+				title:"Error Details: "+record[0]+" - "+record[1],
+				panelClass:"panel-red"
+			}).draw(function(id,date){
+				
+			});		
+		});
+	}
+	
+	var serviceDetails = function () {
+		hideElements(["serviceTrend","errorTable","errorTrend","customerTable","customerTrend"]);
+		new TableComponent({
+			//query : "",
+			targetId:"serviceTable",
+			title:"Service Counts",
+			columns: [{ title: "Service" },{ title: "Counts" }]
+		}).draw(function(record){
+			new TimeChartComponent({
+				//query: "",    
+				targetId:"serviceTrend",
+				title:"Service Details: "+record[0]+" - "+record[1],
+				panelClass:"panel-green"
+			}).draw(function(id,date){
+				
+			});		
+		});
+	}
+
+	var customerDetails = function () {
+		hideElements(["customerTrend","serviceTable","serviceTrend","errorTable","errorTrend"]);
+		new TableComponent({
+			//query : "",
+			targetId:"customerTable",
+			title:"Customer Error Counts",
+			columns: [{ title: "Service" },{ title: "Counts" }]
+		}).draw(function(record){
+			new TimeChartComponent({
+				//query: "",    
+				targetId:"customerTrend",
+				title:"Customer Error Details: "+record[0]+" - "+record[1],
+				panelClass:"panel-yellow"
+			}).draw(function(id,date){
+				
+			});		
+		});
+	}
+	
+	var headers = function () {
+		new BoxChartComponent({
+			title:"Errors",
+			targetId:"comp1",
+			action:"View Details",
+			actionClick: "errorDetails()",
+			icon:"fa fa-exclamation fa-2x",
+			panelClass:"overview-item--c2",
+			options:{size:{height:75,width:200}}
+			//query:"SELECT series(eventTimestamp, '"+getTimeBucket()+"'), distinctcount(segments.userData.Error) FROM transactions WHERE application = 'xxx' and segments.userData.Error IS NOT NULL"
+		}).draw();
+		
+		new BoxChartComponent({
+			title:"Service Errors",
+			targetId:"comp2",
+			action:"View Details",
+			actionClick: "serviceDetails()",
+			icon:"fa fa-cogs fa-2x",
+			panelClass:"overview-item--c3",
+			options:{size:{height:75,width:200}}
+			//query:"SELECT series(eventTimestamp, '"+getTimeBucket()+"'), distinctcount(segments.userData.Error) FROM transactions WHERE application = 'xxx' and segments.userData.Error IS NOT NULL"
+		}).draw();
+		
+		new BoxChartComponent({
+			title:"Customer Errors",
+			targetId:"comp3",
+			action:"View Details",
+			actionClick: "customerDetails()",
+			icon:"fa fa-tasks fa-2x",
+			panelClass:"overview-item--c4",
+			options:{size:{height:75,width:200}}
+			//query:"SELECT series(eventTimestamp, '"+getTimeBucket()+"'), distinctcount(segments.userData.Error) FROM transactions WHERE application = 'xxx' and segments.userData.Error IS NOT NULL"
+		}).draw();
+	}
+	
+	var filters = function () {
+		new FilterComponent({
+			targetId:"side-menu",
+			filters:[{
+				label:"Error",
+				id:"errorInput",
+				adqlField :"segments.userData.Error",
+				query:""
+			},{
+				label:"Service",
+				id:"serviceInput",
+				adqlField :"segments.userData.Service",
+				query:""
+			},{
+				label:"Customer",
+				id:"customerInput",
+				adqlField :"segments.userData.Customer",
+				query:""
+			}]
+		}).draw(function(filters){
+			buildDashboard();
+		});
+	}
+	
+	var buildDashboard = function () {
+		headers();
+		filters();
+	}
+	
+	buildDashboard();
+	
+</script>
+</html>

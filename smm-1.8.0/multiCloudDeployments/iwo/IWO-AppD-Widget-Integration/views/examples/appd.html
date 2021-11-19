@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BiQ App - Dashboard</title>
+<meta charset="UTF-8">
+<% include ../partials/theme %>
+<style>
+
+html,body{  height: 100%; }
+body, .wrapper, .page-container {
+    background-color: #3c3c3c;
+}
+
+.page-container{
+	margin-top:15px;
+}
+
+.menu-sidebar {
+	background-color:#38383a;
+}
+
+.menu-sidebar .logo {
+	background-color:#38383a;
+	border-right: 1px solid #38383a;
+}
+
+.navbar-sidebar .navbar__list li a {
+	color:white;
+}
+
+</style>
+</head>
+<body>
+    <div class="wrapper">
+		<aside class="menu-sidebar">
+			<div class="logo">
+				<a href="#">
+					<img width="180px" src="/img/AppDynamicsLogo.svg" alt="AppDynamics" />
+				</a>
+			</div>
+			<nav class="navbar-sidebar">
+				<ul class="list-unstyled navbar__list">
+					<div id="spinnerDiv"></div>
+					<li style="margin-bottom:25px">
+						<ul class="nav" id="time"></ul>
+					</li>
+					<li><a href="#" ><i class="fa fa-download"></i> Devices</a></li>
+					<li><a href="#" ><i class="fas fa-desktop"></i> Apps</a></li>
+					<li><a href="#" ><i class="fa fa-database"></i> Data</a></li>
+					<li><a href="/views/examples/intro.html" ><i class="fa fa-book"></i> Docs</a></li>
+				</ul>
+				<div id="filter"></div>
+			</nav>
+		</aside>    
+		<div class="page-container">  
+			<div class="container-fluid">    
+				<!-- Main Page -->
+				<div class="row">
+					<div id="deviceConnections" class="col-md-3"></div>	
+					<div id="apps" class="col-md-3"></div>	
+					<div id="events" class="col-md-3"></div>		
+				</div>
+				<div class="row">
+					<div class="col-md-9">
+						<div id="deviceTrends"></div>
+					</div>
+					<div class="col-md-9">
+						<div id="appsTrends" class="darkChart"></div>	
+					</div>	
+					<div class="col-md-9">
+						<div id="eventsTrends"></div>	
+					</div>	
+				</div>
+			</div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	//Your BiQ App Components ...
+
+	var hide = function(){
+		hideElements(["deviceTrends","appsTrends","eventsTrends"]);
+	}
+
+	var deviceTrend = function(){
+		hide();
+		new TimeChartComponent({
+			targetId:"deviceTrends",
+			title:"Connection Trends",
+			animate:"zoomIn",
+			xLabel:"Connections",
+			chartOptions:{
+				type:"bar",
+				bar:{
+					width : {ratio:.15}
+				}
+			}
+		}).draw(function(selection){
+			alert(JSON.stringify(selection));
+		})
+	}
+
+	var appsTrend = function(){
+		hide();
+		new TimeChart({
+			targetId:"appsTrends",
+			data:generateRandomTimeData(),
+			animate:"zoomIn",
+			xLabel:"Average Response",
+			chartOptions:{
+				type:"bar",
+				bar:{
+					width : {ratio:.15}
+				},
+				color:{
+					pattern:['#9fb829']
+				}
+			}
+		}).draw(function(selection){
+			alert(JSON.stringify(selection));
+		})	
+	}
+
+	var eventsTrend = function(){
+		hide();
+		new TimeChartComponent({
+			targetId:"eventsTrends",
+			title:"Events Trends",
+			animate:"zoomIn",
+			panelClass:"overview-item--c3",
+			xLabel:"Events"
+		}).draw(function(selection){
+			alert(JSON.stringify(selection));
+		})	
+	}
+
+
+	var buildDashboard = function(){
+		new BoxChartComponent({
+			title:"Connections",
+			targetId:"deviceConnections",
+			actionClick: "deviceTrend()",
+			icon:"fa fa-download",
+			options:{size:{height:75,width:250}},
+			panelClass:"overview-item--c4",
+			animate:"zoomIn"
+		}).draw();
+
+		new BoxChartComponent({
+			title:"Average Response",
+			targetId:"apps",
+			actionClick: "appsTrend()",
+			icon:"fas fa-desktop",
+			options:{size:{height:75,width:250}},
+			panelClass:"overview-item--c2",
+			animate:"zoomIn"
+		}).draw();	
+
+		new BoxChartComponent({
+			title:"Events",
+			targetId:"events",
+			actionClick: "eventsTrend()",
+			icon:"fa fa-database",
+			options:{size:{height:75,width:250}},
+			panelClass:"overview-item--c3",
+			animate:"zoomIn"
+		}).draw();	
+	}
+
+	new TimeRangeComponent({
+		targetId:"time"
+	}).draw(function(timeSelected){
+		buildDashboard();
+	});
+
+	buildDashboard();
+</script>
+</html>

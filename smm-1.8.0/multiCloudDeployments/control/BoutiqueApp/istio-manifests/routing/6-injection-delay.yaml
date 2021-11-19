@@ -1,0 +1,21 @@
+# Copyright (c) 2021, Cisco Systems, Inc. and/or its affiliates. All rights reserved. 
+# Licensed under the Apache 2.0 license, see LICENSE file.
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: injection-delay-productcatalog
+spec:
+  hosts:
+  - productcatalogservice
+  http:
+  - fault:
+      delay:
+        percentage:
+          value: 90
+        fixedDelay: 5s
+    route:
+    - destination:
+        host: productcatalogservice
+        port:
+          number: 3550

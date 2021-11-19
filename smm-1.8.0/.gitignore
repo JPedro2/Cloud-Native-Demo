@@ -1,0 +1,30 @@
+#SMM files
+bin
+smm_1.8.0_darwin_amd64.tar.gz
+gke-peer-kubeconfig
+
+#IWO Collector files
+multiCloudDeployments/iwo/credentials-AppD-IWO-integration.txt
+multiCloudDeployments/iwo/iwok8scollector
+multiCloudDeployments/iwo/IWO-AppD-Widget-Integration.zip
+
+#SecureCN Installer
+multiCloudDeployments/control/SecureCN/installer
+
+#AWS Auth CMs and RBAC
+multiCloudDeployments/control/aws-auth-configMap.yaml
+multiCloudDeployments/control/rbac-eks-full-access.yaml
+multiCloudDeployments/iwo/iwo-widget.pem
+
+#ThousandEyes and AppDynamics Credentials
+multiCloudDeployments/control/AppDynamics/te-appd-custom-monitor.yaml
+multiCloudDeployments/control/AppDynamics/values-ca.yaml
+multiCloudDeployments/control/ThousandEyes/te-agent.yaml
+multiCloudDeployments/control/ThousandEyes/te-credentials.yaml
+
+multiCloudDeployments/peer/AppDynamics/values-ca.yaml
+multiCloudDeployments/peer/ThousandEyes/te-agent.yaml
+multiCloudDeployments/peer/ThousandEyes/te-credentials.yaml
+
+multiCloudDeployments/control/BoutiqueApp/deployments.yaml
+multiCloudDeployments/peer/BoutiqueApp/deployments.yaml

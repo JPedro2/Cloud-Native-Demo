@@ -1,0 +1,40 @@
+# Copyright (c) 2021, Cisco Systems, Inc. and/or its affiliates. All rights reserved. 
+# Licensed under the Apache 2.0 license, see LICENSE file.
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: http-abort-injection-productcatalog
+spec:
+  hosts:
+  - productcatalogservice
+  http:
+  - fault:
+      abort:
+        percentage: 
+          value: 20
+        httpStatus: 500
+    route:
+    - destination:
+        host: productcatalogservice
+        port:
+          number: 3550
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: http-abort-injection-checkout
+spec:
+  hosts:
+  - checkoutservice
+  http:
+  - fault:
+      abort:
+        percentage: 
+          value: 80
+        httpStatus: 500
+    route:
+    - destination:
+        host: checkoutservice
+        port:
+          number: 5050

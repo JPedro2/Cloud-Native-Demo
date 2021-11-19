@@ -1,0 +1,45 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: egress-paymentservices
+  namespace: tea-store
+spec:
+  hosts:
+  - fso-payment-gw-sim.azurewebsites.net
+  - amex-fso-payment-gw-sim.azurewebsites.net
+  ports:
+  - number: 443
+    name: https
+    protocol: HTTPS
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: egress-appdynamics-apm
+  namespace: tea-store
+spec:
+  hosts:
+  - "*.appdynamics.com"
+  ports:
+  - number: 80
+    protocol: HTTP
+    name: http
+  - number: 443
+    protocol: HTTPS
+    name: https
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: whitelist-egress-thousandeyes
+  namespace: tea-store
+spec:
+  hosts:
+  - "*.thousandeyes.com"
+  ports:
+  - number: 80
+    protocol: HTTP
+    name: http
+  - number: 443
+    protocol: HTTPS
+    name: https

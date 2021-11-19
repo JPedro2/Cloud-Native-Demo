@@ -1,0 +1,30 @@
+{
+  "name": "biqapp",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Appdynamics/biqapp-sdk",
+  "authors": [
+    "Richard Paul"
+  ],
+  "description": "BiQ App",
+  "license": "MIT",
+  "dependencies": {
+    "d3": "~3.5.6",
+    "requirejs": "~2.1.14",
+    "underscore": "~1.6.0",
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.6",
+    "jquery-modal": "^0.8.0",
+    "jsrender": "^0.9.81",
+    "jquery-ui": "^1.12.1",
+    "datatables.net": "^1.10.15",
+    "c3": "^0.4.17",
+    "animate.css": "^3.5.2",
+    "spin.js": "^2.3.2",
+    "dimple": "^2.3.0"
+  },
+  "resolutions": {
+    "jquery": "^3.1.1",
+    "dimple": "2.0.0",
+    "d3": "~3.5.6"
+  }
+}

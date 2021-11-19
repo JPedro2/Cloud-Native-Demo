@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ABiQ App - Dashboard</title>
+<meta charset="UTF-8">
+<% include ./partials/theme %>
+<style>
+
+body {
+    background: url(/img/landingbg.svg) no-repeat;
+    background-size: 3057px 2185px;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: #292929;
+}
+
+.wrapper, .page-container {
+    background-color: transparent;
+    height:100%; 
+}
+
+body,html{
+    height:100%;
+}
+
+.greeting-container {
+   display: flex;
+   justify-content: center;
+   align-content: center;
+   margin-top: 20px;
+}
+.greeting {
+   font-family: sans-serif;
+   font-size: 40px;
+   color: #fff;
+}
+
+#starterLinks{
+    height:300px;
+}
+
+#main-area{
+    margin-top: 50px;
+}
+
+i:hover {
+    color: red;
+}
+
+.fa-book:hover {
+    color: red;
+}
+
+</style>
+</head>
+<body>
+    <div class="container-fluid">    
+        <!-- Main Page -->
+        <div class="row">
+            <div class="greeting-container">
+                <img id="logo" width="600px;" src="/img/AppDynamicsLogo.svg"/> 
+                <div class="greeting" id="greeting" style="font-family: Poppins, sans-serif;"> - BiQ App Framework - <%= version %></div>
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+        <div class="row">
+            <div id="main-area" class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div id="docs" class="col-md-4"></div>  
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div id="start" class="col-md-4"></div> 
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div id="advanced" class="col-md-4"></div>  
+                </div>
+            </div>
+        </div>             
+    </div>    
+</body>
+<script type="text/javascript">
+	//Your BiQ App Components ...
+
+    new BoxComponent({
+        value:"Basic App",
+        title:"Starter BiQ App",
+        targetId:"start",
+        actionClick: "window.location.href='/views/newdash.html'",
+        icon:"fa fa-anchor",
+        animate:"zoomIn"
+    }).draw();
+
+	new BoxComponent({
+        value:"MyAppD",
+        title:"Advanced BiQ App",
+        targetId:"advanced",
+        actionClick: "window.location.href='/views/examples/appd.html'",
+        icon:"fa fa-rocket",
+        animate:"zoomIn"
+    }).draw();
+    
+    new BoxComponent({
+        value:"Docs",
+        title:"BiQ App Documentation",
+        targetId:"docs",
+        actionClick: "window.location.href='/views/examples/intro.html'",
+        icon:"fa fa-book",
+        animate:"zoomIn"
+    }).draw();
+
+</script>
+</html>

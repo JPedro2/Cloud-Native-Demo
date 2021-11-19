@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: teastore-image-injection-delay
+spec:
+  hosts:
+  - teastore-image
+  http:
+  - fault:
+      delay:
+        percentage:
+          value: 80
+        fixedDelay: 3s
+    route:
+    - destination:
+        host: teastore-image
+        subset: v1
+        port:
+          number: 8080

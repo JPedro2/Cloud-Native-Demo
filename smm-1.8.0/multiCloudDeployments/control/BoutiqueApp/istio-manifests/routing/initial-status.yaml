@@ -1,0 +1,18 @@
+# If you apply any of the istio routing manifests (1-6) and then remove them, you have to apply this
+# manifest to restore the initial routing status, otherwise the app will not be reachable
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: frontend-ingress
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - boutique-frontEnd-ingressgateway
+  http:
+  - route:
+    - destination:
+        host: frontend
+        port:
+          number: 80

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BiQ App - Dashboard</title>
+<meta charset="UTF-8">
+<% include ../includes/prism %>
+<% include ../partials/theme %>
+<% include head %>
+</head>
+<body>
+		<div class="wrapper">
+		<!-- Menu -->
+		<%- include ./menu %>
+        <div class="page-container">    
+			<!-- Main Page -->
+			<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6">
+					<p>Table Component</p>
+					<ul>
+						<li>Table component is a wrapper around <a href="https://datatables.net/">datatables.net</a></li>
+						<li>Using the table component you must provide the data property</li>
+						<li>When selecting a row, the row data is passed as an array. If you click on the row you will see the values.</li>
+					</ul>
+					<pre><code class="language-javascript">
+	var data = [
+		["Apple",1000],
+		["Amazon",2000],
+		["Cisco",3000],
+		["AppDynamics",4000],
+	]
+
+	new Table({
+		targetId:"table",
+		title:"Errors By Customers",
+		data:data,
+		columns: [{ title: "Customer" },{ title: "Counts" }]
+	}).draw(function(row){
+		alert(JSON.stringify(row));
+	});	
+					</code></pre>
+
+				</div>	
+				<div id="table" class="col-md-6"></div>				
+			</div>
+			<div class="row"><hr/></div>
+			<div class="row">
+				<div class="col-md-6">
+					<p>Table Component</p>
+					<ul>
+						<li>Adds an outer panel and you can provide a title. The title property can be dynamic and include some variable and or html</li>
+						<li>All chart components allow you to pass in an ADQL query instead of the data property. If you pass in both, the query would be executed first.</li>
+						<li>if you remove the data and query properties then the component will generate random or test data.</li>
+					</ul>
+					<pre><code class="language-javascript">	
+	var data = [
+		["Apple",1000],
+		["Amazon",2000],
+		["Cisco",3000],
+		["AppDynamics",4000],
+	]	
+	.....	
+	new TableComponent({
+		targetId:"table2",
+		title:"Errors By Customers",
+		data:data,
+		columns: [{ title: "Customer" },{ title: "Counts" }]
+	}).draw(function(row){
+		alert(JSON.stringify(row));
+	});					
+</code></pre>
+
+				</div>	
+				<div id="table2" class="col-md-6"></div>				
+			</div>
+			<div class="row"><hr/></div>
+			<div class="row">
+					<div class="col-md-6">
+						<p>No Data provided</p>
+						
+						<pre><code class="language-javascript">			
+	new TableComponent({
+		targetId:"table3",
+		title:"Errors By Customers",
+		columns: [{ title: "Customer" },{ title: "Counts" }],
+		options : {
+			"searching": false,
+			"paging": false,
+			"ordering": false
+		}
+	}).draw(function(row){
+		alert(JSON.stringify(row));
+	});					
+	</code></pre>
+	
+					</div>	
+					<div id="table3" class="col-md-6"></div>				
+				</div>
+			<div class="row"><hr/></div>
+			<div class="row">
+					<div class="col-md-6">
+						<p>Customizing Table Options</p>
+						<ul>
+							<li>To pass in C3 chart options provide a chartOptions property.</li>
+							<li>This will work for both Table and TableComponents.</li>
+						</ul>
+						<pre><code class="language-javascript">			
+	new TableComponent({
+		targetId:"table3",
+		title:"Errors By Customers",
+		data:data,
+		columns: [{ title: "Customer" },{ title: "Counts" }],
+		options : {
+			"searching": false,
+			"paging": false,
+			"ordering": false
+		}
+	}).draw(function(row){
+		alert(JSON.stringify(row));
+	});					
+	</code></pre>
+	
+					</div>	
+					<div id="table4" class="col-md-6"></div>				
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<p>Query Examples</p>
+						<ul>
+							The following provides some query examples. You still need to declare the columns property to match your data.
+						</ul>
+						<pre><code class="language-javascript">			
+//group by the following 3 custom fields							
+query : "SELECT segments.userData.field1,segments.userData.field2, segments.userData.field3 count(*) as count FROM transactions WHERE application = 'myApp' and segments.userData.Error IS NOT NULL order by count desc"						
+
+//group by errors							
+query: "SELECT segments.userData.Error, count(*) as count FROM transactions WHERE application = 'myApp' and segments.userData.Error IS NOT NULL order by count desc"
+	</code></pre>
+	
+					</div>	
+					<div id="table4" class="col-md-6"></div>				
+				</div>
+		</div>
+		</div>
+		
+    </div>
+</body>
+<script type="text/javascript">
+	
+
+	var chartSection = function(){
+		var data = [
+			["Apple",1000],
+			["Amazon",2000],
+			["Cisco",3000],
+			["AppDynamics",4000],
+		]
+
+		new Table({
+			targetId:"table",
+			title:"Errors By Customers",
+			data:data,
+			columns: [{ title: "Customer" },{ title: "Counts" }]
+		}).draw(function(row){
+			alert(JSON.stringify(row));
+		});
+
+		new TableComponent({
+			targetId:"table2",
+			title:"Errors By Customers",
+			data:data,
+			columns: [{ title: "Customer" },{ title: "Counts" }]
+		}).draw(function(row){
+			alert(JSON.stringify(row));
+		});
+
+		
+		new TableComponent({
+			targetId:"table3",
+			title:"Errors By Customers",
+			columns: [{ title: "Customer" },{ title: "Counts" }],
+			options : {
+				"searching": false,
+				"paging": false,
+				"ordering": false
+			}
+		}).draw(function(row){
+			alert(JSON.stringify(row));
+		});
+
+		new TableComponent({
+			targetId:"table4",
+			title:"Errors By Customers",
+			data:data,
+			columns: [{ title: "Customer" },{ title: "Counts" }],
+			options : {
+				"searching": false,
+				"paging": false,
+				"ordering": false
+			}
+		}).draw(function(row){
+			alert(JSON.stringify(row));
+		});
+
+	}
+
+	//Your BiQ App Components ...
+	var buildDashboard = function(){
+		chartSection();				
+	}
+	buildDashboard();
+
+
+</script>
+</html>

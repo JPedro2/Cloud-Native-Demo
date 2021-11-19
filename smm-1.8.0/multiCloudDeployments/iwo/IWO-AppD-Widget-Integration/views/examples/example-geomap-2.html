@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BiQ App - Dashboard</title>
+<meta charset="UTF-8">
+<% include ../partials/theme %>
+<% include head %>
+<% include ../includes/geomap %>
+</head>
+<body>
+	<div class="wrapper">
+		<aside class="menu-sidebar">
+			<div class="logo">
+				<a href="#">
+					<img width="180px" src="/img/AppDynamicsLogo.svg" alt="AppDynamics" />
+				</a>
+			</div>
+			<div class="menu-sidebar__content js-scrollbar1">
+				<nav class="navbar-sidebar">
+					<ul class="nav" id="side-menu"></ul>
+				</nav>
+			</div>
+		</aside>  
+        <div class="page-container"> 
+			<div class="container-fluid">    
+				<div id="geomap"></div>
+				<div id="experience"></div>
+				<div id="trend"></div>
+				<div id="sankey" style="width:765px;"></div>
+			</div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	//Your BiQ App Components ...
+
+	var geoMap;
+
+	var hideComps = function(){
+		hideElements(["experience","trend","sankey"]);
+	}
+
+	var buildMap = function(){
+		hideComps();
+
+		var data = [
+			[1,96,41.8781,-87.6298],
+			[2,90,25.7617,-80.1918],
+			[3,70,37.7749,-122.4194]
+		]
+		geoMap = new GeoMapComponent({
+			targetId:"geomap",
+			data:data
+		});
+		geoMap.draw();	
+	}
+
+	function setup(){
+		buildMap();
+
+		new FilterComponent({
+			targetId:"side-menu",
+			filters:[{
+				label:"Store",
+				id:"idStore",
+				adqlField :"<field name required>",
+				query:""
+			}]
+		}).draw(function(filters){
+            buildMap();
+		});	
+		
+		
+	}
+
+	function mouseClicked() {
+		
+		var selectedModels = geoMap.getDataModelsClicked(mouseX,mouseY);
+		var mX = mouseX;
+		var mY = mouseY;
+		console.log("mX ="+mX+" mY ="+mY);
+		if(selectedModels && selectedModels.length > 0){
+			hideComps();
+			
+			var experienceChart = new DonutChartComponent({
+				data:[["Normal",65],["Slow",20],["Error",15]],
+				targetId:"experience",
+				title:"User Experience",
+				options:{
+					size:{width:"200",height:"200"},
+					legend: {show: false}
+				}
+			});
+			experienceChart.draw(function(selection){
+				hideElements(["sankey"]);
+				var trendChart = new TimeChartComponent({
+					targetId:"trend",
+					title:"Experience Trend",
+					options:{
+						size:{width:"400",height:"200"}
+					}
+				});
+				trendChart.draw(function(selection){
+					var plotlyData={
+						nodes : ["RuntimeException",
+						"Login Service",
+						"DB Service",
+						"Customer A",
+						"Customer B"],
+						source : [1,1,2,2,3],
+						target : [2,3,4,5,5],
+						values : [15,5,10,5,2]
+					}
+
+					// sankeyChart = new PlotlySankeyChart({
+					// 	targetId:"sankey",
+					// 	title:"Flow",
+					// 	data:plotlyData,
+					// 	options:{
+					// 		size:{width:"400",height:"400"}
+					// 	}
+					// });
+					// sankeyChart.renderChart(function(selection){
+					// 	alert(JSON.stringify(selection));
+					// });
+					// geoMap.showComponent(sankeyChart,mX+10,mY+355);
+				})	
+				geoMap.showComponent(trendChart,mX+300,mY);
+			})	
+			geoMap.showComponent(experienceChart,mX+20,mY);
+		}
+	}
+
+</script>
+</html>

@@ -1,0 +1,76 @@
+<link rel="icon" href="data:;base64,=">
+
+<script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="/node_modules/datatables/media/js/jquery.dataTables.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/node_modules/datatables/media/css/jquery.dataTables.min.css"/>
+
+<!-- script type="text/javascript" src="/node_modules/d3/dist/d3.min.js"></script>
+<script type="text/javascript" src="/node_modules/billboard.js/dist/billboard.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/node_modules/billboard.js/dist/billboard.min.css"/ -->
+<!-- <script type="text/javascript" src="/node_modules/c3/c3.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/node_modules/c3/c3.min.css"/> -->
+
+<script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+
+<!--script type="text/javascript" src="/node_modules/animsition/dist/js/animsition.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/node_modules/animsition/dist/css/animsition.min.css"/-->
+<!-- <script type="text/javascript" src="/node_modules/leaflet/dist/leaflet.js"></script>
+<link type="text/css" rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css"/> -->
+
+<script type="text/javascript" src="/node_modules/jsviews/jsviews.min.js"></script>
+
+<!--script type="text/javascript" src="/node_modules/prismjs/prism.js"></script>
+<link type="text/css" rel="stylesheet" href="/node_modules/prismjs/themes/prism.css"/-->
+<!-- <script type="text/javascript" src="/node_modules/spin.js/spin.js"></script>
+<link type="text/css" rel="stylesheet" href="/node_modules/spin.js/spin.css"/> -->
+
+<link type="text/css" rel="stylesheet" href="/node_modules/@fortawesome/fontawesome-free/css/all.min.css" />
+<link type="text/css" rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
+
+<!--script type="text/javascript" src="/node_modules/p5/lib/p5.min.js"></script>
+<script type="text/javascript" src="/node_modules/p5/lib/addons/p5.dom.min.js"></script-->
+
+
+<!-- Main CSS-->
+ <link href="/theme-admin/css/theme.css" rel="stylesheet" media="all">
+ <link href="/theme-admin/css/dark.css" rel="stylesheet" media="all">
+
+
+
+ <script type="text/javascript" src="/analytics/js/biq-app.js"></script>
+
+<script type="text/javascript" src="/analytics/js/biq-app-charts-billboard.js"></script>
+<script type="text/javascript" src="/analytics/js/biq-app-group.js"></script>
+
+<link type="text/css" href="/analytics/css/biq-app.css" rel="stylesheet"/>
+
+
+<!--custom scripts-->
+<script type="text/javascript" src="/analytics/js/custom-biq-app.js"></script>
+
+
+
+<%- include components-templates %>
+<%- include custom-components-templates %>
+
+
+<!-- IWO -->
+<script type="text/javascript" src="/analytics/js/biq-app-cwom.js"></script>
+<link type="text/css" href="/analytics/css/biq-app-cwom.css" rel="stylesheet"/>
+<%- include ../custom/cwom-templates %>
+
+<script>
+var controller = "<%= controller %>";
+
+var openAdql = function(query,range){
+    query = replaceNulls(query);
+    copyTextToClipBoard(query);
+    var query = escapeQuery(query);
+    var url = controller+"/controller/#/location=ANALYTICS_ADQL_SEARCH&timeRange=Custom_Time_Range.BETWEEN_TIMES."+range.end+"."+range.start+".120&adqlQuery="+query+"&searchType=SINGLE&searchMode=ADVANCED&viewMode=DATA";
+    window.open(url,'_blank');
+}
+</script>
+
+
+

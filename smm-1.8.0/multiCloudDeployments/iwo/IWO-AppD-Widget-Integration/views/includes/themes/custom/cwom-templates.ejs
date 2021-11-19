@@ -1,0 +1,396 @@
+<script id="_SVGIcon" type="text/x-jsrender">
+ 
+  {{if type == 'ApplicationComponent'}}
+      <svg id='iconPath' width=45px height=45px viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path d='M15.5 2c.825 0 1.5.675 1.5 1.5v17c0 .825-.675 1.5-1.5 1.5h-7c-.825 0-1.5-.675-1.5-1.5v-17C7 2.675 7.675 2 8.5 2h7zM15 20V4H9v16h6zm5-16a1 1 0 0 1 1 1v14a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zM4 4a1 1 0 0 1 1 1v14a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm6.5 3.75a.75.75 0 0 1 0-1.5h3a.75.75 0 0 1 0 1.5h-3zm0 3a.75.75 0 0 1 0-1.5h3a.75.75 0 0 1 0 1.5h-3zM12 18a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'  
+              fill-rule='nonzero' 
+              data-link="class{getIconClass: type ~root.actions ~critOnly }"/>
+      </svg>
+  {{else type == 'VirtualMachine'}}
+
+      <svg id='iconPath' width=45px height=45px viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path d='M2.077 9.043a1 1 0 0 1 .538-1.307l8.775-3.66c.24-.1.512-.102.754-.006l9.225 3.659a1 1 0 0 1 .56 
+          1.298.989.989 0 0 1-.534.54l-9.22 4.033a1 1 0 0 1-.817-.008L2.583 9.568a1.033 1.033 0 0 1-.506-.525zm9.707-2.964l-6.29 
+          2.623 6.291 2.885 6.613-2.884-6.614-2.624zm8.817 5.322a1 1 0 0 1 .799 1.833l-9.225 4.024a1 1 0 0 
+          1-.817-.008l-8.775-4.023a1 1 0 0 1 .834-1.819l8.368 3.837 8.816-3.844zm0 3.658a1 1 0 1 1 .798 
+          1.834l-9.224 4.024a1 1 0 0 1-.817-.008l-8.775-4.024a1 1 0 0 1 .834-1.819l8.368 3.838 8.816-3.845z' 
+          fill-rule='nonzero' 
+          data-link="class{getIconClass: type ~root.actions ~critOnly}"
+          />
+      </svg>
+  {{else type == 'Host'}}
+      <svg id='iconPath' width=45px height=45px viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path d='M19.5 11c.825 0 1.5.675 1.5 1.5v3c0 .825-.675 1.5-1.5 1.5H13v1.999h7a1 1 0 1 1 0 2H4a1 1 0 1 1 
+          0-2h7V17H4.5c-.825 0-1.5-.675-1.5-1.5v-3c0-.825.675-1.5 1.5-1.5h15zm-.5 4v-2H5v2h14zm.5-12c.825 0 1.5.675
+          1.5 1.5v3c0 .825-.675 1.5-1.5 1.5h-15C3.675 9 3 8.325 3 7.5v-3C3 3.675 3.675 3 4.5 3h15zM19 7V5H5v2h14z' 
+          data-link="class{getIconClass: type ~root.actions ~critOnly}"
+          />
+      </svg>
+  {{else type == 'Storage' || type == 'VirtualVolume'}}
+
+      <svg id='iconPath' width=45px height=45px viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <g><path d='M10.364 14.136c3.659 0 7.363-1.125 7.363-3.272V6.773c0-2.148-3.704-3.273-7.363-3.273C6.704 3.5 3 
+              4.625 3 6.773v4.09c0 2.148 3.704 3.273 7.364 3.273zm0-9c3.72 0 5.728 1.161 5.728 1.637 0 .287-.74.823-2.141 
+              1.204-.918.25-2.116.432-3.587.432s-2.67-.182-3.586-.432c-1.403-.38-2.141-.917-2.141-1.204 0-.476 2.007-1.637 
+              5.727-1.637zM4.637 8.9c.6.32 1.332.572 2.14.759 1.105.255 2.347.386 3.587.386 1.24 0 2.482-.131 
+              3.587-.386.809-.187 1.54-.44 2.14-.76v1.965c0 .475-2.007 1.636-5.727 1.636s-5.727-1.162-5.727-1.636V8.9z' 
+              data-link="class{getIconClass: type ~root.actions ~critOnly}"
+              />
+              <path d='M18.667 11.44c1.786.535 3.06 1.439 3.06 2.696v4.091c0 2.15-3.704 3.273-7.363 3.273C10.704 21.5 7 
+              20.376 7 18.227v-3.403c.99.193 2.05.294 3.118.308a8.8 8.8 0 0 0 .66.21c.917.248 2.115.43 3.586.43 1.47 
+              0 2.669-.182 3.587-.43 1.402-.38 2.14-.918 2.14-1.206 0-.292-.766-.843-2.219-1.224.403-.427.683-.915.795-1.473zm1.425
+              6.787v-1.964c-.601.32-1.332.573-2.141.76a16.29 16.29 0 0 1-3.587.386c-1.24 
+              0-2.482-.133-3.586-.387-.81-.186-1.54-.439-2.141-.759v1.964c0 .475 2.007 1.636 5.727 
+              1.636s5.728-1.16 5.728-1.636z' 
+              data-link="class{getIconClass: type ~root.actions ~critOnly}"
+              />
+          </g>
+            
+      </svg>
+  {{else type == 'Database' || type == 'Volumes'}}
+      <svg id='iconPath' width=45px height=45px viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path d='M4.402 17.342v-2.754l.157.083c.768.412 1.708.738 2.752.978 1.44.333 3.065.506 4.689.506s3.249-.173 
+          4.69-.506c1.043-.24 1.982-.566 2.753-.978l.155-.083v2.754c0 .794-2.884 2.256-7.598 2.256s-7.598-1.462-7.598
+          -2.256zM19.598 6.658c0 .478-1.05 1.196-2.909 1.692-1.23.33-2.812.564-4.689.564-1.878 0-3.459-.235-4.69-.564
+          -1.858-.496-2.908-1.214-2.908-1.692 0-.796 2.884-2.255 7.598-2.255s7.598 1.459 7.598 2.255zm0 5.342c0 .478
+          -1.05 1.196-2.909 1.693-1.23.329-2.812.563-4.689.563-1.878 0-3.459-.234-4.69-.563-1.858-.497-2.908-1.215
+          -2.908-1.693V9.245c.051.029.104.056.157.084.768.41 1.708.737 2.752.979 1.439.332 3.065.505 4.689.505s3.25
+          -.173 4.69-.505c1.044-.242 1.983-.568 2.753-.979.051-.028.104-.054.155-.084V12zM12 2.503c-4.166 0-8.372 
+          1.113-9.302 3.251-.202.534-.195.904-.195.904v10.684c0 .32.07.62.195.904.93 2.137 5.136 3.251 9.302 3.251 
+          4.166 0 8.372-1.114 9.302-3.25.124-.285.195-.584.195-.905V6.658c0-2.728-4.777-4.155-9.497-4.155z' 
+          data-link="class{getIconClass: type ~root.actions  ~critOnly}"
+          />
+      </svg>
+      {{else type == 'ContainerSpec' || type == 'ContainerPod' || 'WorkloadController'}}
+      <svg id='iconPath' width=45px height=45px viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path d='M15.5 2c.825 0 1.5.675 1.5 1.5v17c0 .825-.675 1.5-1.5 1.5h-7c-.825 0-1.5-.675-1.5-1.5v-17C7 2.675 7.675 2 8.5 2h7zM15 20V4H9v16h6zm5-16a1 1 0 0 1 1 1v14a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zM4 4a1 1 0 0 1 1 1v14a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm6.5 3.75a.75.75 0 0 1 0-1.5h3a.75.75 0 0 1 0 1.5h-3zm0 3a.75.75 0 0 1 0-1.5h3a.75.75 0 0 1 0 1.5h-3zM12 18a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'  
+              fill-rule='nonzero' 
+              data-link="class{getIconClass: type ~root.actions ~critOnly}"/>
+      </svg>
+  {{/if}}
+</script>
+
+
+<script id="_cwomIconComponent" type="text/x-jsrender">
+    <div class='col-1' style='display:inline-block; text-align: center;'>
+        <a class="cwomIcon" data-link="{on ~updateFilter type}">
+            {{include tmpl="#_SVGIcon"/}}
+        </a>
+        <br/>
+        <div style='margin:5px; text-align:center; display:contents;'>
+            {^{if ~hasActions(type, ~root.actions, ~critOnly, ~actionCatEff, ~actionCatPrev, ~actionCatPerf, ~actionCatComp) }}
+                <span class='badge badge-danger db-dash' title='Critical Actions'>{^{countSeverity: ~root.actions type 'CRITICAL'  ~critOnly}}</span>
+                <span class='badge badge-warning db-dash' title='Major Actions'>{^{if ~critOnly }}0{{else}}{^{countSeverity: ~root.actions type 'MAJOR' ~critOnly}}{{/if}}</span>
+                <span class='badge badge-minor db-dash' title='Minor Actions'>{^{if ~critOnly }}0{{else}}{^{countSeverity: ~root.actions type 'MINOR' ~critOnly}}{{/if}}</span>
+            {{else}}
+                <span class='badge badge-light db-dash' title='No Actions'>0</span>&nbsp;
+            {{/if}}
+            
+        </div>
+        <div>
+            {{if type == 'ApplicationComponent'}}
+            <small>Application<br/>Component</small>
+            {{/if}}
+            {{if type == 'ApplicationServer'}}
+                <small>Application<br/>Server</small>
+            {{else type == 'VirtualMachine'}}
+                <small>VM</small>
+            {{else type == 'Host'}}
+                <small>Server<br/>&nbsp;</small>
+            {{else type == 'Storage'}}
+                <small>Storage<br/>&nbsp;</small>
+            {{else type == 'Database'}}
+                <small>DB<br/>&nbsp;</small>
+            {{else type == 'ContainerSpec'}}
+                <small>ContainerSpec<br/>&nbsp;</small>
+            {{else type == 'ContainerPod'}}
+                <small>K8s Pod<br/>&nbsp;</small>
+            {{else type == 'WorkloadController'}}
+                <small>K8s Controller<br/>&nbsp;</small>
+            {{else type == 'Volumes'}}
+                <small>Volumes<br/>&nbsp;</small>
+            {{else type == 'VirtualVolume'}}
+                <small>Virtual Volume&nbsp;</small>
+            {{/if}}
+        </div>
+</div>
+</script>
+
+<script id="_cwomIconPanel" type="text/x-jsrender">
+  <div class='col-7' style='display:contents;'>
+      <div class='col-7' style='display:inline-block;'>
+           <p class='h3'><img src="/img/intersight-logo.png" width="50" height="50">{^{actionCount:actions ~critOnly ~actionCatEff ~actionCatPrev ~actionCatPerf ~actionCatComp}} Pending Actions - Intersight</p>
+      </div>
+      <div class='col-1' style='display:inline-block;padding: 0px;'>
+        <div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' data-link="~actionCatEff" id='actionCatEffCheckbox' />
+          <label class='custom-control-label' for='actionCatEffCheckbox'>Efficiency Only</label>
+       </div>
+    </div>
+    <div class='col-1' style='display:inline-block;padding: 0px;'>
+      <div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' data-link="~actionCatPerf" id='actionCatPerfCheckbox' />
+        <label class='custom-control-label' for='actionCatPerfCheckbox'>Performance Only</label>
+      </div>
+    </div>
+    <div class='col-1' style='display:inline-block;padding: 0px;'>
+      <div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' data-link="~actionCatPrev" id='actionCatPrevCheckbox' />
+        <label class='custom-control-label' for='actionCatPrevCheckbox'>Prevention Only</label>
+      </div>
+    </div>
+    <div class='col-1' style='display:inline-block;padding: 0px;'>
+      <div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' data-link="~actionCatComp" id='actionCatCompCheckbox' />
+        <label class='custom-control-label' for='actionCatCompCheckbox'>Compliance Only</label>
+      </div>
+    </div>  
+
+      <div class='col-1' style='display:inline-block;padding: 0px;'>
+          <div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' data-link="~critOnly" id='critCheckbox' />
+             <label class='custom-control-label' for='critCheckbox'>Critical Only</label>
+          </div>
+      </div>
+  </div>
+  <div class='col-12' style='height:20px'>&nbsp;</div>
+  <div class='col-12' style='display:contents;'>
+      <div class='col-1' style='display:inline-block;'>&nbsp;</div>
+      {{for icons}}
+          {{include  tmpl="#_cwomIconComponent"/}}
+      {{/for}}
+      <div class='col-1' style='display:inline-block;'>&nbsp;</div>
+  </div>
+  <div class='col-12 headers' >
+    <div class='row'>
+
+
+      {^{for actions filter=~actionFilter }}
+          {{include  tmpl="#_actionHeaderRecommendation"/}}
+      {{/for}}
+    </div>
+  </div>
+      <div class='col-12' >
+
+      {^{for actions filter=~actionDetailFilter }}
+          {{include  tmpl="#_itemDetail"/}}
+      {{/for}}
+      </div>
+
+
+</script>
+
+<!-- action summary -->
+<script id="_actionHeaderRecommendation" type="text/x-jsrender">
+     <div class='card {{if risk.severity === "CRITICAL" }}border-danger{{else }}border-secondary{{/if}} mb-3'>
+       <div class='card-header-{{:risk.severity}}'>{{:risk.severity}}</div>
+       
+       <div class='card-body'>
+          <a class='list-group-item-action'
+          data-link="{on ~updateFilterDetails uuid}"
+           data-toggle='list' href='#list-{{:uuid}}' role='tab' aria-controls='{{:uuid}}'>
+           <div class='card-text'>
+            <div>
+              <b>Action:</b>&nbsp;{{if actionType === 'DELETE' }}DELETE{{else}}{{:actionType}}{{/if}}<br>
+              <b>Target:</b> &nbsp; {{targetDisplay:target target.className}}<br>
+              <b>Reason:</b> &nbsp;{{:risk.subCategory}}
+            </div>
+           </div>
+           <div style='margin: -20px 20px 0px 0px !important; float:right;'>
+             <span class='btn-floating btn-action actionpanelicon-{{:risk.severity}}' style='color:#949494;'>
+               {^{if ~detailID === uuid}}
+                <i class='fas fa-chevron-down pl-1'></i>
+               {{else}}
+               <i class='fas fa-chevron-right pl-1'></i>
+               {{/if}}
+             </span>
+           </div>
+          </a>
+       </div>
+     </div>
+</script>
+
+<script id="_itemDetail" type="text/x-jsrender">
+<div class='card tab-pane col-12' id='list-{{:uuid}}' role='tabpanel' aria-labelledby='list-{{:uuid}}-list'
+  style='max-width:95%;min-width:60%;padding: 5px 0px 25px 5px;'>
+  <div class='col-12' style='display:flex;margin:20px 0px 10px 0px;'>
+    <h5>
+      {{:details}}</h5>
+  </div>
+  <div class='col-12' style='display:flex;padding-left:0px;margin-bottom:10px;'>
+    <div class='col-6' style='display:inline-block;'>
+      <span class='vmt-subtitle'>{{:risk.description}}</span>
+    </div>
+    <div class='col-3' style='display:inline-block;'>
+      {{if target.className == "VirtualMachine}}{{getStatsValueText:stats}}{{/if}}
+    </div>
+    <div class='col-3' style='display:inline-block;'>
+      <small class="{{getRiskClass: risk.subCategory}}">{{:risk.subCategory}}</small>
+    </div>
+  </div>
+
+
+
+  <div class='col-12' style='display:flex;padding-left:0px;margin-top:20px;'>
+    <div class='col-4' style='display:inline-block;'>
+      <div class='col-12'>
+        <span class='classtitle'> {{:target.className}} </span>
+      </div>
+      <div class='col-12'>
+      
+        <a href='https://intersight.com/an/wo/home/?viewKey={{:entityURL}}' target='_new'>
+          <span class='classname'> {{:target.displayName}} </span>
+        </a>
+      </div>
+      {{if actionType != 'DELETE'}}
+        <div class='col-12'>
+          <span class='categorytext'> Host: </span> <span class='actiondata'> {{getHost:target target.className}}
+          </span>
+        </div>
+        <div class='col-12'>
+          <span class='categorytext'> IP Address: </span> <span class='actiondata'>
+            {{getIp: target target.className}}</span>
+        </div>
+        {{if target.aspects.cloudAspect !== undefined}}
+        <div class='col-12'>
+          <span class='categorytext'> Business Account: </span> <span class='actiondata'>
+            {{:target.aspects.cloudAspect.businessAccount.uuid}} </span>
+        </div>
+        {{/if}}
+      {{/if}}
+      <div class='col-12' style='margin-top:20px;'>
+        <span class='categorytitle'> Action Details </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> Created: </span> <span class='actiondata'> {{:createTime.substring(0,10)}} </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> Type: </span> <span class='actiondata'> {{:actionType.replace("_"," ")}} </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> State: </span> <span class='actiondata'> {{:actionState.replace("_"," ")}} </span>
+      </div>
+      {{if target.className === "VirtualMachine"}}
+      <div class='col-12' style='margin-top:20px;'>
+        <span class='categorytitle'> On-Demand Costs </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> Current: </span> <span
+          class='actiondata {{if target.onDemandRateBefore > target.onDemandRateAfter}}pink-text{{else}}teal-text{{/if}}'>${{:target.onDemandRateBefore}}
+        </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> After: </span> <span
+          class='actiondata {{if target.onDemandRateBefore > target.onDemandRateAfter}}teal-text{{else}}pink-text{{/if}}'><b>${{:target.onDemandRateAfter}}
+          </b></span>
+      </div>
+
+      {{/if}}
+    </div>
+
+    <div class='col-4' style='display:inline-block;'>
+      <div class='col-12'>
+        <span class='classtitle'> Change Details </span>
+      </div>
+      {{if risk.reasonCommodity.length > 0 }}
+      <div class='col-12'>
+        <span class='categorytext'> Main Factor: </span> <span class='actiondata'> {{:risk.reasonCommodity}} </span>
+      </div>
+
+      {{/if}}
+      <div class='col-12'>
+        <span class='categorytext'> Goal: </span> <span class='actiondata'> {{:risk.subCategory}} </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> Environment: </span> <span class='actiondata'> {{:target.environmentType}} </span>
+      </div>
+      {{if actionType == "DELETE"}}
+
+      {{else target.className == "ApplicationServer"}}
+      <div class='col-12' style='margin-top:20px;'>
+        <span class='categorytitle'> Resource Details </span>
+      </div>
+
+        <div class='col-12'>
+          <span class='categorytext'> {{:risk.reasonCommodity}} From: </span> <span class='actiondata'>
+            {{getval:risk.reasonCommodity newValue currentValue}}
+          </span>
+        </div>
+        <div class='col-12'>
+          <span class='categorytext'> {{:risk.reasonCommodity}} To: </span> <span class='actiondata'>
+            {{getval:risk.reasonCommodity currentValue newValue}} </span>
+        </div>
+  
+      {{else}}
+      <div class='col-12' style='margin-top:20px;'>
+            <span class='categorytitle'> Current Resource </span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Shape: </span> <span class='actiondata'> {{:currentEntity.displayName}}</span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'>{{:risk.reasonCommodity}}:</span> <span class='actiondata'> {{getval:risk.reasonCommodity currentValue currentValue}}  </span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Location: </span> <span class='actiondatalocation'> {{:currentLocation.displayName}}</span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Location Type: </span> <span class='actiondata'> {{:currentLocation.className}} </span>
+          </div>
+          <div class='col-12' style='margin-top:20px;'>
+            <span class='categorytitle'> New Resource - Recommendation </span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Shape: </span> <span class='actiondata'> {{:newEntity.displayName}}</span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> {{:risk.reasonCommodity}}: </span> <span class='actiondata'> {{getval:risk.reasonCommodity resizeToValue resizeToValue}}  </span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Location: </span> <span class='actiondatalocation'> {{:newLocation.displayName}} </span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Location Type: </span> <span class='actiondata'> {{:newLocation.className}} </span>
+          </div>
+      {{/if}}
+    </div>
+    <div class='col-4' style='display:inline-block;'>
+      <div class='col-12'>
+        <span class='classtitle'> ACTIONS </span>
+      </div>
+      <div class='col-12' style='margin-top:10px;'>
+        <a href='https://intersight.com/an/wo/home/?viewKey={{:actionURL}}' target='_new'>
+          <button type='button' class='btn btn-outline-default waves-effect' style="min-width: 180px;">Drill
+            Down</button>
+        </a>
+
+      </div>
+      <div class='col-12'>
+        <button type='button' class='btn btn-outline-default waves-effect' data-toggle='modal'
+          data-target='#modal-{{:uuid}}' style="min-width: 180px;" >Execute Action</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div class='modal fade' id='modal-{{:uuid}}' tabindex='-1' role='dialog' aria-labelledby='modalTitle' aria-hidden='true'
+  style='margin-left: 450px;'>
+  <div class='modal-dialog modal-dialog-centered' role='document'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h5 class='modal-title' id='modalTitle'>Execute Action - Confirmation</h5>
+        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+          <span aria-hidden='true'>&times;</span>
+        </button>
+      </div>
+      <div class='modal-body'>
+        Are you sure you want to execute this Action:
+        <p><small><b>{{:details}}</b></small></p>
+        You know, this is a demo. Execution is disabled.
+      </div>
+      <div class='modal-footer'>
+        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</script>

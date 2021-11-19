@@ -1,0 +1,37 @@
+<link rel="icon" href="data:;base64,=">
+<script type="text/javascript" src="/bundle.js" ></script>
+
+
+<script type="text/javascript" src="/analytics/js/biq-app.js"></script>
+<script type="text/javascript" src="/analytics/js/biq-app-charts-billboard.js"></script>
+<script type="text/javascript" src="/analytics/js/dashboard-theme.js"></script>
+<script type="text/javascript" src="/analytics/js/metisMenu.js"></script>
+
+<link type="text/css" href="/analytics/css/dashboard-theme.css" rel="stylesheet"/>
+<link type="text/css" href="/analytics/css/biq-app.css" rel="stylesheet"/>
+
+<!--custom scripts-->
+<script type="text/javascript" src="/analytics/js/custom-biq-app.js"></script>
+
+<%- include component-templates %>
+<%- include custom-components-templates %>
+
+<!-- CWOM -->
+<script type="text/javascript" src="/analytics/js/biq-app-cwom.js"></script>
+<link type="text/css" href="/analytics/css/biq-app-cwom.css" rel="stylesheet"/>
+<%- include ../custom/cwom-templates %>
+
+<script>
+var controller = "<%= controller %>";
+
+var openAdql = function(query,range){
+    query = replaceNulls(query);
+    copyTextToClipBoard(query);
+    var query = escapeQuery(query);
+    var url = controller+"/controller/#/location=ANALYTICS_ADQL_SEARCH&timeRange=Custom_Time_Range.BETWEEN_TIMES."+range.end+"."+range.start+".120&adqlQuery="+query+"&searchType=SINGLE&searchMode=ADVANCED&viewMode=DATA";
+    window.open(url,'_blank');
+}
+</script>
+
+
+

@@ -1,0 +1,19 @@
+{
+	"localport":3000,
+	"https":true,
+	"iwo_config": {
+		"iwoServer": 		"https://intersight.com",
+		"iwoAPIPath": 		"/wo/api/v3",
+		"iwoViewEntityURL": "/view/main/",
+		"iwoGetActionPath": "/entities",
+		"iwoOderActionBy": 	"severity",
+		"ascending": 		"false",
+		"disable_hateoas": 	"true",
+		"limit": 			"40"
+	},
+	"cwom_config": {
+		"turboserver": "https://xlcwom.demo.turbonomic.com",
+		"username": "ciscoiwo",
+		"password": "ciscoiwo"
+	}
+}

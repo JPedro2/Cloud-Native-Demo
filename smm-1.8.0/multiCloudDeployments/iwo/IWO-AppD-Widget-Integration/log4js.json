@@ -1,0 +1,10 @@
+{
+  "appenders": 
+  [
+    { "type":"console","level":"DEBUG"},
+    { "type":"file", "filename": "log/http.log", "backups": 10, "maxLogSize": 10485760, "category": "http","level":"INFO" },
+    { "type":"file", "filename": "log/restmanager.log", "backups": 10, "maxLogSize": 10485760, "category": "RestManager","level":"INFO" },
+    { "type":"file", "filename": "log/analyticsmanager.log", "backups": 10, "maxLogSize": 10485760, "category": "AnalyticsManager","level":"INFO" }
+  ],
+  "replaceConsole":true
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BiQ App - Dashboard</title>
+<meta charset="UTF-8">
+<% include ../includes/prism %>
+<% include ../partials/theme %>
+<% include head %>
+</head>
+<body>
+    <div class="wrapper">
+		<!-- Menu -->
+		<%- include ./menu %>
+        <div class="page-container">   
+			<!-- Main Page -->
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<p>Layout Your Components</p>
+					<p>Best to start with newdash.html and build your dashboard.</p>
+					<pre><code class="language-javascript">
+	&lt;body&gt;
+		&lt;div class="wrapper"&gt;
+			&lt;aside class="menu-sidebar"&gt;
+				&lt;div class="logo"&gt;
+					&lt;a href="#"&gt;
+						&lt;img width="180px" src="/img/AppDynamicsLogo.svg" alt="AppDynamics" /&gt;
+					&lt;/a&gt;
+				&lt;/div&gt;
+				&lt;div class="menu-sidebar__content js-scrollbar1"&gt;
+					&lt;nav class="navbar-sidebar"&gt;
+						&lt;ul class="nav" id="side-menu"&gt;&lt;/ul&gt;
+					&lt;/nav&gt;
+				&lt;/div&gt;
+			&lt;/aside&gt;    
+			&lt;div class="page-container"&gt; 
+				&lt;div class="container-fluid"&gt;    
+					&lt;div class="row"&gt;
+						&lt;div id="comp1" class="col-md-3"&gt;&lt;/div&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/body&gt;
+					</code></pre>
+					<ul style="margin:20px">
+							<li>Within the page-container div, you will begin to add your components.</li>
+							<li>Components and ChartComponents bind to div elements using the targetId property.</li>
+							<li>Bootstrap grid layout is used to align components (see : <a href="https://getbootstrap.com/docs/4.0/layout/grid/">https://getbootstrap.com/docs/4.0/layout/grid</a>)</li>
+							<li>The admin theme is based on this open source project (see :<a href="https://github.com/ColorlibHQ/CoolAdmin">https://github.com/ColorlibHQ/CoolAdmin</a>)</li>
+							<li>Font Awesome icons are also used (see : <a href="https://www.w3schools.com/icons/fontawesome_icons_intro.asp">https://www.w3schools.com/icons/fontawesome_icons_intro.asp</a>)</li>
+					</ul>
+
+				</div>	
+			</div>
+		</div>
+    </div>
+</body>
+<script type="text/javascript">
+	
+
+	var chartSection = function(){
+		var data = [
+			["Apple",1000],
+			["Amazon",2000],
+			["Cisco",3000],
+			["AppDynamics",4000],
+		]
+
+		new Table({
+			targetId:"table",
+			title:"Errors By Customers",
+			data:data,
+			columns: [{ title: "Customer" },{ title: "Counts" }]
+		}).draw(function(row){
+			alert(JSON.stringify(row));
+		});
+
+		new TableComponent({
+			targetId:"table2",
+			title:"Errors By Customers",
+			data:data,
+			columns: [{ title: "Customer" },{ title: "Counts" }]
+		}).draw(function(row){
+			alert(JSON.stringify(row));
+		});
+
+		
+		new TableComponent({
+			targetId:"table3",
+			title:"Errors By Customers",
+			columns: [{ title: "Customer" },{ title: "Counts" }],
+			options : {
+				"searching": false,
+				"paging": false,
+				"ordering": false
+			}
+		}).draw(function(row){
+			alert(JSON.stringify(row));
+		});
+
+		new TableComponent({
+			targetId:"table4",
+			title:"Errors By Customers",
+			data:data,
+			columns: [{ title: "Customer" },{ title: "Counts" }],
+			options : {
+				"searching": false,
+				"paging": false,
+				"ordering": false
+			}
+		}).draw(function(row){
+			alert(JSON.stringify(row));
+		});
+
+	}
+
+	//Your BiQ App Components ...
+	var buildDashboard = function(){
+		chartSection();				
+	}
+	buildDashboard();
+
+
+</script>
+</html>

@@ -1,0 +1,121 @@
+- trigger: bt
+  description: BiQ Table Component
+  scope: javascript
+  mTime: 1529385120837
+  text: |
+        new TableComponent({
+            //query : "",
+            targetId:"",
+            title:"Service Counts",
+            //panelClass:"panel-red",
+            columns: [{ title: "Service" },{ title: "Counts" }]
+        }).draw(function(record){
+            
+        });
+
+- trigger: bx
+  description: BiQ Box Component
+  scope: javascript
+  mTime: 1529387776029
+  text: |
+        new BoxChartComponent({
+            title:"Chart",
+            targetId:"${1:id}",
+            action:"View Details",
+            actionClick: "action()",
+            icon:"fa fa-exclamation fa-2x",
+            //icon:"fa fa-cogs fa-2x",
+            //icon:"fa fa-tasks fa-2x",
+            height:75,
+            width:300
+            //query:""
+        }).draw();
+
+- trigger: bf
+  description: BiQ Filter Component
+  scope: javascript
+  mTime: 1529384127033
+  text: |
+        new FilterComponent({
+            targetId:"side-menu",
+            filters:[{
+                label:"Error",
+                id:"errorInput",
+                adqlField :"segments.userData.Error",
+                query:""
+            },{
+                label:"Service",
+                id:"serviceInput",
+                adqlField :"segments.userData.Service",
+                query:""
+            }]
+        }).draw(function(filters){
+            buildDashboard();
+        });
+
+- trigger: btime
+  description: BiQ Time Component
+  scope: javascript
+  mTime: 1529384481794
+  text: |
+        new TimeRangeComponent({
+         targetId:"timeSelector"
+        }).draw();
+
+- trigger: blc
+  description: BiQ Line Chart
+  scope: javascript
+  mTime: 1529385048990
+  text: |
+        new LineChartComponent({
+            //query: "",    
+            targetId:"errorTrend",
+            title:"Error Details: ",
+            panelClass:"panel-red"
+        }).draw(function(id,date){
+            
+        });
+
+- trigger: bh
+  description: BiQ Hide Elements
+  scope: javascript
+  mTime: 1529385573428
+  text: |
+        hideElements(["${1:div1}","${2:div2}"]);
+
+- trigger: bd
+  description: Div
+  scope: html
+  mTime: 1529380997154
+  text: |
+        <div id=""> </div>
+        
+
+- trigger: br3
+  description: BiQ Row - 3 Comps
+  scope: html
+  mTime: 1529382032117
+  text: |
+        <div class="row">
+         <div class="col-lg-4 col-md-4">
+          <div id="comp1" class="panel panel-red"></div>
+         </div>
+         <div class="col-lg-4 col-md-4">
+          <div id="comp2" class="panel panel-green"></div>
+         </div>
+         <div class="col-lg-4 col-md-4">
+          <div id="comp3" class="panel panel-yellow"></div>
+         </div>
+        </div>
+
+- trigger: bl
+  description: BiQ Left Bar Filter
+  scope: html
+  mTime: 1529384039107
+  text: |
+        <div class="navbar-default sidebar" role="navigation">
+         <div class="sidebar-nav navbar-collapse">
+          <ul class="nav" id="side-menu"></ul>
+         </div>
+        </div>
+

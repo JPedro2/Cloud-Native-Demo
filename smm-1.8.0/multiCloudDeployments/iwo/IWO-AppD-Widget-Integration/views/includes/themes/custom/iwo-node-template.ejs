@@ -1,0 +1,321 @@
+
+
+<script id="_SVGIcon" type="text/x-jsrender">
+  {{if type == 'ApplicationServer' || type == 'ApplicationComponent'}}
+     <svg id='iconPath' width=75px height=75px viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
+          <path d='M15.5 2c.825 0 1.5.675 1.5 1.5v17c0 .825-.675 1.5-1.5 1.5h-7c-.825 0-1.5-.675-1.5-1.5v-17C7 2.675 7.675 2 8.5 2h7zM15 20V4H9v16h6zm5-16a1 1 0 0 1 1 1v14a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zM4 4a1 1 0 0 1 1 1v14a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1zm6.5 3.75a.75.75 0 0 1 0-1.5h3a.75.75 0 0 1 0 1.5h-3zm0 3a.75.75 0 0 1 0-1.5h3a.75.75 0 0 1 0 1.5h-3zM12 18a1 1 0 1 1 0-2 1 1 0 0 1 0 2z'  
+              fill-rule='nonzero' 
+              data-link="class{getIconClass: type ~root.actions ~critOnly}"/>
+      </svg>
+  {{/if}}
+</script>
+
+<script id="_cwomIconComponent" type="text/x-jsrender">
+<div class='col-2' style='display:inline-block; text-align: center;'>
+    <a class="cwomIcon" data-link="{on ~updateFilter type}">
+        {{include tmpl="#_SVGIcon"/}}
+    </a>
+    <br/>
+    <div style='margin:5px; text-align:center; display:contents;'>
+        {^{if ~hasActions(type, ~root.actions, ~critOnly ) }}
+            <span class='badge badge-danger db-dash' title='Critical Actions'>{^{countSeverity: ~root.actions type 'CRITICAL'  ~critOnly}}</span>
+            <span class='badge badge-warning db-dash' title='Major Actions'>{^{if ~critOnly }}0{{else}}{^{countSeverity: ~root.actions type 'MAJOR' ~critOnly}}{{/if}}</span>
+            <span class='badge badge-minor db-dash' title='Minor Actions'>{^{if ~critOnly }}0{{else}}{^{countSeverity: ~root.actions type 'MINOR' ~critOnly}}{{/if}}</span>
+        {{else}}
+            <span class='badge badge-light db-dash' title='No Actions'>0</span>&nbsp;
+        {{/if}}
+    </div>
+</div>
+
+</script>
+
+<script id="_cwomIconPanel" type="text/x-jsrender">
+<div  style='display:contents;'>
+    <div class='col-9' style='display:inline-block;'>
+         <p class='h3'>{^{actionCount:actions ~critOnly}} Pending Actions proposed by IWO:</p>
+    </div>
+    <div class='col-2' style='display:inline-block;padding: 0px;'>
+        <div class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input' data-link="~critOnly" id='critCheckbox' />
+           <label class='custom-control-label' for='critCheckbox'>Show Critical Only</label>
+        </div>
+    </div>
+</div>
+<div class='col-12' style='height:20px'>&nbsp;</div>
+<div class='col-12' style='display:contents;'>
+    <div class='col-1' style='display:inline-block;'>&nbsp;</div>
+    {{for icons}}
+        {{include  tmpl="#_cwomIconComponent"/}}
+    {{/for}}
+    <div class='col-1' style='display:inline-block;'>&nbsp;</div>
+</div>
+<div class='col-12 headers' >
+  <div class='row'>
+
+    {^{for actions filter=~actionFilter }}
+        {{include  tmpl="#_actionHeaderRecommendation"/}}
+    {{/for}}
+  </div>
+</div>
+    <div class='col-12' >
+
+    {^{for actions filter=~actionDetailFilter }}
+        {{include  tmpl="#_itemDetail"/}}
+    {{/for}}
+    </div>
+
+
+</script>
+
+<!-- action summary -->
+<script id="_actionHeaderRecommendation" type="text/x-jsrender">
+     <div class='card {{if risk.severity === "CRITICAL" }}border-danger{{else }}border-secondary{{/if}} mb-3'>
+       <div class='card-header-{{:risk.severity}}'>{{:risk.severity}}</div>
+       <div class='card-header'><img src='/img/{{if target.className === "ApplicationServer" }}as{{else}}vm{{/if}}.png' class='actionicon'/><span {{if risk.severity === "CRITICAL" }}style='color:#FF0000;'{{/if}}>{{if target.className === "ApplicationServer" }}Application Server{{else target.className === "VirtualMachine" }}Virtual Machine{{/if}} Action</span></div>
+
+       <div class='card-body'>
+          <a class='list-group-item-action'
+          data-link="{on ~updateFilterDetails uuid}"
+           data-toggle='list' href='#list-{{:uuid}}' role='tab' aria-controls='{{:uuid}}'>
+           <div class='card-text'>
+            <div>
+              <b>Action:</b>&nbsp;{{if actionType === 'DELETE' }}DELETE{{else}}{{:actionType}}{{/if}}<br>
+              <b>Target:</b> &nbsp; {{targetDisplay:target target.className}}<br>
+              {{if actionType !== 'DELETE' }}<b>Resize from</b> {{getval:risk.reasonCommodity resizeToValue currentValue}}<b> to</b> {{getval:risk.reasonCommodity resizeToValue resizeToValue}}<br/>{{/if}}
+              <b>Reason:</b> &nbsp; {{:risk.subCategory}}
+            </div>
+           </div>
+           <div style='margin: -20px 20px 0px 0px !important; float:right;'>
+             <span class='btn-floating btn-action actionpanelicon-{{:risk.severity}}' style='color:#949494;'>
+               {^{if ~detailID === uuid}}
+                <i class='fas fa-chevron-down pl-1'></i>
+               {{else}}
+               <i class='fas fa-chevron-right pl-1'></i>
+               {{/if}}
+             </span>
+           </div>
+          </a>
+       </div>
+     </div>
+</script>
+
+<script id="_itemDetail" type="text/x-jsrender">
+<div class='card tab-pane col-12' id='list-{{:uuid}}' role='tabpanel' aria-labelledby='list-{{:uuid}}-list'
+  style='max-width:95%;min-width:60%;padding: 5px 0px 25px 5px;'>
+  <div class='col-12' style='display:flex;margin:20px 0px 10px 0px;'>
+    <h5>
+      {{:details}}</h5>
+  </div>
+  <div class='col-12' style='display:flex;padding-left:0px;margin-bottom:10px;'>
+    <div class='col-6' style='display:inline-block;'>
+      <span class='vmt-subtitle'>{{:risk.description}}</span>
+    </div>
+    <div class='col-3' style='display:inline-block;'>
+      {{if target.className == "VirtualMachine}}{{getStatsValueText:stats}}{{/if}}
+    </div>
+    <div class='col-3' style='display:inline-block;'>
+      <small class="{{getRiskClass: risk.subCategory}}">{{:risk.subCategory}}</small>
+    </div>
+  </div>
+
+
+
+  <div class='col-12' style='display:flex;padding-left:0px;margin-top:20px;'>
+    <div class='col-4' style='display:inline-block;'>
+      <div class='col-12'>
+        <span class='classtitle'> {{:target.className}} </span>
+      </div>
+      <div class='col-12'>
+      
+        <a href='https://intersight.com/an/wo/home/?viewKey={{:entityURL}}' target='_new'>
+          <span class='classname'> {{:target.displayName}} </span>
+        </a>
+      </div>
+      {{if actionType != 'DELETE'}}
+        <div class='col-12'>
+          <span class='categorytext'> Host: </span> <span class='actiondata'> {{getHost:target target.className}}
+          </span>
+        </div>
+        <div class='col-12'>
+          <span class='categorytext'> IP Address: </span> <span class='actiondata'>
+            {{getIp: target target.className}}</span>
+        </div>
+        {{if target.aspects.cloudAspect !== undefined}}
+        <div class='col-12'>
+          <span class='categorytext'> Business Account: </span> <span class='actiondata'>
+            {{:target.aspects.cloudAspect.businessAccount.uuid}} </span>
+        </div>
+        {{/if}}
+      {{/if}}
+      <div class='col-12' style='margin-top:20px;'>
+        <span class='categorytitle'> Action Details </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> Created: </span> <span class='actiondata'> {{:createTime.substring(0,10)}} </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> Type: </span> <span class='actiondata'> {{:actionType.replace("_"," ")}} </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> State: </span> <span class='actiondata'> {{:actionState.replace("_"," ")}} </span>
+      </div>
+      {{if target.className === "VirtualMachine"}}
+      <div class='col-12' style='margin-top:20px;'>
+        <span class='categorytitle'> On-Demand Costs </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> Current: </span> <span
+          class='actiondata {{if target.onDemandRateBefore > target.onDemandRateAfter}}pink-text{{else}}teal-text{{/if}}'>${{:target.onDemandRateBefore}}
+        </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> After: </span> <span
+          class='actiondata {{if target.onDemandRateBefore > target.onDemandRateAfter}}teal-text{{else}}pink-text{{/if}}'><b>${{:target.onDemandRateAfter}}
+          </b></span>
+      </div>
+
+      {{/if}}
+    </div>
+
+    <div class='col-4' style='display:inline-block;'>
+      <div class='col-12'>
+        <span class='classtitle'> Change Details </span>
+      </div>
+      {{if risk.reasonCommodity.length > 0 }}
+      <div class='col-12'>
+        <span class='categorytext'> Main Factor: </span> <span class='actiondata'> {{:risk.reasonCommodity}} </span>
+      </div>
+
+      {{/if}}
+      <div class='col-12'>
+        <span class='categorytext'> Goal: </span> <span class='actiondata'> {{:risk.subCategory}} </span>
+      </div>
+      <div class='col-12'>
+        <span class='categorytext'> Environment: </span> <span class='actiondata'> {{:target.environmentType}} </span>
+      </div>
+      {{if actionType == "DELETE"}}
+
+      {{else target.className == "ApplicationServer"}}
+      <div class='col-12' style='margin-top:20px;'>
+        <span class='categorytitle'> Resource Details </span>
+      </div>
+
+        <div class='col-12'>
+          <span class='categorytext'> {{:risk.reasonCommodity}} From: </span> <span class='actiondata'>
+            {{getval:risk.reasonCommodity newValue currentValue}}
+          </span>
+        </div>
+        <div class='col-12'>
+          <span class='categorytext'> {{:risk.reasonCommodity}} To: </span> <span class='actiondata'>
+            {{getval:risk.reasonCommodity currentValue newValue}} </span>
+        </div>
+  
+      {{else}}
+      <div class='col-12' style='margin-top:20px;'>
+            <span class='categorytitle'> Current Resource </span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Shape: </span> <span class='actiondata'> {{:currentEntity.displayName}}</span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'>{{:risk.reasonCommodity}}:</span> <span class='actiondata'> {{getval:risk.reasonCommodity currentValue currentValue}}  </span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Location: </span> <span class='actiondatalocation'> {{:currentLocation.displayName}}</span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Location Type: </span> <span class='actiondata'> {{:currentLocation.className}} </span>
+          </div>
+          <div class='col-12' style='margin-top:20px;'>
+            <span class='categorytitle'> New Resource - Recommendation </span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Shape: </span> <span class='actiondata'> {{:newEntity.displayName}}</span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> {{:risk.reasonCommodity}}: </span> <span class='actiondata'> {{getval:risk.reasonCommodity resizeToValue resizeToValue}}  </span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Location: </span> <span class='actiondatalocation'> {{:newLocation.displayName}} </span>
+          </div>
+          <div class='col-12'>
+            <span class='categorytext'> Location Type: </span> <span class='actiondata'> {{:newLocation.className}} </span>
+          </div>
+      {{/if}}
+    </div>
+    <div class='col-4' style='display:inline-block;'>
+      <div class='col-12'>
+        <span class='classtitle'> ACTIONS </span>
+      </div>
+      <div class='col-12' style='margin-top:10px;'>
+        <a href='https://intersight.com/an/wo/home/?viewKey={{:actionURL}}' target='_new'>
+          <button type='button' class='btn btn-outline-default waves-effect' style="min-width: 180px;">Drill
+            Down</button>
+        </a>
+
+      </div>
+      <div class='col-12'>
+        <button type='button' class='btn btn-outline-default waves-effect' data-toggle='modal'
+          data-target='#modal-{{:uuid}}' style="min-width: 180px;" >Execute Action</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div class='modal fade' id='modal-{{:uuid}}' tabindex='-1' role='dialog' aria-labelledby='modalTitle' aria-hidden='true'
+  style='margin-left: 450px;'>
+  <div class='modal-dialog modal-dialog-centered' role='document'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h5 class='modal-title' id='modalTitle'>Execute Action - Confirmation</h5>
+        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+          <span aria-hidden='true'>&times;</span>
+        </button>
+      </div>
+      <div class='modal-body'>
+        Are you sure you want to execute this Action:
+        <p><small><b>{{:details}}</b></small></p>
+      </div>
+      <div class='modal-footer'>
+        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+        <button type='button' class='btn btn-primary' data-link="{on ~executeAction uuid}">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</script>
+
+<script type="text/x-jsrender">
+<div class='card {{if risk.severity === "CRITICAL" }}border-danger{{else }}border-secondary{{/if}} mb-3'>
+  <div class='card-header-{{:risk.severity}}'>{{:risk.severity}}</div>
+  <div class='card-header'><img src='/img/{{if target.className === "ApplicationServer" }}as{{else}}vm{{/if}}.png' class='actionicon'/><span {{if risk.severity === "CRITICAL" }}style='color:#FF0000;'{{/if}}>{{if target.className === "ApplicationServer" }}Application Server{{else target.className === "VirtualMachine" }}Virtual Machine{{/if}} Action</span></div>
+
+  <div class='card-body'>
+     <a class='list-group-item-action'
+     data-link="{on ~updateFilterDetails uuid}"
+      data-toggle='list' href='#list-{{:uuid}}' role='tab' aria-controls='{{:uuid}}'>
+      <div class='card-text'>
+       <div>
+         <b>Action:</b>&nbsp;{{if actionType === 'DELETE' }}DELETE{{else}}{{:actionType}}{{/if}}<br>
+         <b>Target:</b> &nbsp; {{targetDisplay:target target.className}}<br>
+         {{if actionType !== 'DELETE' }}<b>Resize from</b> {{getval:risk.reasonCommodity resizeToValue currentValue}}<b> to</b> {{getval:risk.reasonCommodity resizeToValue resizeToValue}}<br/>{{/if}}
+         <b>Reason:</b> &nbsp; {{:risk.subCategory}}
+       </div>
+      </div>
+      <div style='margin: -20px 20px 0px 0px !important; float:right;'>
+        <span class='btn-floating btn-action actionpanelicon-{{:risk.severity}}' style='color:#949494;'>
+          {^{if ~detailID === uuid}}
+           <i class='fas fa-chevron-down pl-1'></i>
+          {{else}}
+          <i class='fas fa-chevron-right pl-1'></i>
+          {{/if}}
+        </span>
+      </div>
+     </a>
+  </div>
+</div>
+</script>
+

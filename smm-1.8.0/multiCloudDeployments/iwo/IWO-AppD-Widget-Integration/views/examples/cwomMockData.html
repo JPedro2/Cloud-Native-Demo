@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>BiQ App - Dashboard</title>
+	<meta charset="UTF-8">
+	<% include ../partials/theme %>
+	<% include ../examples/head %>
+
+	<style>
+	.page-container {
+		padding-left: 0px;
+	}
+	</style>
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="page-container">
+			<div class="container-fluid">
+				<!-- Main Page -->
+				<img id="loadingindicator" src="/img/loading.gif"/>
+				<div id="CWOMTest" class="row"></div>
+
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	function getCounts(type, actions) {
+		var subactions = actions.filter(action => action.target.className === type)
+		var data = {
+			type : type,
+			critical : subactions.filter(action => action.risk.severity === 'CRITICAL').length,
+			major : subactions.filter(action => action.risk.severity === 'MAJOR').length,
+			minor : subactions.filter(action => action.risk.severity === 'MINOR').length,
+		}
+		return data;
+	}
+
+	var buildDashboard = function () {
+
+		makeGetCall("/cwom/mockData", function (results) {
+			var actions = [];
+			if (results && results.actions) {
+				actions = results.actions;
+				
+			}
+			var counts = {};
+			if(results && results.counts) {
+				counts = results.counts;
+			}
+			var server = '';
+			if(results && results.cwomserver) {
+				server = results.cwomserver;
+			}
+			var data = {
+				targetId: "CWOMTest",
+				title: "CWOM Test",
+				actions: actions,
+				server: server
+			};
+			new CWOMPanelComponent(data).draw(function () {
+				//buildDashboard();
+				$('#loadingindicator').hide();
+			});;
+
+
+		});
+
+		// new CWOMIconComponent({
+		// 	title: "CWOM Test",
+		// 	targetId: "CWOMTest",
+		// 	critical: 0,
+		// 	major: 0,
+		// 	minor: 0,
+		// 	type: "AppServer"
+		// }).draw(function () {
+		// 	//buildDashboard();
+		// });
+	}
+	buildDashboard();
+</script>
+
+</html>

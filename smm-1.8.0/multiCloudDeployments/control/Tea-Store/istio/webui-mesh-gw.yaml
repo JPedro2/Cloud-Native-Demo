@@ -1,0 +1,75 @@
+apiVersion: servicemesh.cisco.com/v1alpha1
+kind: IstioMeshGateway
+metadata:
+  labels:
+    app: teastore-webui-mesh-gateway
+    istio: webui-mesh-gateway
+    istio.io/rev: cp-v111x.istio-system
+  name: teastore-webui-mesh-gateway
+  namespace: istio-system
+spec:
+  deployment:
+    metadata:
+      labels:
+        app: teastore-webui-mesh-gateway
+        gateway-name: teastore-webui-mesh-gateway
+        gateway-type: ingress
+        istio: webui-mesh-gateway
+        istio.io/rev: cp-v111x.istio-system
+    env:
+    - name: ISTIO_META_LOCAL_ENDPOINTS_ONLY
+      value: "true"
+    replicas:
+      count: 1
+      min: 1
+      max: 1
+    resources:
+      limits:
+        cpu: "2"
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    securityContext:
+      runAsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+  service:
+    ports:
+    - name: http2
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    - name: tcp-als-tls
+      port: 50600
+      protocol: TCP
+      targetPort: 50600
+    - name: tcp-zipkin-tls
+      port: 59411
+      protocol: TCP
+      targetPort: 59411
+    type: LoadBalancer
+  istioControlPlane:
+    name: cp-v111x
+    namespace: istio-system
+  runAsRoot: true
+  type: ingress
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  labels:
+    app: teastore-webui-ingressgateway
+  name: teastore-webui-ingressgateway
+  namespace: tea-store
+spec:
+  selector:
+    gateway-name: teastore-webui-mesh-gateway
+    gateway-type: ingress
+  servers:
+  - hosts:
+    - "*"
+    port:
+      name: http
+      number: 8080
+      protocol: HTTP

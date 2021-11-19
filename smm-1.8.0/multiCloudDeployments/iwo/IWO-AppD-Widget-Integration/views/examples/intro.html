@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BiQ App - Dashboard</title>
+<meta charset="UTF-8">
+<% include ../includes/prism %>
+<% include ../partials/theme %>
+<% include head %>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Menu -->
+		<%- include ./menu %>
+        <div class="page-container">   
+            <!-- Main Page -->
+            <div class="container-fluid">
+                <!-- Main Page -->
+                <div class="row">
+                    <div class="typo-articles">
+                            <h2 class="pb-2 display-5">Intro</h2>
+                            
+                            <p>BiQ App Framework was created to provide the ability to quickly build very tailored apps using the Analytics API.</p>
+                            <div class="vue-lists">
+                                <ul>
+                                    <li>Full control over the look and feel with pure html and javascript.</li>
+                                    <li>Control over queries and updating the data on the fly.</li>
+                                    <li>Control over how to visualize the data and being able to interact with the visualizations.</li>
+                                </ul>
+                            </div>
+                            
+                            <br/>
+                            <p>Built on open source libraries. This allows you to easily integrate any libraries that you would like to use.
+                                We also wrap these libraries by using Chart and Component objects, which allows you to swap libraries if you like.
+                                Most Libraries have their Pros and Cons and we have chosen to pick a few libraries and mix and match based on the use case.
+                            </p>
+                            <br/>
+                            <h5 class="pb-2 display-5">Main Technologies :</h5>
+                            
+                            <div  class="vue-lists">
+                                <ul>
+                                    <li>Node.js app using express views</li>
+                                    <li>C3.js for charts</li>
+                                    <li>Plotly.js for charts</li>
+                                    <li>JQuery</li>
+                                </ul>
+                            </div>
+                           
+                        </div>
+                </div>
+                <div class="row">
+                    <br/>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Component based, simple api and very customizable.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Generates the following panel with a Pie Chart backed by an ADQL query :</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                            <pre><code class="language-javascript">			
+        new PieChartComponent({
+            targetId:"pieChart",
+            title:"Customers"
+            query:"SELECT segments.userData.customerName, count(*) FROM transactions"
+        }).draw(function(selection){
+            alert(selection);
+        })						
+                            </code></pre>
+                        </div>
+                    <div id="pieChart" class="col-md-6"></div>
+                </div>
+            </div>
+		</div>
+    </div>
+</body>
+<script type="text/javascript">
+	
+	//Your BiQ App Components ...
+	var buildDashboard = function(){
+		new PieChartComponent({
+			targetId:"pieChart",
+			title:"Customers"
+		}).draw(function(selection){
+			alert(selection);
+		})			
+	}
+	buildDashboard();
+
+
+</script>
+</html>

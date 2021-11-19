@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BiQ App - Dashboard</title>
+<meta charset="UTF-8">
+<% include ../partials/theme %>
+<% include head %>
+</head>
+<body>
+	<div class="wrapper">
+		<aside class="menu-sidebar">
+			<div class="logo">
+				<a href="#">
+					<img width="180px" src="/img/AppDynamicsLogo.svg" alt="AppDynamics" />
+				</a>
+			</div>
+			<div class="menu-sidebar__content js-scrollbar1">
+				<nav class="navbar-sidebar">
+					<ul class="nav" id="side-menu"></ul>
+				</nav>
+			</div>
+		</aside>  
+        <div class="page-container"> 
+			<div class="container-fluid">    
+				<!-- Main Page -->
+				<div class="row">
+					<div id="ErrorTotals" class="col-md-3"></div>				
+				</div>
+			</div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	//Your BiQ App Components ...
+	var buildDashboard = function(){
+		new BoxChartComponent({
+			title:"Error Counts",
+			targetId:"ErrorTotals",
+			action:"View Details",
+			actionClick: "alert('setup an action for your component')",
+			icon:"fa fa-exclamation fa-2x",
+			options:{size:{height:75,width:300}},
+			panelClass:"overview-item--c3"
+			//query:""
+		}).draw();
+				
+		new FilterComponent({
+			targetId:"side-menu",
+			filters:[{
+				label:"Error",
+				id:"idError",
+				adqlField :"<field name required>",
+				query:""
+			}]
+		}).draw(function(filters){
+            buildDashboard();
+		});		
+	}
+	buildDashboard();
+</script>
+</html>

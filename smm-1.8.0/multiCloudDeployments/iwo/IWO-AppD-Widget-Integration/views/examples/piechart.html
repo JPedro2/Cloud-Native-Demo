@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BiQ App - Dashboard</title>
+<meta charset="UTF-8">
+<% include ../includes/prism %>
+<% include ../partials/theme %>
+<% include head %>
+</head>
+<body>
+    <div class="wrapper">
+		<!-- Menu -->
+		<%- include ./menu %>
+        <div class="page-container">   
+			<!-- Main Page -->
+		<div  class="container-fluid">
+			<div class="row">
+				<div id="pieChartInfo" class="col-md-6">
+					<p>Pie Chart :</p>
+					<ul>
+						<li>When working with the PieChart object you have to provide the data using the data property.</li>
+						<li>A wrapper for a C3.js Pie Chart (see <a href="https://c3js.org/samples/chart_pie.html">c3.js pie chart</a> ) </li>
+						<li>You would use the Pie Chart when you want to have control over the data and the chart itself.</li>
+					</ul>
+					<pre><code class="language-javascript">
+	var pieData = [
+		["Apple",1000],
+		["Amazon",2000],
+		["Cisco",3000],
+		["AppDynamics",4000],
+	]
+	
+	new PieChart({
+		targetId:"pieChart",
+		data:pieData
+	}).draw(function(selection){
+		alert(selection);
+	})
+					</code></pre>
+
+				</div>	
+				<div id="pieChart" class="col-md-6"></div>				
+			</div>
+			<div class="row"><hr/></div>
+			<div class="row">
+				<div class="col-md-6">
+					<p>Pie Chart Component</p>
+					<ul>
+						<li>Adds an outer panel and you can provide a title. The title property can be dynamic and include some variable and or html</li>
+						<li>All chart components allow you to pass in an ADQL query instead of the data property. If you pass in both, the query would be executed first.</li>
+						<li>if you remove the data and query properties then the component will generate random or test data.</li>
+					</ul>
+					<pre><code class="language-javascript">			
+new PieChartComponent({
+	targetId:"pieChartComponent",
+	title:"Pie Chart Component"
+	//query:"select customername,count(*) from transactions where application = 'test"
+}).draw(function(selection){
+	alert(selection);
+})						
+</code></pre>
+
+				</div>	
+				<div id="pieChartComponent" class="col-md-6"></div>				
+			</div>
+			<div class="row"><hr/></div>
+			<div class="row">
+					<div class="col-md-6">
+						<p>Customizing Chart Options</p>
+						<ul>
+							<li>To pass in C3 chart options provide a chartOptions property.</li>
+							<li>This will work for both Chart and ChartComponents.</li>
+						</ul>
+						<pre><code class="language-javascript">			
+	new PieChartComponent({
+		targetId:"pieChartComponentCustomized",
+		title:"Pie Chart Component Customized",
+		chartOptions:{
+			size:{width:"200",height:"200"},
+			color:{pattern: ['#FF0000']},
+			legend: {show: false}
+		}
+	}).draw(function(selection){
+		alert(selection);
+	})						
+	</code></pre>
+	
+					</div>	
+					<div id="pieChartComponentCustomized" class="col-md-6"></div>				
+				</div>
+		</div>
+		</div>
+		
+    </div>
+</body>
+<script type="text/javascript">
+	
+
+	var pieChartSection = function(){
+		var pieData = [
+			["Apple",1000],
+			["Amazon",2000],
+			["Cisco",3000],
+			["AppDynamics",4000],
+		]
+
+		new PieChart({
+			targetId:"pieChart",
+			data:pieData
+		}).draw(function(selection){
+			alert(selection);
+		})
+
+		new PieChartComponent({
+			targetId:"pieChartComponent",
+			title:"Pie Chart Component"
+			//query:"select customername,count(*) from transactions where application = 'test"
+		}).draw(function(selection){
+			alert(selection);
+		})
+
+		new PieChartComponent({
+			targetId:"pieChartComponentCustomized",
+			title:"Pie Chart Component Customized",
+			chartOptions:{
+				size:{width:"200",height:"200"},
+				color:{pattern: ['#FF0000']},
+				legend: {show: false}
+			}
+		}).draw(function(selection){
+			alert(selection);
+		})
+	}
+
+	//Your BiQ App Components ...
+	var buildDashboard = function(){
+		pieChartSection();				
+	}
+	buildDashboard();
+
+
+</script>
+</html>

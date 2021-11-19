@@ -1,0 +1,75 @@
+apiVersion: servicemesh.cisco.com/v1alpha1
+kind: IstioMeshGateway
+metadata:
+  labels:
+    app: boutique-frontEnd-mesh-gateway
+    istio: frontEnd-mesh-gateway
+    istio.io/rev: cp-v111x.istio-system
+  name: boutique-frontend-mesh-gw
+  namespace: istio-system
+spec:
+  deployment:
+    metadata:
+      labels:
+        app: boutique-frontEnd-mesh-gateway
+        gateway-name: boutique-frontend-mesh-gw
+        gateway-type: ingress
+        istio: boutique-mesh-gateway
+        istio.io/rev: cp-v111x.istio-system
+    env:
+    - name: ISTIO_META_LOCAL_ENDPOINTS_ONLY
+      value: "true"
+    replicas:
+      count: 1
+      min: 1
+      max: 1
+    resources:
+      limits:
+        cpu: "2"
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    securityContext:
+      runAsGroup: 0
+      runAsNonRoot: false
+      runAsUser: 0
+  service:
+    ports:
+    - name: http2
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    - name: tcp-als-tls
+      port: 50600
+      protocol: TCP
+      targetPort: 50600
+    - name: tcp-zipkin-tls
+      port: 59411
+      protocol: TCP
+      targetPort: 59411
+    type: LoadBalancer
+  istioControlPlane:
+    name: cp-v111x
+    namespace: istio-system
+  runAsRoot: true
+  type: ingress
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  labels:
+    app: boutique-frontEnd-ingressgateway
+  name: boutique-frontEnd-ingressgateway
+  namespace: boutique-app
+spec:
+  selector:
+    gateway-name: boutique-frontend-mesh-gw
+    gateway-type: ingress
+  servers:
+  - hosts:
+    - "*"
+    port:
+      name: http
+      number: 80
+      protocol: HTTP

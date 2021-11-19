@@ -1,0 +1,47 @@
+# Copyright (c) 2021, Cisco Systems, Inc. and/or its affiliates. All rights reserved.
+# Licensed under the Apache 2.0 license, see LICENSE file.
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: teastore-webui-weighted-v1-v2
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - teastore-webui-ingressgateway
+  http:
+    - route:
+        - destination:
+            host: teastore-webui
+            subset: v1
+            port:
+              number: 8080
+          weight: 50
+        - destination:
+            host: teastore-webui
+            subset: v2
+            port:
+              number: 8080
+          weight: 50
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: teastore-image-weighted-v1-v2
+# spec:
+#   hosts:
+#     - teastore-image
+#   http:
+#     - route:
+#         - destination:
+#             host: teastore-image
+#             subset: v1
+#             port:
+#               number: 8080
+#           weight: 50
+#         - destination:
+#             host: teastore-image
+#             subset: v2
+#             port:
+#               number: 8080
+#           weight: 50

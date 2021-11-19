@@ -1,0 +1,129 @@
+<script id="_chartComponent" type="text/x-jsrender">
+    <div class="au-card {{:panelClass}}">
+        <div class="au-card-inner">
+            <h3 class="title-2">{{:title}}</h3>
+            <div class="chart-info">
+                
+            </div>
+            <div id="{{:div}}" class="{{:div}}"></div>
+        </div>
+    </div>
+</script>
+
+<script id="_noPanelComponent" type="text/x-jsrender">
+    <div id="{{:div}}"></div>
+</script>
+
+<script id="_tableComponent" type="text/x-jsrender">
+    <div class="au-card {{:panelClass}}">
+        <div class="au-card-inner">
+            <h3 class="title-2">{{:title}}</h3>
+            <br/>
+            <table id="{{:div}}" style="width:100%;">
+                <thead>
+                    <tr>
+                    {{for columns}}
+                        <th>{{:title}}</th>
+                    {{/for}}
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>	
+</script>
+
+<script id="_table" type="text/x-jsrender">
+    <table id="{{:div}}" style="width:100%">
+        <thead>
+            <tr>
+            {{for columns}}
+                <th>{{:title}}</th>
+            {{/for}}
+            </tr>
+        </thead>
+    </table>	
+</script>
+
+<script id="_timeRangeComponent" type="text/x-jsrender">
+    <select id="timeRange" class="form-control">
+        <option value="15">Last 15 Minutes</option>
+        <option value="30">Last 30 Minutes</option>
+        <option value="1h">Last 1 Hour</option>
+        <option value="3h">Last 3 Hours</option>
+        <option value="6h">Last 6 Hours</option>
+        <option value="12h">Last 12 Hours</option>
+        <option value="1d">Last 1 Day</option>
+        <option value="2d">Last 2 Days</option>
+        <option value="3d">Last 3 Days</option>
+        <option value="1w">Last 1 Week</option>
+        <option value="2w">Last 2 Weeks</option>
+        <option value="3w">Last 3 Weeks</option>
+        <option value="1m">Last 1 Month</option>
+        <option value="2m">Last 2 Months</option>
+        <option value="3m">Last 3 Months</option>
+      </select>
+</script>
+
+<script id="_boxComponent" type="text/x-jsrender">
+    <div id="{{:targetId}}-box" class="overview-item {{:panelClass}}" onClick="{{:actionClick}}" style="cursor: pointer;">
+        <div class="overview__inner">
+            <div class="overview-box clearfix">
+                <div class="icon">
+                    <i class="{{:icon}}" {{if iconColor}} style="color:{{:iconColor}}" {{/if}}></i>
+                </div>
+                <div class="text">
+                    <h2>{{:value}}</h2>
+					<span>{{:title}}</span>
+                </div>
+            </div>
+            {{if hasChart}}
+                <div class="overview-chart">
+                    <div id="{{:targetId}}-chart"></div>
+                </div>
+            {{else}}
+                <div class="overview-chart" style="height:30px;"></div>
+            {{/if}}
+        </div>
+    </div>	
+</script>
+
+<script id="_filtersComponent" type="text/x-jsrender">
+    <li class="sidebar-search">
+        <div class="form-group">
+            <label>Time Range:</label>
+            <span id="_timeSelector"></span>
+        </div>
+        {{for filters}}
+            <div class="form-group">
+                <label>{{:label}}</label>
+                <input type="text" class="form-control" id="{{:id}}"/>
+            </div>
+        {{/for}}
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary" id="_resetFilter">Reset</button> &nbsp;<button type="submit" class="btn btn-primary" id="_submitFilter">Query</button>
+        </div>
+    </li>
+</script>
+
+<script id="_modalComponent" type="text/x-jsrender">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</script>

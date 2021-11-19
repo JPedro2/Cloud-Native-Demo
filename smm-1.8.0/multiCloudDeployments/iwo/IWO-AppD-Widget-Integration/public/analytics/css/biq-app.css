@@ -1,0 +1,32 @@
+
+spinnerDiv {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.navbar {
+  background-color:#080808;
+}
+
+.ui-autocomplete { 
+  position: absolute; 
+  cursor: default;
+  z-index:30 !important
+}  
+
+.page-wrapper{
+  min-height: 100%;
+}
+
+.overview-item--c0 {
+  background-image: -moz-linear-gradient(90deg, #050c30 0%, #575354 100%);
+  background-image: -webkit-linear-gradient(90deg, #050c30 0%, #575354 100%);
+  background-image: -ms-linear-gradient(90deg, #050c30 0%, #575354 100%);
+}
+
+.overview-item--c5 {
+  background-image: -moz-linear-gradient(90deg, #ecedf5 0%, #5f5d5e 100%);
+  background-image: -webkit-linear-gradient(90deg, #ecedf5 0%, #5f5d5e 100%);
+  background-image: -ms-linear-gradient(90deg, #ecedf5 0%, #5f5d5e 100%);
+}

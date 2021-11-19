@@ -1,0 +1,31 @@
+<div style="background-color: #000000; padding: 5px;display: block;">    
+        <table class="dash_header">
+          <tr>
+          <td style="width:400px; font-size:10pt; color:white"><a href="/"><img width="180px" src="/img/AppDynamicsLogo.svg"/></a>BiQ App</td>
+          <td></td>
+          <td style="width:100px;">
+              <label class="dash_header" style="color:white;">Time Range: </label>
+          </td>
+          <td style="width:100px;">
+                  <select id="timeRange" class="biq_input">
+                      <option value="15">Last 15 Minutes</option>
+                      <option value="30">Last 30 Minutes</option>
+                      <option value="1h">Last 1 Hour</option>
+                      <option value="2h">Last 2 Hour</option>
+                      <option value="4h">Last 4 Hour</option>
+                      <option value="6h">Last 6 Hours</option>
+                      <option value="12h">Last 12 Hours</option>
+                      <option value="1d">Last 1 Day</option>
+                      <option value="2d">Last 2 Days</option>
+                  </select>
+          </td>
+          <td style="padding:10px;width:200px;">
+              <button type="submit" class="btn btn-primary" onclick="find();">Run</button>
+          </td>
+          <td>
+              <label id="lastRan" class="dash_header" style="font-size:10pt; color:white"></label>
+          </td>
+          <td><div id="spinnerDiv"></div></td>
+          </tr>
+        </table>      
+  </div>

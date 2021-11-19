@@ -1,0 +1,18 @@
+.darkChart .c3 text, .darkLineChart .c3 text tspan{
+	fill: white;
+}
+
+.darkChart .c3 .c3-axis-x path, .darkLineChart .c3 .c3-axis-x line {
+    stroke:white;
+}
+.darkChart .c3 .c3-axis-y path, .darkLineChart .c3 .c3-axis-y line {
+    stroke:white;
+}
+
+.darkChart .au-card .au-card-inner .title-2 {
+    color:white;
+}
+
+.darkChart .au-card {
+    background-color: black;
+}

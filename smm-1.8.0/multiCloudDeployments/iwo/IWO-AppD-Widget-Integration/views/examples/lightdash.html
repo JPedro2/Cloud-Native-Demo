@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <title>BiQ App - Dashboard</title>
+    <% include ../partials/theme %>
+<style>
+    #countries table.dataTable tbody tr {
+        background-color: transparent;
+    }
+
+    #countries table.dataTable thead th,  #countries table.dataTable thead td{
+        border-bottom : 0px;
+    }
+    #countries .table td, #countries .table th {
+        border-top:0px;
+    }
+
+    #countries table.dataTable.no-footer {
+        border-bottom : 0px;
+    }
+
+    .menu-sidebar .logo {
+        background:#5a5959;
+    }
+
+    .menu-sidebar {
+        width:200px;
+    }
+
+    .page-container {
+        padding-left:200px;
+        padding-top:10px;
+    }
+</style>
+</head>
+<body>
+    <div class="page-wrapper">
+       
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar ">
+            <div class="logo">
+                <a href="#">
+                    <img width="180px" src="/img/AppDynamicsLogo.svg" alt="AppDynamics" />
+                </a>
+            </div>
+            <div class="menu-sidebar__content js-scrollbar1">
+                <nav class="navbar-sidebar">
+                    <ul class="list-unstyled navbar__list">
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fas fa-chart-bar"></i>Charts</a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fas fa-table"></i>Tables</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div id="membersOnline" class="col"></div>
+                            <div id="itemsSold" class="col"></div>
+                            <div id="thisWeek" class="col"></div>
+                            <div id="totalEarnings" class="col"></div>
+                        </div>
+                        <div class="row">
+                            <div id="recent-reports" class="col-lg-9"></div>
+                            <div id="prodServicesBreakDown" class="col-lg-3"></div>    
+                        </div>
+                        <div class="row">
+                            <hr/>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <h2 class="title-1 m-b-25">Earnings By Items</h2>
+                                <div id="items" class="table-responsive table--no-card m-b-40"></div>
+                            </div>
+                            <div class="col-lg-3">
+                                <h2 class="title-1 m-b-25">Top countries</h2>
+                                <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
+                                    <div class="au-card-inner">
+                                        <div class="table-responsive">
+                                            <div id="countries"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+    new BoxChartComponent({
+        value:"10368",
+        title:"members online",
+        targetId:"membersOnline",
+        icon:"zmdi zmdi-account-o",
+        panelClass:"overview-item--c1",
+        animate:"zoomIn",
+        options:{
+            size:{height:75,width:250},
+            type:"area-step",
+            color:{
+                pattern:['ff7f0e']
+            }
+        },
+    }).draw();
+    
+    new BoxChartComponent({
+        value:388688,
+        title:"members online",
+        targetId:"itemsSold",
+        icon:"zmdi zmdi-shopping-cart",
+        panelClass:"overview-item--c2",
+        animate:"zoomIn",
+        options:{
+            size:{height:75,width:250}
+        },
+    }).draw();
+
+    new BoxChartComponent({
+        value:1086,
+        title:"orders sold",
+        targetId:"thisWeek",
+        icon:"zmdi zmdi-calendar-note",
+        panelClass:"overview-item--c3",
+        animate:"zoomIn",
+        options:{
+            size:{height:75,width:250},
+            type:"bar"
+        },
+    }).draw();
+
+    new BoxChartComponent({
+        value:"1,000,000",
+        title:"total earnings",
+        targetId:"totalEarnings",
+        icon:"zmdi zmdi-money",
+        panelClass:"overview-item--c3",
+        animate:"zoomIn",
+        options:{
+            size:{height:75,width:250},
+            type:"area-step"
+        },
+    }).draw();
+
+    new TimeChartComponent({
+        targetId:"recent-reports",
+        title:"Services",
+        options:{
+            color:{pattern: ['#FF0000']},
+            legend: {show: false},
+            size:{height:200}
+        }
+    }).draw(function(selection){
+        alert(JSON.stringify(selection));
+    })	
+
+    var data = [["Products",80],["Services",20]];
+    new PieChartComponent({
+        targetId:"prodServicesBreakDown",
+        data:data,
+        title:"Product/Services",
+        options:{
+            color:{pattern: ['#00ace6','#f93947']},
+            size:{height:200}
+        }
+    }).draw(function(selection){
+        alert(JSON.stringify(selection));
+    })	
+
+    var tableData = [
+		["2018-09-29","100398","iPhone X 64Gb Grey","$999",1,"$999"],
+        ["2018-09-28","100397","Samsung S8 Black","$756",1,"$756"],
+        ["2018-09-27","100396","Game Console Controller","$22",2,"$44"]
+	]	
+		
+	new Table({
+		targetId:"items",
+		data:tableData,
+        columns: [{ title: "Date" },{ title: "Order ID" },{ title: "Name" },{ title: "Price" },{ title: "Quantity" },{ title: "Total" }],
+        class:"table table-borderless table-striped table-earning",
+        options : {
+			"searching": false,
+			"paging": false,
+            "ordering": false,
+            "bInfo" : false
+		}
+	}).draw(function(row){
+		alert(JSON.stringify(row));
+    });
+    
+    var countriesData = [
+        ["United States","$119M"],
+        ["Australia","$100M"],
+        ["United Kingdom","$90M"],
+        ["Italy","$80M"],
+        ["France","$70M"]
+    ]	
+    
+    new Table({
+		targetId:"countries",
+		data:countriesData,
+        columns: [{ title: "" },{ title: "" }],
+        class:"table table-top-countries",
+        options : {
+			"searching": false,
+			"paging": false,
+            "ordering": false,
+            "bInfo" : false
+		}
+	}).draw(function(row){
+		alert(JSON.stringify(row));
+    });
+    
+
+</script>
+</html>
+<!-- end document-->

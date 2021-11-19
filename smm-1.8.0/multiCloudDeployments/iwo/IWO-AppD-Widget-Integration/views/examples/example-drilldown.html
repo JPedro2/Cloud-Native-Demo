@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BiQ App - Dashboard</title>
+<meta charset="UTF-8">
+<% include ../partials/theme %>
+<% include head %>
+</head>
+<body>
+	<div class="wrapper">
+		<aside class="menu-sidebar">
+			<div class="logo">
+				<a href="#">
+					<img width="180px" src="/img/AppDynamicsLogo.svg" alt="AppDynamics" />
+				</a>
+			</div>
+			<div class="menu-sidebar__content js-scrollbar1">
+				<nav class="navbar-sidebar">
+					<ul class="nav" id="side-menu"></ul>
+				</nav>
+			</div>
+		</aside>    
+		<div class="page-container"> 
+			<div class="container-fluid">   
+				<!-- Main Page -->
+				<div class="row">
+					<p class="col">Click on the view details and the then the error breakdown.</p>
+				</div>	
+				<div class="row">
+					<div id="ErrorTotals" class="col-md-3"></div>
+					<div id="ErrorBreakDown" class="col-md-6"></div>
+				</div>
+				<div class="row">
+					<p>Click on a table record and then a point in the time series graph.</p>
+				</div>
+				<div class="row">
+					<div id="ErrorTable" class="col-md-4"></div>
+					<div id="ErrorTrend" class="col-md-4"></div>
+					<div id="sankeyChart" class="col-md-4"></div>
+				</div>
+			</div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+	//Your BiQ App Components ...
+	var buildDashboard = function(){
+		new BoxChartComponent({
+			title:"Error Counts",
+			targetId:"ErrorTotals",
+			action:"View Details",
+			actionClick: "errorAction()", //This function is called when the widget is selected
+			icon:"fa fa-exclamation fa-2x",
+			options:{
+				size:{height:75,width:300},
+			},
+			animate:"bounceInLeft",
+			panelClass:"overview-item--c2"			
+			//query:""
+		}).draw();
+	}
+
+	var errorAction = function(){
+		new DonutChartComponent({
+			//query: "",    
+			targetId:"ErrorBreakDown",
+			title:"Error Breakdown",
+			animate:"bounceInRight"
+		}).draw(function(id){
+			//hide elements lower down the chain
+			hideElements(["ErrorTrend"]);
+			
+			new TableComponent({
+				//query : "",
+				targetId:"ErrorTable",
+				title:"Table Chart",
+				panelClass:"panel-red",
+				columns: [{ title: "Name" },{ title: "Counts" }],
+				animate:"zoomIn"
+			}).draw(function(record){
+				new TimeChartComponent({
+					//query: "",    
+					targetId:"ErrorTrend",
+					title:"Error Trend Chart",
+					panelClass:"panel-red",
+					animate:"zoomInDown"
+				}).draw(function(rec){
+					
+					var data={
+						nodes : ["RuntimeException",
+						"Login Service",
+						"DB Service",
+						"Customer A",
+						"Customer B"],
+						source : [1,1,2,2,3],
+						target : [2,3,4,5,5],
+						values : [15,5,10,5,2]
+					}
+
+					sankeyChart = new PlotlySankeyChart({
+						targetId:"sankeyChart",
+						title:"Flow",
+						animate:"zoomIn"
+					});
+					sankeyChart.renderChart(data,function(selection){
+						alert(JSON.stringify(selection));
+					});
+				});
+			});
+		});
+	}
+	new FilterComponent({
+		targetId:"side-menu",
+		filters:[{
+			label:"Error",
+			id:"idError",
+			adqlField :"<field name required>",
+			query:""
+		},{
+			label:"Customer",
+			id:"idCustomer",
+			adqlField :"<field name required>",
+			query:""
+		}]
+	}).draw(function(filters){
+		//hide elements lower down the chain
+		hideElements(["ErrorTable","ErrorTrend"]);
+		buildDashboard();
+	});
+
+	buildDashboard();
+</script>
+</html>

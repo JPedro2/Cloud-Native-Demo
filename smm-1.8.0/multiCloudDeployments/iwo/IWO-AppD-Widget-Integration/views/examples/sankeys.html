@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>BiQ App - Dashboard</title>
+  <meta charset="UTF-8">
+  <% include ../includes/prism %>
+  <% include ../partials/theme%>
+  <% include head %>
+  <% include ../includes/sankey %>
+
+
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- Menu -->
+    <%- include ./menu %>
+    <div class="page-container">
+      <div class="container-fluid">
+        <!-- Main Page -->
+        <div class="row">
+          <p>Sankey Charts</p>
+        </div>
+        <div class="row">
+          <hr />
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p>D3 Sankey Chart</p>
+            <ul>
+              <li>See : <a
+                  href="https://github.com/ricklupton/d3-sankey-diagram">https://github.com/ricklupton/d3-sankey-diagram</a>
+              </li>
+              <li>This component allows you to drill in and zoom on just the element selected.</li>
+              <li>You must include the sankey partials.</li>
+              <li>If you leave the data property empty then the chart will generate sample data.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <pre><code class="language-javascript">	
+	
+	&lt;% include ../partials/sankey %&gt;
+
+	....
+
+  var chartSection = function () {
+    var data = {
+      nodes: [{ "id": 0, "name": "RuntimeException" },
+      { "id": 1, "name": "Login Service" },
+      { "id": 2, "name": "DB Service" },
+      { "id": 3, "name": "Customer A" },
+      { "id": 4, "name": "Customer B" }],
+      links: [{ "source": 0, "target": 1, "value": 15 },
+      { "source": 0, "target": 2, "value": 5 },
+      { "source": 1, "target": 3, "value": 10 },
+      { "source": 1, "target": 4, "value": 5 }
+      ]
+    }
+
+    sankeyChart = new SankeyChart({
+      targetId: "chart",
+      data: data,
+      options: { height: "1000px", width: "1000px" }
+    });
+
+    sankeyChart.renderChart(function (selection) {
+      alert(selection);
+    });
+						</code></pre>
+          </div>
+        </div>
+        <svg id='chart' xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript">
+
+
+
+
+  var chartSection = function () {
+    var data = {
+      nodes: [{ "id": 0, "name": "RuntimeException" },
+      { "id": 1, "name": "Login Service" },
+      { "id": 2, "name": "DB Service" },
+      { "id": 3, "name": "Customer A" },
+      { "id": 4, "name": "Customer B" }],
+      links: [{ "source": 0, "target": 1, "value": 15 },
+      { "source": 0, "target": 2, "value": 5 },
+      { "source": 1, "target": 3, "value": 10 },
+      { "source": 1, "target": 4, "value": 5 }
+      ]
+    }
+
+    sankeyChart = new SankeyChart({
+      targetId: "chart",
+      data: data,
+      options: { height: "1000px", width: "1000px" }
+    });
+
+    sankeyChart.renderChart(function (selection) {
+      alert(selection.value);
+    });
+
+  }
+
+
+  //Your BiQ App Components ...
+  var buildDashboard = function () {
+    chartSection();
+  }
+  buildDashboard();
+
+
+</script>
+
+</html>

@@ -1,0 +1,31 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: webui-ingress-tea-store
+  namespace: tea-store
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - teastore-webui-ingressgateway
+  http:
+  - route:
+    - destination:
+        host: teastore-webui
+        port:
+          number: 8080
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: teastore-webui
+  namespace: tea-store
+spec:
+  hosts:
+  - "teastore-webui.default.svc.cluster.local"
+  http:
+  - route:
+    - destination:
+        host: teastore-webui
+        port:
+          number: 8080
