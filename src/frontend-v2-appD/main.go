@@ -21,8 +21,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 	"strconv"
+	"time"
 
 	"cloud.google.com/go/profiler"
 	"contrib.go.opencensus.io/exporter/jaeger"
@@ -86,20 +86,24 @@ type frontendServer struct {
 func main() {
 	/********************************************* AppD Golang Agent *********************************************/
 	cfg := appd.Config{}
-	
-	cfg.AppName = "UKI-DevX-k8s-Demo"
-	cfg.TierName = "BoutiqueFrontEnd"
-	cfg.NodeName = "FrontEndv1"
+
+	cfg.AppName = os.Getenv("APPD_APP_NAME")
+	cfg.TierName = os.Getenv("APPD_TIER_NAME")
+	cfg.NodeName = os.Getenv("APPD_NODE_NAME")
+
+	// cfg.AppName = "UKI-DevX-k8s-Demo"
+	// cfg.TierName = "BoutiqueFrontEnd"
+	// cfg.NodeName = "FrontEndv1"
 
 	controllerPORT, _ := strconv.ParseUint(os.Getenv("APPD_CONTROLLER_PORT"), 10, 10)
 	controllerUseSSL, _ := strconv.ParseBool(os.Getenv("APPD_CONTROLLER_USE_SSL"))
 
 	cfg.Controller.Host = os.Getenv("APPD_CONTROLLER_HOST")
 	cfg.Controller.Port = uint16(controllerPORT)
-	cfg.Controller.UseSSL  = controllerUseSSL
+	cfg.Controller.UseSSL = controllerUseSSL
 	cfg.Controller.Account = os.Getenv("APPD_CONTROLLER_ACCOUNT")
 	cfg.Controller.AccessKey = os.Getenv("APPD_CONTROLLER_ACCESS_KEY")
-	cfg.InitTimeoutMs = 1000  // Wait up to 1s for initialization to finish
+	cfg.InitTimeoutMs = 1000 // Wait up to 1s for initialization to finish
 
 	//Initialize the agent by passing the configuration structure to InitSDK() in your main function
 	//If nil is returned, the agent is initialized successfully. If an error returns, it is likely because the agent could not reach the Controller.
@@ -287,7 +291,7 @@ func mustMapEnv(target *string, envKey string) {
 	v := os.Getenv(envKey)
 	if v == "" {
 		panic(fmt.Sprintf("environment variable %q not set", envKey))
-		//Terminate the appD agent right before the application exits  
+		//Terminate the appD agent right before the application exits
 		appd.TerminateSDK()
 	}
 	*target = v
@@ -301,17 +305,17 @@ func mustConnGRPC(ctx context.Context, conn **grpc.ClientConn, addr string) {
 		grpc.WithStatsHandler(&ocgrpc.ClientHandler{}))
 	if err != nil {
 		panic(errors.Wrapf(err, "grpc: failed to connect %s", addr))
-		//Terminate the appD agent right before the application exits 
+		//Terminate the appD agent right before the application exits
 		appd.TerminateSDK()
 	}
 }
 
 //AppD middleware to enclose the routing handling functions and monitor Business Transactions
 func appdynamicsMiddleware(next http.Handler) http.Handler {
-    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        btHandle := appd.StartBT(r.URL.Path, "")
-        next.ServeHTTP(w, r)
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		btHandle := appd.StartBT(r.URL.Path, "")
+		next.ServeHTTP(w, r)
 		appd.EndBT(btHandle)
 		fmt.Printf("AppD Middleware sucessfully instrumented BT with handle: %x and URL.Path: %s\n", btHandle, r.URL.Path)
-    })
+	})
 }

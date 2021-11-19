@@ -95,12 +95,6 @@ The full architecture of the _Online Boutique_ application, with all the tools d
 - A Google Cloud Project, [new]((https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project)) or existing with _Google Container Registry_ enabled
 - The Google [Cloud SDK](https://cloud.google.com/sdk/install) installed, that includes the `gcloud` command-line tool
 - `kubectl`, which can be installed via `gcloud components install kubectl`
-- GCP APIs for Cloud Monitoring, Tracing, Debugger enabled:
-```sh
-gcloud services enable monitoring.googleapis.com \
-    cloudtrace.googleapis.com \
-    clouddebugger.googleapis.com
-```
 
 ## Quick-Start with GKE and Istio
 1.  **Set the `PROJECT_ID` env variable and ensure the GKE API is enabled:**
@@ -115,13 +109,10 @@ gcloud services enable monitoring.googleapis.com \
     gcloud services enable cloudprofiler.googleapis.com
     ```
    
-2.  **Enable _Google Container Registry (GCR)_ on your GCP project:**
+2.  **Enable _Google Container Registry (GCR)_ on your project and configure the `docker` CLI to authenticate to GCR::**
 
     ```sh
     gcloud services enable containerregistry.googleapis.com
-    ```
-    Configure the `docker` CLI to authenticate to GCR:
-    ```sh
     gcloud auth configure-docker -q
     ```
 
@@ -135,7 +126,7 @@ gcloud services enable monitoring.googleapis.com \
     ```sh
     ZONE=europe-west2-a
     gcloud container clusters create <your-cluster-name> \
-        --project=${PROJECT_ID} --zone=${ZONE} --release-channel=stable \
+        --project=${PROJECT_ID} --zone=${ZONE} --node-locations=${ZONE} \
         --enable-autoupgrade --enable-autoscaling \
         --min-nodes=4 --max-nodes=6 --machine-type=e2-standard-2
     ```
@@ -148,7 +139,7 @@ gcloud services enable monitoring.googleapis.com \
     ```sh
     ZONE=europe-west2-a
     gcloud container clusters create <your-cluster-name> \
-        --project=${PROJECT_ID} --zone=${ZONE} --release-channel=stable \
+        --project=${PROJECT_ID} --zone=${ZONE} --node-locations=${ZONE} \
         --enable-autoupgrade --enable-autoscaling --preemptible \
         --min-nodes=4 --max-nodes=6 --machine-type=e2-standard-2
     ```
@@ -505,3 +496,8 @@ You can then get the `Average Response Time` from the _FrontEnd Business Transac
 [![MetricBrowser AppD FE](./docs/img/MetricBrowser-AppD-FE.png)](./docs/img/MetricBrowser-AppD-FE.png)
 
 [![MetricBrowser AppD TE CustomMetrics](./docs/img/MetricBrowser-AppD-TE-CustomMetrics.png)](./docs/img/MetricBrowser-AppD-TE-CustomMetrics.png)
+
+
+# Multi Cloud Deployment
+
+To see the deployment for multi cloud environments please check the guide under the [smm-1.8.0 folder](./smm-1.8.0/).
