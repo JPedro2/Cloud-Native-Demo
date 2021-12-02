@@ -6,26 +6,26 @@ To add _IWO_ to this multicloud demo you will need to deploy the _IWO K8s Collec
 
 1. [Download the latest IWO Collector](https://software.cisco.com/download/home/286319499/type/286328874/release/1.0.1) and unzip it in this folder
 2. Go to [Intersight Help Center](https://intersight.com/help/saas/resources#cisco_intersight_handbook)
-   2.1. Go to the _Cisco Intersight Workload Optimizer_ section and open the _Cisco Intersight Workload Optimizer Target Configuration Guide_
-   2.2. Jump straight in to the _Cloud Native Targets_ section and follow all the steps. You will need to install the _IWO K8s Collector_ first and only then claim your targets.
+   1. Go to the _Cisco Intersight Workload Optimizer_ section and open the _Cisco Intersight Workload Optimizer Target Configuration Guide_
+   2. Jump straight in to the _Cloud Native Targets_ section and follow all the steps. You will need to install the _IWO K8s Collector_ first and only then claim your targets.
 
 ## Add AppDynamics APM data to IWO
 
 1. Go to [Intersight Help Center](https://intersight.com/help/saas/resources#cisco_intersight_handbook)
-   1.1. Go to the _Cisco Intersight Workload Optimizer_ section and open the _Cisco Intersight Workload Optimizer Target Configuration Guide_
-   1.2. Jump straight in to the _Application Performance Management (APM)_ > _Cisco AppDynamics_ section
-   1.3. The targets are SaaS based so you will need to **Turn OFF Connect through an Intersight Assist**
-   1.4. If you are using the `ukse` _AppDynamics_ org then there is an account already created for this purpose `uki-devx-iwo` - please use this and you can ignore the _Prerequisites_ section. If not, then please follow the _Prerequisites_ section closely.
-   1.5. Follow the instructions in the _Claiming an AppDynamics Target_ section and **please note** that you are **NOT** using _Intersight Assist_
+   1. Go to the _Cisco Intersight Workload Optimizer_ section and open the _Cisco Intersight Workload Optimizer Target Configuration Guide_
+   2. Jump straight in to the _Application Performance Management (APM)_ > _Cisco AppDynamics_ section
+   3. The targets are SaaS based so you will need to **Turn OFF Connect through an Intersight Assist**
+   4. If you are using the `ukse` _AppDynamics_ org then there is an account already created for this purpose `uki-devx-iwo` - please use this and you can ignore the _Prerequisites_ section. If not, then please follow the _Prerequisites_ section closely.
+   5. Follow the instructions in the _Claiming an AppDynamics Target_ section and **please note** that you are **NOT** using _Intersight Assist_
 
 ## AWS Billing Capabilities to IWO
 
 At the time of writing only AWS billing is supported
 
 1. Go to [Intersight Help Center](https://intersight.com/help/saas/resources#cisco_intersight_handbook)
-   1.1. Go to the _Cisco Intersight Workload Optimizer_ section and open the _Cisco Intersight Workload Optimizer Target Configuration Guide_
-   1.2. Jump straight in to the _Cloud Targets_ > _AWS Billing Targets_ section
-   1.3. If you are using the _AWS UKI-DevX_ account then the _S3 bucket_ is already created for you on that account - `aws-cur-iwo`. If not, then please follow the instructions on how to create the required _S3 bucket_ under your _AWS_ account
+   1. Go to the _Cisco Intersight Workload Optimizer_ section and open the _Cisco Intersight Workload Optimizer Target Configuration Guide_
+   2. Jump straight in to the _Cloud Targets_ > _AWS Billing Targets_ section
+   3. If you are using the _AWS UKI-DevX_ account then the _S3 bucket_ is already created for you on that account - `aws-cur-iwo`. If not, then please follow the instructions on how to create the required _S3 bucket_ under your _AWS_ account
 
 ## Add IWO Widget to AppDynamics Dashboard
 
