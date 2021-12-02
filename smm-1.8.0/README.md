@@ -28,7 +28,7 @@ If you need to install on another _OS_, please check the [installation guide](ht
 
 ### GCP - GKE 
 
-If you followed the single cluster deployment above you should already have the Google [Cloud SDK](https://cloud.google.com/sdk/install) installed, with the `gcloud` command-line tool and `kubectl` ready to go. **If not**, please install those and follow the [guide above](https://github.com/JPedro2/Cloud-Native-Demo#quick-start-with-gke-and-istio), **up to point 3. only**.
+If you followed the single cluster deployment above you should already have the [Google Cloud SDK](https://cloud.google.com/sdk/install) installed, with the `gcloud` command-line tool and `kubectl` ready to go. **If not**, please install those and follow the [guide above](https://github.com/JPedro2/Cloud-Native-Demo#quick-start-with-gke-and-istio), **up to point 3. only**.
 
 
 1. Create a cluster, called `smm-gke`, in _GKE_ with 4 nodes: 
@@ -77,7 +77,7 @@ In order to create a cluster on [AWS EKS](https://aws.amazon.com/eks/?whats-new-
       --nodes-min 2 \
       --nodes-max 10 \
       --region eu-west-2
-  ```
+    ```
 
   **Please Note:** Similarly to _GKE_ above, this cluster gets deployed in London, zone `eu-west-2`, if you wish to deploy elsewhere, please check the [available regions and zones here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions). If you wish to change the `node-type` you can find more [information here](https://aws.amazon.com/ec2/instance-types/).
 
@@ -359,6 +359,7 @@ Both these resources will be defined on the primary cluster, so the ingress for 
    kubectl get svc -n istio-system
    ```
    You can now access the TeaStore App!! 🥳🥳🥳
+   
 5. (Optional) Have a look at the `IstioMeshGateway` and `Gateway` resources deployed
    ```
    kubectl get IstioMeshGateway -n istio-system
